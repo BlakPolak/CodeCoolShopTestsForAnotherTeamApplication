@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class ProductDaoSqlite implements ProductDao {
         ProductCategory category = new ProductCategory("Category", "Department", "Description");
         Supplier supplier = new Supplier("Supplier", "Description");
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
+            Connection connection = SqliteJDBVConnector.connection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products");
             while (rs.next()){
