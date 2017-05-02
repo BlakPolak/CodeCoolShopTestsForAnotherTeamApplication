@@ -14,7 +14,6 @@ public class ProductController {
     public void displayList(){
         List<Product> products = productDao.getAll();
         view.displayList(products);
-
     }
 
 
