@@ -4,9 +4,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,20 +26,27 @@ public class ProductDaoSqlite implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         List<Product> products = new ArrayList<>();
         ProductCategory category = new ProductCategory("Category", "Department", "Description");
         Supplier supplier = new Supplier("Supplier", "Description");
-        Product product1 = new Product("Product", 12.50f, "PLN", "Description", category, supplier);
-        Product product2 = new Product("Product 2", 12.50f, "PLN", "Description", category, supplier);
-        Product product3 = new Product("Product 3", 12.50f, "PLN", "Description", category, supplier);
-        products.add(product1);
-        products.add(product2);
-        products.add(product3);
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM products");
+            while (rs.next()){
+                Product product = new Product(
+                        rs.getString("name"),
+                        rs.getFloat("price"),
+                        "PLN",
+                        rs.getString("description"),
+                        category,
+                        supplier
+                        );
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return products;
     }
 
