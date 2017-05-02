@@ -7,9 +7,6 @@ import com.codecool.shop.model.Supplier;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kamil on 02.05.17.
- */
 public class ProductDaoSqlite implements ProductDao {
     @Override
     public void add(Product product) {
