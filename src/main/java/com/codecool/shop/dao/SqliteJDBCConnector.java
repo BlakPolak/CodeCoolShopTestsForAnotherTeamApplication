@@ -23,7 +23,7 @@ public class SqliteJDBCConnector {
 
 
     public static void createTables() throws SQLException{
-        Connection connection = SqliteJDBCConnector.connection();
+        Connection connection = connection();
         Statement statement = connection.createStatement();
         statement.execute("CREATE TABLE IF NOT EXISTS \"products\"\n" +
                 "(\n" +
