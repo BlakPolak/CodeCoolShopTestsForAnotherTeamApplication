@@ -8,6 +8,7 @@ public class MainMenuController {
     public void mainMenuAction(){
         System.out.println("1. List all products");
         System.out.println("2. List products by category");
+        System.out.println("3. List products by supplier");
         System.out.println("Select option");
         Integer option = UserInput.getUserInput();
         switch (option){
@@ -16,6 +17,9 @@ public class MainMenuController {
                 break;
             case 2:
                 productController.listProductByCategory();
+                break;
+            case 3:
+                productController.listProductBySupplier();
                 break;
             default:
                 System.out.println("Wrong option");
