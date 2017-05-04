@@ -47,7 +47,7 @@ public class SupplierDaoSqlite implements SupplierDao {
         try {
             Connection connection = SqliteJDBCConnector.connection();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM suppplier WHERE");
+            ResultSet rs = statement.executeQuery("SELECT * FROM suppplier");
             while(rs.next()){
                 Supplier supplier = new Supplier(
                         rs.getString("name"),
