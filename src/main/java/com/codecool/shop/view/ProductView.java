@@ -9,14 +9,14 @@ public class ProductView {
 
     public void displayList(List<Product> products){
         for(Product product : products){
-            System.out.println(product.toString());
+            System.out.println(product.getName());
         }
     }
 
     public void displayCategoryList(List<ProductCategory> productCategoryList){
         System.out.println("Product categories");
         for(ProductCategory productCategory: productCategoryList){
-            System.out.println(productCategory.toString());
+            System.out.println(productCategory.getId() + ") " +productCategory.getName());
         }
     }
 }
