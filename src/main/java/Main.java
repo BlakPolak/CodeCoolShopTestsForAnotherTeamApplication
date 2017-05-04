@@ -1,3 +1,4 @@
+import com.codecool.shop.controller.MainMenuController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 import com.codecool.shop.view.UserInput;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 
 
 public class Main {
-    static ProductController productController = new ProductController();
+    private static MainMenuController mainMenuController = new MainMenuController();
 
     public static void main(String[] args) {
         if(args.length > 0 && args[0].equals("--create-tables")){
@@ -18,21 +19,8 @@ public class Main {
                 e.printStackTrace();
             }
         }
+        mainMenuController.mainMenuAction();
 
-        System.out.println("1. List all products");
-        System.out.println("2. List products by category");
-        System.out.println("Select option");
-        Integer option = UserInput.getUserInput();
-        switch (option){
-            case 1:
-                productController.displayList();
-                break;
-            case 2:
-                productController.listProductByCategory();
-                break;
-            default:
-                System.out.println("Wrong option");
-        }
     }
 
 
