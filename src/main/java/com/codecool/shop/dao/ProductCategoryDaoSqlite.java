@@ -30,6 +30,7 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
         for(int i = 1; i<4; i++){
             String name = "Category" + Integer.toString(i);
             ProductCategory productCategory = new ProductCategory(name, "department", "description");
+            productCategory.setId(i);
             productCategoryList.add(productCategory);
         }
         return productCategoryList;
