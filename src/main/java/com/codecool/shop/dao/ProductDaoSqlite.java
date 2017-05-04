@@ -14,6 +14,8 @@ import java.util.List;
 
 public class ProductDaoSqlite implements ProductDao {
     private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
+    private static SupplierDao supplierDao = new SupplierDaoSqlite();
+
     @Override
     public void add(Product product) {
 
@@ -88,7 +90,6 @@ public class ProductDaoSqlite implements ProductDao {
             Connection connection = SqliteJDBCConnector.connection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE category_id = " + productCategory.getId());
-            Supplier supplier = new Supplier("Supplier", "Description");
             while (rs.next()){
                 Product product = new Product(
                         rs.getString("name"),
@@ -96,7 +97,7 @@ public class ProductDaoSqlite implements ProductDao {
                         "PLN",
                         rs.getString("description"),
                         productCategory,
-                        supplier
+                        supplierDao.find(rs.getInt("supplier_id"))
                 );
                 product.setId(rs.getInt("id"));
                 products.add(product);
