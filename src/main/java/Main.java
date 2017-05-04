@@ -30,7 +30,9 @@ public class Main {
         switch (option){
             case 1:
                 productController.displayList();
+                break;
             case 2:
+                productController.listProductByCategory();
                 break;
             default:
                 System.out.println("Wrong option");
