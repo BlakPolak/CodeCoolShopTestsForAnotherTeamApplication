@@ -69,7 +69,7 @@ public class ProductDaoSqlite implements ProductDao {
             Product product = new Product(
                     name,
                     12f,
-                    "Description",
+                    "PLN",
                     "Description",
                     productCategory,
                     supplier

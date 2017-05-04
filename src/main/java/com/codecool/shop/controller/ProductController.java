@@ -28,6 +28,7 @@ public class ProductController {
         Integer categoryId = UserInput.getUserInput();
         ProductCategory category = productCategoryDao.find(categoryId);
         List<Product> products = productDao.getBy(category);
+        view.displayList(products);
     }
 
 
