@@ -25,10 +25,7 @@ public class ProductController {
             ProductCategory productCategory = new ProductCategory(name, "department", "description");
             productCategoryList.add(productCategory);
         }
-        System.out.println("Product categories");
-        for(ProductCategory productCategory: productCategoryList){
-            System.out.println(productCategory.toString());
-        }
+
     }
 
 
