@@ -1,7 +1,12 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +21,23 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
 
     @Override
     public ProductCategory find(int id) {
-        return new ProductCategory("Category","Department", "Description");
+        ProductCategory productCategory = null;
+        try {
+            Connection connection = SqliteJDBCConnector.connection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM categories WHERE id = " + Integer.toString(id));
+            if(rs.next()){
+                productCategory = new ProductCategory(
+                        rs.getString("name"),
+                        rs.getString("department"),
+                        rs.getString("description")
+                );
+                productCategory.setId(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productCategory;
     }
 
     @Override
@@ -27,11 +48,21 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
     @Override
     public List<ProductCategory> getAll() {
         List<ProductCategory> productCategoryList = new ArrayList<>();
-        for(int i = 1; i<4; i++){
-            String name = "Category" + Integer.toString(i);
-            ProductCategory productCategory = new ProductCategory(name, "department", "description");
-            productCategory.setId(i);
-            productCategoryList.add(productCategory);
+        try {
+            Connection connection = SqliteJDBCConnector.connection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM categories");
+            while (rs.next()){
+                ProductCategory productCategory = new ProductCategory(
+                        rs.getString("name"),
+                        rs.getString("department"),
+                        rs.getString("description")
+                );
+                productCategory.setId(rs.getInt("id"));
+                productCategoryList.add(productCategory);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return productCategoryList;
     }
