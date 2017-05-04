@@ -1,5 +1,6 @@
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
+import com.codecool.shop.view.UserInput;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -21,12 +22,7 @@ public class Main {
         System.out.println("1. List all products");
         System.out.println("2. List products by category");
         System.out.println("Select option");
-        Scanner scanner = new Scanner(System.in);
-        while (!scanner.hasNextInt()){
-            System.out.println("Wrong input try again");
-            scanner.next();
-        }
-        Integer option = scanner.nextInt();
+        Integer option = UserInput.getUserInput();
         switch (option){
             case 1:
                 productController.displayList();
