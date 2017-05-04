@@ -1,7 +1,12 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class SupplierDaoSqlite implements SupplierDao {
@@ -12,7 +17,22 @@ public class SupplierDaoSqlite implements SupplierDao {
 
     @Override
     public Supplier find(int id) {
-        return null;
+        Supplier supplier = null;
+        try {
+            Connection connection = SqliteJDBCConnector.connection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM suppplier WHERE id = " + Integer.toString(id));
+            if(rs.next()){
+                supplier = new Supplier(
+                        rs.getString("name"),
+                        rs.getString("description")
+                );
+                supplier.setId(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return supplier;
     }
 
     @Override
