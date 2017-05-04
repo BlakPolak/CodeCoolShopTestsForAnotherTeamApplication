@@ -3,8 +3,10 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.view.ProductView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductController {
@@ -17,7 +19,16 @@ public class ProductController {
     }
 
     public void listProductByCategory(){
-        System.out.println("Product by category");
+        List<ProductCategory> productCategoryList = new ArrayList<>();
+        for(int i = 1; i<4; i++){
+            String name = "Category" + Integer.toString(i);
+            ProductCategory productCategory = new ProductCategory(name, "department", "description");
+            productCategoryList.add(productCategory);
+        }
+        System.out.println("Product categories");
+        for(ProductCategory productCategory: productCategoryList){
+            System.out.println(productCategory.toString());
+        }
     }
 
 
