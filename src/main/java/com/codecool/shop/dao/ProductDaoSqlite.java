@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoSqlite implements ProductDao {
+    private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     @Override
     public void add(Product product) {
 
@@ -56,7 +57,27 @@ public class ProductDaoSqlite implements ProductDao {
 
     @Override
     public List<Product> getBy(Supplier supplier) {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try {
+            Connection connection = SqliteJDBCConnector.connection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE supplier_id = " + supplier.getId());
+            while(rs.next()){
+                Product product = new Product(
+                        rs.getString("name"),
+                        rs.getFloat("price"),
+                        "PLN",
+                        rs.getString("description"),
+                        productCategoryDao.find(rs.getInt("category_id")),
+                        supplier
+                );
+                product.setId(rs.getInt("id"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 
     @Override
