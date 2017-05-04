@@ -1,5 +1,7 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Product;
@@ -12,6 +14,7 @@ import java.util.List;
 public class ProductController {
     private ProductDao productDao = new ProductDaoSqlite();
     private ProductView view = new ProductView();
+    private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
 
     public void displayList(){
         List<Product> products = productDao.getAll();
@@ -19,13 +22,8 @@ public class ProductController {
     }
 
     public void listProductByCategory(){
-        List<ProductCategory> productCategoryList = new ArrayList<>();
-        for(int i = 1; i<4; i++){
-            String name = "Category" + Integer.toString(i);
-            ProductCategory productCategory = new ProductCategory(name, "department", "description");
-            productCategoryList.add(productCategory);
-        }
-
+        List<ProductCategory> productCategoryList = productCategoryDao.getAll();
+        view.displayCategoryList(productCategoryList);
     }
 
 
