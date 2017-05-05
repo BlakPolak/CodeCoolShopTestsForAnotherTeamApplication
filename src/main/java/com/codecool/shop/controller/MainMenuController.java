@@ -3,7 +3,8 @@ package com.codecool.shop.controller;
 import com.codecool.shop.view.UserInput;
 
 public class MainMenuController {
-    static ProductController productController = new ProductController();
+    ProductController productController = new ProductController();
+    BasketController basketController = new BasketController();
 
     public void mainMenuAction(){
         System.out.println("1. List all products");
@@ -13,14 +14,16 @@ public class MainMenuController {
         Integer option = UserInput.getUserInput();
         switch (option){
             case 1:
-                productController.displayList();
+                this.productController.displayList();
                 break;
             case 2:
-                productController.listProductByCategory();
+                this.productController.listProductByCategory();
                 break;
             case 3:
-                productController.listProductBySupplier();
+                this.productController.listProductBySupplier();
                 break;
+            case 4:
+                this.basketController.addToCartAction();
             default:
                 System.out.println("Wrong option");
         }
