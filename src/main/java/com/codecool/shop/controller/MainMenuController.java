@@ -10,6 +10,7 @@ public class MainMenuController {
         System.out.println("1. List all products");
         System.out.println("2. List products by category");
         System.out.println("3. List products by supplier");
+        System.out.println("4. Add product to cart");
         System.out.println("Select option");
         Integer option = UserInput.getUserInput();
         switch (option){
