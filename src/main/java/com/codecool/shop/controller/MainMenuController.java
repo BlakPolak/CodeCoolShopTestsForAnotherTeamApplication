@@ -17,6 +17,8 @@ public class MainMenuController {
             System.out.println("2. List product by category.");
             System.out.println("3. List product by supplier.");
             System.out.println("4. Add product to basket.");
+            System.out.println("5. Review basket.");
+
             System.out.println("0. Exit.");
             System.out.println("Select option:");
 
@@ -37,6 +39,10 @@ public class MainMenuController {
                     break;
                 case 4:
                     System.out.println("Add item to basket:");
+                    basketController.addToCartAction();
+                    break;
+                case 5:
+                    System.out.println("Review basket:");
                     basketController.addToCartAction();
                     break;
                 case 0:

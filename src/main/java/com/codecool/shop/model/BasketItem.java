@@ -4,10 +4,13 @@ package com.codecool.shop.model;
 public class BasketItem {
     private Product product;
     private Integer quantity;
+    private Float allPrice;
+
 
     BasketItem(Product product, Integer quantity) {
         this.setProduct(product);
         this.setQuantity(quantity);
+        this.setAllPrice();
     }
 
     public Integer getQuantity() {
@@ -27,5 +30,13 @@ public class BasketItem {
         this.quantity = quantity;
     }
 
+    public Float getAllPrice() {
+        return allPrice;
+    }
 
+    public void setAllPrice() {
+        this.allPrice = this.getQuantity() * this.getProduct().getDefaultPrice();
+    }
+
+    
 }
