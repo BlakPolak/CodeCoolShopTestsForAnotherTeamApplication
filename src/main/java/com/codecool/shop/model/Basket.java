@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Basket {
     private List<BasketItem> items = new ArrayList<BasketItem>();
-    private Float basketPrice;
+    private Float basketPrice = 0.00f;
+//    do I need this as a atribute or method should be enough
 
     public void add(Product product, Integer quantity) {
 
@@ -22,6 +23,22 @@ public class Basket {
             this.getItems().add(item);
         }
 
+    }
+
+    public Float getBasketPrice() {
+        for (BasketItem item: this.getItems()) {
+            this.basketPrice += item.getAllPrice();
+        }
+        return basketPrice;
+    }
+
+    public Integer getTotalUnits() {
+        Integer units = 0;
+        for (BasketItem item : this.getItems()) {
+            units += item.getQuantity();
+
+        }
+        return  units;
     }
 
     public List<BasketItem> getItems() {

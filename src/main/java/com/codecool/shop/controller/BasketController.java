@@ -30,16 +30,19 @@ public class BasketController {
         System.out.println("Choose quantity for product: ");
         Integer quantity = UserInput.getUserInput();
         this.basket.add(product, quantity);
-        displayBasketItems(this.basket);
+        displayBasketItems();
 
     }
 
-    public void displayBasketItems(Basket basket) {
+    public void displayBasketItems() {
         basketView.displayBasket(basket);
 //        is this method nessery, why can I use  basketView.displayBasket(basket) alone??
     }
 
-    public void reviewBasket(Basket basket) {
+    public void reviewBasket() {
+        displayBasketItems();
+        basketView.displayBasketSummary(this.basket);
+
 
 
     }

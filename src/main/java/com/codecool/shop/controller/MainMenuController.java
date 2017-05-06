@@ -43,7 +43,7 @@ public class MainMenuController {
                     break;
                 case 5:
                     System.out.println("Review basket:");
-                    basketController.addToCartAction();
+                    basketController.reviewBasket();
                     break;
                 case 0:
                     System.out.println("Exit program");
