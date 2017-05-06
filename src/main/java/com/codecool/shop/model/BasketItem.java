@@ -31,6 +31,7 @@ public class BasketItem {
     }
 
     public Float getAllPrice() {
+        this.setAllPrice();
         return allPrice;
     }
 

@@ -8,8 +8,8 @@ import java.util.List;
 
 public class BasketView {
     public void displayBasket(Basket basket) {
+        System.out.println("Your basket contains: ");
         for (BasketItem item : basket.getItems()) {
-//            System.out.println(item.getProduct().getName() + "- quantity: " + Integer.toString(item.getQuantity()));
             System.out.println(item);
         }
     }

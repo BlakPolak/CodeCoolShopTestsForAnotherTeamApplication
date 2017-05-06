@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Basket {
     private List<BasketItem> items = new ArrayList<BasketItem>();
+    private Float basketPrice;
 
     public void add(Product product, Integer quantity) {
 
