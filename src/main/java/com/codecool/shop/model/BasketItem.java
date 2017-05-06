@@ -38,5 +38,11 @@ public class BasketItem {
         this.allPrice = this.getQuantity() * this.getProduct().getDefaultPrice();
     }
 
-    
+    @Override
+    public String toString() {
+        return "Product: " + this.getProduct().getName() +
+               ", unit price: " + this.getProduct().getPrice() +
+                ", quantity: " + this.getQuantity() +
+                ", allPrice: " + this.getAllPrice() + this.getProduct().getDefaultCurrency();
+    }
 }
