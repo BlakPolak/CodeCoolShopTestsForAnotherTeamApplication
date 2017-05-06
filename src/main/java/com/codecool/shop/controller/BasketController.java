@@ -22,17 +22,16 @@ public class BasketController {
     public void addToCartAction() {
         List<Product> products = this.productDao.getAll();
         view.displayProductsList(products);
+
         System.out.println("Choose product id: ");
         Integer productId = UserInput.getUserInput();
         Product product = productDao.find(productId);
-        System.out.println(product);
-        this.basket.add(product, 5);
-        System.out.println("Choose product id: ");
 
-        Integer productId2 = UserInput.getUserInput();
-        Product product2 = productDao.find(productId2);
-        System.out.println(product2);
-        this.basket.add(product2, 5);
+        System.out.println("Choose quantity for product: ");
+        Integer quantity = UserInput.getUserInput();
+        this.basket.add(product, quantity);
+
+        System.out.println("In your basket: ");
         displayBasketItems(this.basket);
 
     }
