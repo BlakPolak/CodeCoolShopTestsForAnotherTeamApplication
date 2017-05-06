@@ -46,4 +46,15 @@ public class BasketController {
 
 
     }
+
+    public void editBasket() {
+        displayBasketItems();
+        System.out.println("Choose id of item Tou want update: ");
+        Integer basketItemId = UserInput.getUserInput();
+        System.out.println("Put new amount of items - if 0 product will be removed from basket. ");
+        Integer newAmount = UserInput.getUserInput();
+        this.basket.update(basketItemId, newAmount);
+
+
+    }
 }

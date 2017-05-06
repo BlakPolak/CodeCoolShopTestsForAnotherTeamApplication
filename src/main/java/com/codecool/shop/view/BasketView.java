@@ -10,8 +10,10 @@ import java.util.List;
 public class BasketView {
     public void displayBasket(Basket basket) {
         System.out.println("Your basket contains: ");
+        int i = 1;
         for (BasketItem item : basket.getItems()) {
-            System.out.println(item);
+            System.out.println(Integer.toString(i) + ") " + item);
+            i++;
         }
     }
 

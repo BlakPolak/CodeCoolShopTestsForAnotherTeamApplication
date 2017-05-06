@@ -14,4 +14,14 @@ public class UserInput {
         Integer option = scanner.nextInt();
         return option;
     }
+
+//    public static Integer getUserDeleteOrUpdate() {
+//        Scanner scanner = new Scanner(System.in);
+//        while (!scanner.hasNextInt() && !scanner.next().equals("X")) {
+//            System.out.println("Invalid input. Try again");
+//            scanner.next();
+//        }
+//        Integer option = scanner.nextInt();
+//        return option;
+//    }
 }

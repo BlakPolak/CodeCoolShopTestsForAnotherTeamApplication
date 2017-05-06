@@ -3,7 +3,6 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.view.UserInput;
 
-import java.util.Scanner;
 
 public class MainMenuController {
 
@@ -18,6 +17,8 @@ public class MainMenuController {
             System.out.println("3. List product by supplier.");
             System.out.println("4. Add product to basket.");
             System.out.println("5. Review basket.");
+            System.out.println("6. Edit basket.");
+            System.out.println("7. Confirm and pay.");
 
             System.out.println("0. Exit.");
             System.out.println("Select option:");
@@ -43,6 +44,14 @@ public class MainMenuController {
                     break;
                 case 5:
                     System.out.println("Review basket:");
+                    basketController.reviewBasket();
+                    break;
+                case 6:
+                    System.out.println("Edit basket:");
+                    basketController.editBasket();
+                    break;
+                case 7:
+                    System.out.println("Confirm and pay:");
                     basketController.reviewBasket();
                     break;
                 case 0:

@@ -5,8 +5,9 @@ import java.util.List;
 
 public class Basket {
     private List<BasketItem> items = new ArrayList<BasketItem>();
-    private Float basketPrice = 0.00f;
-//    do I need this as a atribute or method should be enough
+    private Float basketPrice = 0.00f;  //    do I need this as a atribute or method should be enough
+    private Boolean confirm = false;
+    private Boolean payed = false;
 
     public void add(Product product, Integer quantity) {
 
@@ -25,7 +26,16 @@ public class Basket {
 
     }
 
+    public void update(Integer item_id, Integer newAmount) {
+        if (newAmount <= 0) {
+            this.getItems().remove(item_id - 1);
+        } else {
+            this.getItems().get(item_id - 1).setQuantity(newAmount);
+        }
+    }
+
     public Float getBasketPrice() {
+        this.basketPrice = 0.00f;
         for (BasketItem item: this.getItems()) {
             this.basketPrice += item.getAllPrice();
         }
