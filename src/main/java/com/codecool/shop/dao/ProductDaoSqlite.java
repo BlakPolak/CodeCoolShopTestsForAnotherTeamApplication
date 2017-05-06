@@ -10,26 +10,35 @@ import java.util.List;
 
 
 public class ProductDaoSqlite implements ProductDao{
+
+    private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
+    private SupplierDao supplierDao = new SupplierDaoSqlite();
+
     @Override
     public void add(Product product) {
 
     }
 
+//    Gdzie stworzyc produktCategoryDao i supllierDao, jesli sa potrzebne do
+//        uzyskania kompletnego obiektu produktu - na razie ustawione jako atrybuty klasy
+//            productDaoSqlite :/
+
     @Override
     public Product find(int id) {
         Product product = null;
-        ProductCategory productCategory = new ProductCategory("dupeczka", "deparatamencik", "descryptionik");
-        Supplier supplier = new Supplier("Supcio", "Super supplier");
-
+        ProductCategory category;
+        Supplier supplier;
         try {
             Statement statement = SqliteJDBCConnector.connection().createStatement();
             ResultSet rs = statement.executeQuery("select * from products where id = " + Integer.toString(id));
+            supplier = supplierDao.find(rs.getInt("supplier_id"));
+            category = productCategoryDao.find(rs.getInt("category_id"));
             product = new Product(
                 rs.getString("name"),
                 rs.getFloat("price"),
                 "PLN",
                 rs.getString("description"),
-                productCategory,
+                category,
                 supplier
             );
             product.setId(rs.getInt("id"));
@@ -49,14 +58,15 @@ public class ProductDaoSqlite implements ProductDao{
     public List<Product> getAll() {
 
         List<Product> products = new ArrayList<Product>();
-        ProductCategory category = new ProductCategory("Category", "dep 1", "Desc");
-        Supplier supplier = new Supplier("Supcio", "Super supplier");
+        ProductCategory category;
+        Supplier supplier;
 
         try {
-//          Connection connection = SqliteJDBCConnector.connection();
             Statement statement = SqliteJDBCConnector.connection().createStatement();
             ResultSet rs = statement.executeQuery("select * from products");
             while (rs.next()) {
+                supplier = supplierDao.find(rs.getInt("supplier_id"));
+                category = productCategoryDao.find(rs.getInt("category_id"));
                 Product product = new Product(
                         rs.getString("name"),
                         rs.getFloat("price"),
@@ -78,18 +88,19 @@ public class ProductDaoSqlite implements ProductDao{
     @Override
     public List<Product> getBy(Supplier supplier) {
         List<Product> products = new ArrayList<Product>();
-        ProductCategory productCategory = new ProductCategory("dupeczka", "deparatamencik", "descryptionik");
+        ProductCategory category;
 
         try {
             Statement statement = SqliteJDBCConnector.connection().createStatement();
             ResultSet rs = statement.executeQuery("select * from products WHERE supplier_id = " + Integer.toString(supplier.getId()));
             while (rs.next()) {
+                category = productCategoryDao.find(rs.getInt("category_id"));
                 Product product = new Product(
                         rs.getString("name"),
                         rs.getFloat("price"),
                         "PLN",
                         rs.getString("description"),
-                        productCategory,
+                        category,
                         supplier
                 );
                 products.add(product);
@@ -103,21 +114,21 @@ public class ProductDaoSqlite implements ProductDao{
     }
 
     @Override
-    public List<Product> getBy(ProductCategory productCategory) {
+    public List<Product> getBy(ProductCategory category) {
         List<Product> products = new ArrayList<Product>();
-        Supplier supplier = new Supplier("Supcio", "Super supplier");
+        Supplier supplier;
 
         try {
-//          Connection connection = SqliteJDBCConnector.connection();
             Statement statement = SqliteJDBCConnector.connection().createStatement();
-            ResultSet rs = statement.executeQuery("select * from products WHERE category_id = " + Integer.toString(productCategory.getId()));
+            ResultSet rs = statement.executeQuery("select * from products WHERE category_id = " + Integer.toString(category.getId()));
             while (rs.next()) {
+                supplier = supplierDao.find(rs.getInt("supplier_id"));
                 Product product = new Product(
                         rs.getString("name"),
                         rs.getFloat("price"),
                         "PLN",
                         rs.getString("description"),
-                        productCategory,
+                        category,
                         supplier
                 );
                 products.add(product);
