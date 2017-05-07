@@ -52,7 +52,7 @@ public class MainMenuController {
                     break;
                 case 7:
                     System.out.println("Confirm and pay:");
-                    basketController.reviewBasket();
+                    basketController.confirmAndPay();
                     break;
                 case 0:
                     System.out.println("Exit program");

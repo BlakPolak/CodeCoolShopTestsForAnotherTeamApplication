@@ -1,6 +1,8 @@
 package com.codecool.shop.view;
 
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInput {
@@ -15,13 +17,28 @@ public class UserInput {
         return option;
     }
 
-//    public static Integer getUserDeleteOrUpdate() {
-//        Scanner scanner = new Scanner(System.in);
-//        while (!scanner.hasNextInt() && !scanner.next().equals("X")) {
-//            System.out.println("Invalid input. Try again");
+    public static Boolean yesNoInput() {
+        String[] goodAnswers = {"Y", "y", "N", "n"};
+        Scanner scanner = new Scanner(System.in);
+        String option = "";
+//        System.out.println(option);
+//        System.out.println(Arrays.asList(goodAnswers).contains(option));
+
+        while (scanner.hasNextLine()) {
+            option = scanner.nextLine();
+
+            if (Arrays.asList(goodAnswers).contains(option)) {
+                System.out.println("Breaking");
+                break;
+            }
+
+            System.out.println("Invalid input. Try again");
 //            scanner.next();
-//        }
-//        Integer option = scanner.nextInt();
-//        return option;
-//    }
+        }
+
+        System.out.println(option);
+        return true;
+    }
+
+
 }

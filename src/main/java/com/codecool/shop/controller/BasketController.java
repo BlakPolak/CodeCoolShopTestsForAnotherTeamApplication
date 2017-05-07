@@ -42,9 +42,6 @@ public class BasketController {
     public void reviewBasket() {
         displayBasketItems();
         basketView.displayBasketSummary(this.basket);
-
-
-
     }
 
     public void editBasket() {
@@ -54,7 +51,12 @@ public class BasketController {
         System.out.println("Put new amount of items - if 0 product will be removed from basket. ");
         Integer newAmount = UserInput.getUserInput();
         this.basket.update(basketItemId, newAmount);
+    }
 
-
+    public void confirmAndPay() {
+        System.out.println("Your basket summary: ");
+        basketView.displayBasketSummary(this.basket);
+        System.out.println("\n Do you want end shopping and confirm basket? (Y/N):");
+        Boolean confirm = UserInput.yesNoInput();
     }
 }
