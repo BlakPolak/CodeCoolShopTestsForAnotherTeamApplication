@@ -10,10 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kamil on 04.05.17.
- */
-public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
+public class ProductCategoryDaoSqlite extends BaseDao implements ProductCategoryDao{
     @Override
     public void add(ProductCategory category) {
 
@@ -23,7 +20,7 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
     public ProductCategory find(int id) {
         ProductCategory productCategory = null;
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM categories WHERE id = " + Integer.toString(id));
             if(rs.next()){
@@ -49,7 +46,7 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
     public List<ProductCategory> getAll() {
         List<ProductCategory> productCategoryList = new ArrayList<>();
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM categories");
             while (rs.next()){

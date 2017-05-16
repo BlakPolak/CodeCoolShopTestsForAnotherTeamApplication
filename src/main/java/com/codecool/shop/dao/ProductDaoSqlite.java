@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoSqlite implements ProductDao {
+public class ProductDaoSqlite extends BaseDao implements ProductDao {
     private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private static SupplierDao supplierDao = new SupplierDaoSqlite();
 
@@ -25,7 +25,7 @@ public class ProductDaoSqlite implements ProductDao {
     public Product find(int id) {
         Product product = null;
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE id = " + id);
             while(rs.next()){
@@ -56,7 +56,7 @@ public class ProductDaoSqlite implements ProductDao {
         ProductCategory category = new ProductCategory("Category", "Department", "Description");
         Supplier supplier = new Supplier("Supplier", "Description");
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products");
             while (rs.next()){
@@ -80,7 +80,7 @@ public class ProductDaoSqlite implements ProductDao {
     public List<Product> getBy(Supplier supplier) {
         List<Product> products = new ArrayList<>();
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE supplier_id = " + supplier.getId());
             while(rs.next()){
@@ -106,7 +106,7 @@ public class ProductDaoSqlite implements ProductDao {
     {
         List<Product> products = new ArrayList<>();
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE category_id = " + productCategory.getId());
             while (rs.next()){
