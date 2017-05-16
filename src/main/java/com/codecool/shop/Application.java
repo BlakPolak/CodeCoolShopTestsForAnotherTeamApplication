@@ -1,19 +1,21 @@
 package com.codecool.shop;
 
 
+import com.codecool.shop.controller.ConfirmController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static spark.Spark.exception;
-import static spark.Spark.port;
-import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
+
 
 public class Application {
 
     private static Application app = new Application();
     private Connection connection;
+    private ConfirmController confirmController = new ConfirmController();
 
 
     private Application() { }
@@ -41,6 +43,10 @@ public class Application {
     }
 
     public void appRoutes(){
+
+        get("/hello", (req, res) -> "Hello World");
+
+        get("/confirm", confirmController::displayConfirmForm);
 
     }
     public static void run(){

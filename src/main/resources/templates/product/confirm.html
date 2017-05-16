@@ -55,7 +55,7 @@
                         <p></p>
 
                         <h6>LALALA</h6>
-                        <h4>Open in new page</a>
+                        <h4>Open in new page</h4>
 
                     </div>
                     <div class="modal-footer">
@@ -69,19 +69,54 @@
             <div class="modal-dialog col-sm-6">
                 <div class="modal-content col-sm-10">
                 <div class="modal-header">
-                    <h6>Your personal data</h6>
-                    <h3 class="modal-title">123</h3>
+                    <!--<h6>Your personal data</h6>-->
+                    <h3 class="modal-title">Your personal data</h3>
                     <p></p>
-                    <h6>TRALALA</h6>
-                    <h4 class="modal-title">12345</h4>
+                    <!--<h6>TRALALA</h6>-->
+                    <!--<h4 class="modal-title">12345</h4>-->
                 </div>
                 <div class="modal-body">
-                    <h6>STRATSRA</h6>
-                    <h3 >sedjhg</h3>
-                    <p></p>
+                    <form action="#" th:action="@{confirm}" method="post" class="col-sm-10">
 
-                    <h6>LALALA</h6>
-                    <h4>Open in new page</a>
+                        <div class="form-group">
+                            <label for="firstName" class="sr-only">First Name</label>
+                            <input type="text" id="firstName" name="firstName" class="form-control"
+                                   placeholder="First Name" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="sr-only">First Name</label>
+                            <input type="text" id="lastName" name="lastName" class="form-control"
+                                   placeholder="Last Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="sr-only">Description</label>
+                            <textarea row="5" id="description" name="description" th:field="*{description}" class="form-control"
+                                      placeholder="Description"
+                                      required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edate" class="sr-only">Event Date</label>
+                            <input type="date" id="edate" name="edate" class="form-control"
+                                   placeholder="dd-mm-yyyy"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category" class="sr-only">Event Category</label>
+                            <select class="form-control" id="category" name="category">
+                                <option value="1">Python</option>
+                                <option value="2">Java</option>
+                                <option value="3">Culture</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="elink" class="sr-only">Name</label>
+                            <input type="text" id="elink" name="elink" class="form-control"
+                                   placeholder="Event external link">
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+                    </form>
 
                 </div>
                 <div class="modal-footer">
