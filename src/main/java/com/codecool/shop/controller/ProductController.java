@@ -33,13 +33,13 @@ public class ProductController {
         return new ModelAndView(model, "product/index");
     }
 
-    public void listProductByCategory(){
-        List<ProductCategory> productCategoryList = productCategoryDao.getAll();
-        view.displayCategoryList(productCategoryList);
-        Integer categoryId = UserInput.getUserInput();
+    public ModelAndView showByCategory(Response response, Request request){
+        Integer categoryId = Integer.parseInt(request.queryParams("category"));
         ProductCategory category = productCategoryDao.find(categoryId);
         List<Product> products = productDao.getBy(category);
-        view.displayList(products);
+        Map<String, Object> model= new HashMap<>();
+        model.put("products", products);
+        return new ModelAndView(model, "product/index");
     }
 
     public void listProductBySupplier(){
