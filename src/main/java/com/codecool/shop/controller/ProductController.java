@@ -14,6 +14,7 @@ import com.codecool.shop.view.UserInput;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,11 +27,12 @@ public class ProductController {
     private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private SupplierDao supplierDao = new SupplierDaoSqlite();
 
-    public ModelAndView showAll(Response response, Request request){
+    public String showAll(Response response, Request request){
         List<Product> products = productDao.getAll();
         Map<String, Object> model= new HashMap<>();
         model.put("products", products);
-        return new ModelAndView(model, "product/index");
+        ModelAndView render = new ModelAndView(model, "product/index");
+        return new ThymeleafTemplateEngine().render(render);
     }
 
     public ModelAndView showByCategory(Response response, Request request){
