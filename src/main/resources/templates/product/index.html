@@ -35,7 +35,11 @@
 
 <div class="container">
     <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+        <select name="category" id="category">
+            <!--/*@thymesVar id="category" type="model.Category"*/-->
+            <option value="all" >all</option>
+            <option th:if="${categories}" th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+        </select>
     </div>
 
     <div id="products" class="row list-group">
