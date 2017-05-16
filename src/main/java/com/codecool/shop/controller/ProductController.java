@@ -29,8 +29,10 @@ public class ProductController {
 
     public String showAll(Request request, Response response){
         List<Product> products = productDao.getAll();
+        List<ProductCategory> productCategories = productCategoryDao.getAll();
         Map<String, Object> model= new HashMap<>();
         model.put("products", products);
+        model.put("categories", productCategories);
         ModelAndView render = new ModelAndView(model, "product/index");
         return new ThymeleafTemplateEngine().render(render);
     }
