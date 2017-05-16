@@ -11,7 +11,10 @@ public class Application {
     private Connection connection = SqliteJDBCConnector.connection();
 
 
-    private Application() { }
+    private Application() {
+
+
+    }
 
     public static Application getApp() {
         return app;

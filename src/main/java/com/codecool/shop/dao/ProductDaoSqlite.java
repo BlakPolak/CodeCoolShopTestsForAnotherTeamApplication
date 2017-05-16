@@ -16,6 +16,8 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
     private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private static SupplierDao supplierDao = new SupplierDaoSqlite();
 
+    private static final String INSERT ="INSERT INTO products (name, description, price) VALUES (?, ?, ?)";
+
     @Override
     public void add(Product product) {
 
@@ -125,5 +127,11 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             e.printStackTrace();
         }
         return products;
+    }
+
+    @Override
+    public boolean insert(Product product) {
+        
+        return true;
     }
 }
