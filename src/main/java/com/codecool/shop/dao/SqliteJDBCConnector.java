@@ -11,14 +11,8 @@ import java.sql.Statement;
 public class SqliteJDBCConnector {
 
 
-    public static Connection connection(){
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
-            return connection;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static Connection connection() throws SQLException{
+        return DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
     }
 
 
