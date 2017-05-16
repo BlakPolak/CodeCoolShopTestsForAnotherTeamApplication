@@ -11,9 +11,14 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.view.ProductView;
 import com.codecool.shop.view.UserInput;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductController {
     private ProductDao productDao = new ProductDaoSqlite();
@@ -21,9 +26,11 @@ public class ProductController {
     private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private SupplierDao supplierDao = new SupplierDaoSqlite();
 
-    public void displayList(){
+    public ModelAndView showAll(Response response, Request request){
         List<Product> products = productDao.getAll();
-        view.displayList(products);
+        Map<String, Object> model= new HashMap<>();
+        model.put("products", products);
+        return new ModelAndView(model, "product/index");
     }
 
     public void listProductByCategory(){
