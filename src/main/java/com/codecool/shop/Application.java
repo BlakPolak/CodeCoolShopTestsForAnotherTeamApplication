@@ -26,7 +26,7 @@ public class Application {
         return connection;
     }
 
-    public void setConnection(){
+    private void setConnection(){
         try{
             this.connection = SqliteJDBCConnector.connection();
         } catch (SQLException e){
@@ -34,6 +34,13 @@ public class Application {
             System.exit(1);
         }
     }
+    private void appSettings(){
+        exception(Exception.class, (e, req, res) -> e.printStackTrace());
+        staticFileLocation("/public");
+        port(8888);
+    }
+
+
 
 
 
