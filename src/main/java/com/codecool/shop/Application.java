@@ -1,20 +1,19 @@
 package com.codecool.shop;
 
 
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static spark.Spark.exception;
-import static spark.Spark.port;
-import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
 
 public class Application {
 
     private static Application app = new Application();
     private Connection connection;
-
+    private ProductController productController = new ProductController();
 
     private Application() { }
 
