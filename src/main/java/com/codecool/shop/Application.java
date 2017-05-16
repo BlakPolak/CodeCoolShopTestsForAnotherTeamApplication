@@ -40,6 +40,10 @@ public class Application {
         port(8888);
     }
 
+    public void appRoutes(){
+
+    }
+
 
 
 
