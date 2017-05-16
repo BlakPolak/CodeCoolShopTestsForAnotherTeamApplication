@@ -39,8 +39,8 @@ public class Application {
         port(8888);
     }
 
-    public void appRoutes(){
-
+    private void appRoutes(){
+        get("/", this.productController::showAll);
     }
     public static void run(){
         Application.getApp().setConnection();
