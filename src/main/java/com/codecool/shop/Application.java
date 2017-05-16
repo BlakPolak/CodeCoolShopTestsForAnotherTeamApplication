@@ -4,11 +4,16 @@ package com.codecool.shop;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+
+import static spark.Spark.exception;
+import static spark.Spark.port;
+import static spark.Spark.staticFileLocation;
 
 public class Application {
 
     private static Application app = new Application();
-    private Connection connection = SqliteJDBCConnector.connection();
+    private Connection connection;
 
 
     private Application() { }
@@ -20,4 +25,17 @@ public class Application {
     public Connection getConnection() {
         return connection;
     }
+
+    public void setConnection(){
+        try{
+            this.connection = SqliteJDBCConnector.connection();
+        } catch (SQLException e){
+            System.out.println("Connection to Database error");
+            System.exit(1);
+        }
+    }
+
+
+
+
 }
