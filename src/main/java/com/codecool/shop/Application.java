@@ -43,6 +43,11 @@ public class Application {
     public void appRoutes(){
 
     }
+    public static void run(){
+        Application.getApp().setConnection();
+        Application.getApp().appSettings();
+        Application.getApp().appRoutes();
+    }
 
 
 
