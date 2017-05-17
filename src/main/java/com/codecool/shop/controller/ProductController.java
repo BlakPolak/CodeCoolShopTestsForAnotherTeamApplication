@@ -68,13 +68,14 @@ public class ProductController {
 
         Map params = new HashMap<>();
         params.put("products", productDao.getAll());
+        System.out.println(params.get(1));
 
         ModelAndView render = new ModelAndView(params, "admin/productlist");
         return new ThymeleafTemplateEngine().render(render);
 
     }
 
-    public String adminProductAdd(Request request, Response response) {
+    public String adminProductInsert(Request request, Response response) {
 
         if (!request.queryParams().isEmpty()) {
 
