@@ -51,10 +51,11 @@ public class Application {
 
     public void appRoutes(){
 
-        get("admin/addproduct", this.productController::adminProductAdd);
-        post("admin/addproduct", this.productController::adminProductAdd);
-        get("admin/products", this.productController::showAll);
-        get("/products", this.productController::adminshowAll);
+        get("admin/addproduct", this.productController::adminProductInsert);
+        post("admin/addproduct", this.productController::adminProductInsert);
+        get("admin/products", this.productController::adminshowAll);
+
+        get("/products", this.productController::showAll);
         post("/products/byCategory/", this.productController::indexFilter);
 
     }
