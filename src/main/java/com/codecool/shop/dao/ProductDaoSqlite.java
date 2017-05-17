@@ -183,6 +183,21 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
         return products;
     }
 
-
+    private List<Product> createProductList(ResultSet rs) throws SQLException{
+        List<Product> products = null;
+        while (rs.next()){
+            Product product = new Product(
+                    rs.getString("name"),
+                    rs.getFloat("price"),
+                    "PLN",
+                    rs.getString("description"),
+                    productCategoryDao.find(rs.getInt("category_id")),
+                    supplierDao.find(rs.getInt("supplier_id"))
+            );
+            product.setId(rs.getInt("id"));
+            products.add(product);
+        }
+        return products;
+    }
 
 }
