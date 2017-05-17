@@ -13,7 +13,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
     private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private static SupplierDao supplierDao = new SupplierDaoSqlite();
 
-    private static final String INSERT ="INSERT INTO products (name, description, price) VALUES (?, ?, ?)";
+    private static final String INSERT ="INSERT INTO products (name, description, price, category_id, supplier_id) VALUES (?, ?, ?, ?, ?)";
 
     @Override
     public void add(Product product) {
@@ -60,6 +60,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             ResultSet rs = statement.executeQuery("SELECT * FROM products");
             while (rs.next()){
                 Product product = new Product(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getFloat("price"),
                         "PLN",
@@ -133,11 +134,9 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             PreparedStatement ps = connection.prepareStatement(INSERT);
             ps.setString(1, product.getName());
             ps.setString(2, product.getDescription());
-            ps.setInt(3, Integer.parseInt(product.getPrice()));
-
-
-            ResultSet rs =  ps.executeQuery();
-
+            ps.setDouble(3, Double.valueOf(product.getDefaultPrice()));
+            ps.setInt(4, product.getProductCategory().getId());
+            ps.setInt(5, product.getSupplier().getId());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
