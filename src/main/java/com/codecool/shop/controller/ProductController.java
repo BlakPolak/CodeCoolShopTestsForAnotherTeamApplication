@@ -53,25 +53,28 @@ public class ProductController {
 
         if (!request.queryParams().isEmpty()) {
 
-              String name = request.queryParams("name");
-              Float price = Float.parseFloat(request.queryParams("price"));
-//            String description = request.queryParams("description");
-//            String currency = request.queryParams("currency");
-//            System.out.println("supplier");
-//            Supplier supplier = supplierDao.find(Integer.parseInt(request.queryParams("supplier")));
-//            System.out.println("category");
-//            ProductCategory category = productCategoryDao.find(Integer.parseInt(request.queryParams("category")));
+            String name = request.queryParams("name");
+            Float price = Float.parseFloat(request.queryParams("price"));
+            String description = request.queryParams("description");
+            String currency = "PLN";
+            Supplier supplier = supplierDao.find(Integer.parseInt(request.queryParams("supplier")));
+            ProductCategory category = productCategoryDao.find(Integer.parseInt(request.queryParams("category")));
+            Product product = new Product(name, price, currency, description, category, supplier);
+            productDao.insert(product);
 
-           // Product product = new Product(name, price, currency, description, category, supplier);
-
-           // System.out.println(product);
-
-            //productDao.add(product);
         }
 
         Map params = new HashMap<>();
+        params.put("categories", productCategoryDao.getAll());
+        params.put("suppliers", supplierDao.getAll());
         return new ModelAndView(params,"admin/productAdd");
     }
 
+    public static ModelAndView adminProductList(Request request, Response response) {
+
+        Map params = new HashMap<>();
+        params.put("products", productDao.getAll());
+        return new ModelAndView(params,"admin/productlist");
+    }
 
 }
