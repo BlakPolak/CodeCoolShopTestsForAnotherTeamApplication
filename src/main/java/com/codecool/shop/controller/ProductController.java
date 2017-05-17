@@ -44,6 +44,8 @@ public class ProductController {
     }
 
     public String indexFilter(Request request, Response response){
+        Basket basket = request.session().attribute("basket");
+
         List<ProductCategory> productCategories = productCategoryDao.getAll();
         List<Supplier> suppliers = supplierDao.getAll();
         String productName = request.queryParams("name");
@@ -54,6 +56,7 @@ public class ProductController {
         model.put("products", products);
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
+        model.put("basket", basket);
         ModelAndView render = new ModelAndView(model, "product/index");
         return new ThymeleafTemplateEngine().render(render);
     }
