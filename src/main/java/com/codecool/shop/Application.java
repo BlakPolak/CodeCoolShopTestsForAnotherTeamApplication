@@ -2,8 +2,12 @@ package com.codecool.shop;
 
 
 import com.codecool.shop.controller.BasketController;
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 import com.codecool.shop.model.Basket;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -23,10 +27,12 @@ public class Application {
     private static Application app = new Application();
     private Connection connection;
     private BasketController basketController = null;
+    private ProductController productController = null;
 
 
     private Application() {
         basketController = new BasketController();
+        productController = new ProductController();
     }
 
     public static Application getApp() {
@@ -63,6 +69,13 @@ public class Application {
 
         get("/basket", (Request req, Response res) -> {
             Basket basket = req.session().attribute("basket");
+
+            ProductCategory category = new ProductCategory("Category", "Department", "Description");
+            Supplier supplier = new Supplier("Supplier", "Description");
+            Product product = new Product("Jakis", 15.2f, "PLN", "Desc", category, supplier);
+            product.setId(1);
+
+            basket.add(product, 1);
             return basketController.renderBasket(basket);
         });
     }
