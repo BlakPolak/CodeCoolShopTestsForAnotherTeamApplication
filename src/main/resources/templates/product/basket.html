@@ -43,22 +43,27 @@
 
     <div id="products" class="row list-group">
 
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${basket.getItems()}">
+        <div class="item col-xs-12 col-lg-4" th:each="basketItem,iterStat : ${basket.getItems()}">
             <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
                 <div class="caption">
-                    <h4 class="group inner list-group-item-heading" th:text="${prod.getProduct().name}">Product name</h4>
+                    <h4 class="group inner list-group-item-heading" th:text="${basketItem.getProduct().name}">Product name</h4>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getProduct().getPrice()}">100 USD</p>
+                            <p class="lead" th:text="${basketItem.getProduct().getPrice()}">100 USD</p>
                         </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-danger" href="#">Delete</a>
+                        <div class="col-xs-12 col-md-12">
+                            <p class="lead d-inline" th:text="'Quantity: ' + ${basketItem.getQuantity()}">100 USD</p>
+                            <span class="lead d-inline" th:text="'Total price: ' + ${basketItem.getPrice()}">100 USD</span>
+                            <a class="btn btn-danger pull-right" th:href="@{'~/basket/' + ${basketItem.getProduct().getId()} + '/1/delete'}">Delete</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-12">
+        <button type="button" class="btn btn-success pull-right">Success</button>
     </div>
 
 </div>
