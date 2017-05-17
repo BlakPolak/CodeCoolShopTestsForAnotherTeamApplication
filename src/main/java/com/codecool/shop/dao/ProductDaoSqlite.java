@@ -108,12 +108,22 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             isWhere = true;
         }
         if(!categoryId.equals("all")){
-            sqlQury += whereOrAnd(isWhere);
+            if(!isWhere) {
+                sqlQury += " WHERE ";
+                isWhere = true;
+            }else{
+                sqlQury += " AND ";
+            }
             sqlQury += "category_id = ?";
             params.put(params.size()+1, categoryId);
         }
         if(!supplierId.equals("all")){
-            sqlQury += whereOrAnd(isWhere);
+            if(!isWhere) {
+                sqlQury += " WHERE ";
+                isWhere = true;
+            }else{
+                sqlQury += " AND ";
+            }
             sqlQury += "supplier_id = ?";
             params.put(params.size()+1, supplierId);
         }
@@ -128,14 +138,6 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             e.printStackTrace();
         }
         return products;
-    }
-
-    private String whereOrAnd(Boolean isWhere){
-        if(!isWhere) {
-            return " WHERE ";
-        }else{
-            return " AND ";
-        }
     }
 
     private List<Product> createProductList(ResultSet rs) throws SQLException{
