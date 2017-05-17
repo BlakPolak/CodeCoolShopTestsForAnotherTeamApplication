@@ -33,7 +33,9 @@ public class Basket{
         for (BasketItem item: items) {
             basketPrice += item.getPrice();
         }
-        return basketPrice;
+
+        double roundOff = Math.round(basketPrice * 100.0) / 100.0;
+        return (float) roundOff;
     }
 
     public Float getPriceNetto() {
@@ -42,7 +44,20 @@ public class Basket{
     }
 
 
+    public void delete(Product product, int quantity) {
+        List<BasketItem> basketItems =  this.getItems();
 
-
-
+        for (BasketItem basketItem : basketItems) {
+            if (basketItem.getProduct().getId() == product.getId()) {
+                Integer newQuantity = basketItem.getQuantity() - quantity;
+                if (newQuantity > 0) {
+                    basketItem.setQuantity(newQuantity);
+                } else {
+                    basketItems.remove(basketItem);
+                    this.setItems(basketItems);
+                }
+                break;
+            }
+        }
+    }
 }
