@@ -29,22 +29,7 @@
 
 <body>
 
-<nav class="navbar navbar-inverse lead">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Admin</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <a href="#" class="btn btn-info btn-lg">
-          <span class="glyphicon glyphicon-tags"></span> Total cost: 25.5 PLN
-        </a>
-    </ul>
-  </div>
-</nav>
+<nav th:replace="navbar :: navbar"></nav>
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
