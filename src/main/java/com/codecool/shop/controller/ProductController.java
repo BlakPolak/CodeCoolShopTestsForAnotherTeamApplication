@@ -37,13 +37,22 @@ public class ProductController {
         return new ThymeleafTemplateEngine().render(render);
     }
 
-    public ModelAndView showByCategory(Request request, Response response){
-        Integer categoryId = Integer.parseInt(request.queryParams("category"));
-        ProductCategory category = productCategoryDao.find(categoryId);
-        List<Product> products = productDao.getBy(category);
+    public String indexFilter(Request request, Response response){
+        List<ProductCategory> productCategories = productCategoryDao.getAll();
+        List<Product> products = null;
+        if(request.queryParams("category").equals("all")) {
+            products = productDao.getAll();
+        }else {
+            Integer categoryId = Integer.parseInt(request.queryParams("category"));
+            ProductCategory category = productCategoryDao.find(categoryId);
+            products = productDao.getBy(category);
+        }
         Map<String, Object> model= new HashMap<>();
         model.put("products", products);
-        return new ModelAndView(model, "product/index");
+        model.put("categories", productCategories);
+        ModelAndView render = new ModelAndView(model, "product/index");
+        return new ThymeleafTemplateEngine().render(render);
+
     }
 
     public void listProductBySupplier(){
