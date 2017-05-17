@@ -40,5 +40,14 @@ public class SqliteJDBCConnector {
                 "    name VARCHAR(255) NOT NULL,\n" +
                 "    description TEXT NOT NULL\n" +
                 ")");
+        statement.execute("CREATE TABLE users\n" +
+                "(\n" +
+                "    id INT PRIMARY KEY NOT NULL,\n" +
+                "    first_name VARCHAR(50) NOT NULL,\n" +
+                "    last_name VARCHAR(100),\n" +
+                "    adres TEXT NOT NULL,\n" +
+                "    phone TEXT NOT NULL,\n" +
+                "    email TEXT\n" +
+                ");");
     }
 }
