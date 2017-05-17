@@ -5,6 +5,7 @@ import com.codecool.shop.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,26 +13,36 @@ import java.util.List;
 
 public class UserDaoSqlite extends BaseDao implements UserDao {
 
+
     @Override
-    public void add(User user) {
+    public Integer add(User user) {
+        Integer id = null;
         try {
-            PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO users" +
-                    "(first_name, last_name, adres, phone, email)" +
-                    "VALUES (?, ?, ?, ?, ?)");
+            String query = "INSERT INTO users (first_name, last_name, adres, phone, email) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = this.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getAdres());
             statement.setString(4, user.getPhone());
             statement.setString(5, user.getEmail());
+            statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            if(rs.next())
+            {
+                id = rs.getInt(1);
+                System.out.println(id);
 
-            statement.execute();
+            }
+            rs.close();
+            statement.close();
+
 
         } catch (SQLException e ) {
             e.printStackTrace();
-
         }
-
+        return id;
     }
+
 
     @Override
     public User find(int id) {
@@ -64,7 +75,7 @@ public class UserDaoSqlite extends BaseDao implements UserDao {
 
         try {
             PreparedStatement statement = this.getConnection().
-                    prepareStatement("SELECT id FROM events WHERE email = ?");
+                    prepareStatement("SELECT id FROM users WHERE email = ?");
             statement.setString(1, email);
             ResultSet rs = statement.executeQuery();
             while(rs.next()) {
@@ -85,22 +96,5 @@ public class UserDaoSqlite extends BaseDao implements UserDao {
     public List<User> getAll() {
         return null;
     }
-//
-//    private List<User> getUser(PreparedStatement statement) throws SQLException {
-//        List<User> users = new ArrayList<User>();
-//        ResultSet rs = statement.executeQuery();
-//        while(rs.next()) {
-//
-//                User user = new User(
-//                        rs.getString("first_name"),
-//                        rs.getString("last_name"),
-//                        rs.getString("adres"),
-//                        rs.getString("phone"),
-//                        rs.getString("email")
-//                        );
-//                user.setId(rs.getInt("id"));
-//                users.add(user);
-//            }
-//        return users;
-//    }
+
 }

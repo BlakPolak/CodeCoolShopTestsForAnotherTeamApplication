@@ -1,7 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductDaoSqlite;
+import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.dao.UserDaoSqlite;
 import com.codecool.shop.model.Basket;
+import com.codecool.shop.model.User;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -17,6 +20,7 @@ public class ConfirmController {
 
     private static Basket basket = null;
     private ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
+    private UserDaoSqlite userDaoSqlite = new UserDaoSqlite();
 
     public String displayConfirmForm(Request req, Response res) {
         Map params = new HashMap<>();
@@ -28,8 +32,8 @@ public class ConfirmController {
 
     public String saveOrder(Request req, Response res) {
         Basket basketToSave = getBasket();
-        Integer userId = saveUser(Request req, Response res);
-
+        Integer userId = saveUser(req, res);
+        Integer orderId = createOrder();
         return "";
     }
 
@@ -39,7 +43,12 @@ public class ConfirmController {
         String adres = req.queryParams("adres");
         String phone = req.queryParams("phone");
         String email = req.queryParams("email");
+        return userDaoSqlite.add(new User(firstName, lastName, adres, phone, email));
 
+    }
+
+    public Integer createOrder() {
+        return 1;
     }
 
     private Basket getBasket() {
