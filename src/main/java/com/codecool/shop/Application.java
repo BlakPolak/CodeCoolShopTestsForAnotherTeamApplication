@@ -18,6 +18,11 @@ public class Application {
     private Connection connection;
 
 
+
+
+    private ProductController productController = new ProductController();
+
+
     private Application() {
 
 
@@ -47,16 +52,12 @@ public class Application {
 
     public void appRoutes(){
 
-//        get("admin/addproduct", (Request req, Response res) -> {
-//            return new ThymeleafTemplateEngine().render(ProductController.adminProductAdd(req, res));
-//        });
-        get("admin/addproduct", ProductController::adminProductAdd, new ThymeleafTemplateEngine());
-        post("admin/addproduct", ProductController::adminProductAdd, new ThymeleafTemplateEngine());
-        get("admin/products", ProductController::adminProductList, new ThymeleafTemplateEngine());
+        get("admin/addproduct", this.productController::adminProductAdd);
+        post("admin/addproduct", this.productController::adminProductAdd);
+        get("admin/products", this.productController::showAll);
 
     }
-
-
+    
     public static void run(){
         Application.getApp().setConnection();
         Application.getApp().appSettings();

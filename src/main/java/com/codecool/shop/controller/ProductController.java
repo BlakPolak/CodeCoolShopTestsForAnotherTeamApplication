@@ -14,6 +14,7 @@ import com.codecool.shop.view.UserInput;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +50,17 @@ public class ProductController {
         view.displayList(products);
     }
 
-    public static ModelAndView adminProductAdd(Request request, Response response) {
+    public String showAll(Request request, Response response) {
+
+        Map params = new HashMap<>();
+        params.put("products", productDao.getAll());
+
+        ModelAndView render = new ModelAndView(params, "admin/productlist");
+        return new ThymeleafTemplateEngine().render(render);
+
+    }
+
+    public String adminProductAdd(Request request, Response response) {
 
         if (!request.queryParams().isEmpty()) {
 
@@ -67,14 +78,15 @@ public class ProductController {
         Map params = new HashMap<>();
         params.put("categories", productCategoryDao.getAll());
         params.put("suppliers", supplierDao.getAll());
-        return new ModelAndView(params,"admin/productAdd");
+        ModelAndView render = new ModelAndView(params, "admin/productAdd");
+        return new ThymeleafTemplateEngine().render(render);
     }
 
-    public static ModelAndView adminProductList(Request request, Response response) {
-
-        Map params = new HashMap<>();
-        params.put("products", productDao.getAll());
-        return new ModelAndView(params,"admin/productlist");
-    }
+//    public static ModelAndView adminProductList(Request request, Response response) {
+//
+//        Map params = new HashMap<>();
+//        params.put("products", productDao.getAll());
+//        return new ModelAndView(params,"admin/productlist");
+//    }
 
 }
