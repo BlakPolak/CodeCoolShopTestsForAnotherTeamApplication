@@ -6,6 +6,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.SupplierDaoSqlite;
+import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -28,6 +29,8 @@ public class ProductController {
     private SupplierDao supplierDao = new SupplierDaoSqlite();
 
     public String showAll(Request request, Response response){
+        Basket basket = request.session().attribute("basket");
+
         List<Product> products = productDao.getAll();
         List<ProductCategory> productCategories = productCategoryDao.getAll();
         List<Supplier> suppliers = supplierDao.getAll();
@@ -35,6 +38,7 @@ public class ProductController {
         model.put("products", products);
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
+        model.put("basket", basket);
         ModelAndView render = new ModelAndView(model, "product/index");
         return new ThymeleafTemplateEngine().render(render);
     }
