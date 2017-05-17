@@ -56,23 +56,12 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
     @Override
     public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
-        ProductCategory category = new ProductCategory("Category", "Department", "Description");
-        Supplier supplier = new Supplier("Supplier", "Description");
         try {
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products");
-            while (rs.next()){
-                Product product = new Product(
-                        rs.getString("name"),
-                        rs.getFloat("price"),
-                        "PLN",
-                        rs.getString("description"),
-                        category,
-                        supplier
-                        );
-                products.add(product);
-            }
+            products = createProductList(rs);
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -86,18 +75,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE supplier_id = " + supplier.getId());
-            while(rs.next()){
-                Product product = new Product(
-                        rs.getString("name"),
-                        rs.getFloat("price"),
-                        "PLN",
-                        rs.getString("description"),
-                        productCategoryDao.find(rs.getInt("category_id")),
-                        supplier
-                );
-                product.setId(rs.getInt("id"));
-                products.add(product);
-            }
+            products = createProductList(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -112,18 +90,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE category_id = " + productCategory.getId());
-            while (rs.next()){
-                Product product = new Product(
-                        rs.getString("name"),
-                        rs.getFloat("price"),
-                        "PLN",
-                        rs.getString("description"),
-                        productCategory,
-                        supplierDao.find(rs.getInt("supplier_id"))
-                );
-                product.setId(rs.getInt("id"));
-                products.add(product);
-            }
+            products = createProductList(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -165,18 +132,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
                 preparedStatement.setString(index, params.get(index));
             }
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()){
-                Product product = new Product(
-                        rs.getString("name"),
-                        rs.getFloat("price"),
-                        "PLN",
-                        rs.getString("description"),
-                        productCategoryDao.find(rs.getInt("category_id")),
-                        supplierDao.find(rs.getInt("supplier_id"))
-                );
-                product.setId(rs.getInt("id"));
-                products.add(product);
-            }
+            products = createProductList(rs);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -184,7 +140,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
     }
 
     private List<Product> createProductList(ResultSet rs) throws SQLException{
-        List<Product> products = null;
+        List<Product> products = new ArrayList<>();
         while (rs.next()){
             Product product = new Product(
                     rs.getString("name"),
