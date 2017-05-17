@@ -28,6 +28,7 @@ public class BasketItem extends BaseModel{
     }
 
     public Float getPrice() {
-        return product.getDefaultPrice() * quantity;
+        double roundOff = Math.round(product.getDefaultPrice() * quantity * 100.0) / 100.0;
+        return (float) roundOff;
     }
 }
