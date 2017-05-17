@@ -4,6 +4,7 @@ package com.codecool.shop;
 import com.codecool.shop.controller.BasketController;
 import com.codecool.shop.controller.ConfirmController;
 import com.codecool.shop.controller.ProductController;
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Product;
@@ -17,6 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static spark.Spark.before;
+import static spark.Spark.*;
 import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.halt;
@@ -33,6 +35,7 @@ public class Application {
     private ProductController productController = null;
     private ConfirmController confirmController = new ConfirmController();
 
+    private ProductController productController = new ProductController();
 
     private Application() {
         basketController = new BasketController();
@@ -87,17 +90,16 @@ public class Application {
         get("/confirm", confirmController::displayConfirmForm);
         post("/confirm", confirmController::saveOrder);
 
+  private void appRoutes(){
+        get("/products", this.productController::showAll);
+        post("/products/byCategory/", this.productController::indexFilter);
     }
 
     public static void run(){
+
+  public static void run(){
         Application.getApp().setConnection();
         Application.getApp().appSettings();
         Application.getApp().appRoutes();
     }
-
-
-
-
-
-
 }
