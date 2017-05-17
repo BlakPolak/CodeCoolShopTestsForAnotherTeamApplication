@@ -34,35 +34,27 @@
                         </tr>
                         <tr>
                             <td>
-                                <label for="currency">Currency: </label>
-                            </td>
-                            <td>
-                                <select id="currency">
-                                    <option value="PLN">PLN</option>
-                                    <option value="USD">USD</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
                                 <label for="supplier">Supplier: </label>
                             </td>
                             <td>
-                                <select id="supplier">
-                                    <option value="1">First</option>
-                                    <option value="2">Second</option>
+                                <select id="supplier" name="supplier">
+
+                                    <option th:each="supplier : ${suppliers}"
+                                            th:value="${supplier.id}" th:text="${supplier.name}"></option>
+
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label for="cat">Category</label>
+                                <label for="category">Category</label>
                             </td>
                             <td>
-                                <input type="radio" id="first" name="category" value="First" />
-                                <label for="first">first </label>
-                                <input type="radio" id="second" name="category" value="Second" />
-                                <label for="second">second </label>
+                                <select id="category" name="category">
+                                    <option th:each="category : ${categories}"
+                                        th:value="${category.id}" th:text="${category.name}"></option>
+                                </select>
+
                             </td>
                         </tr>
                         <tr>
