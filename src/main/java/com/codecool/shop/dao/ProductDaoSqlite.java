@@ -4,10 +4,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +128,21 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
 
     @Override
     public boolean insert(Product product) {
-        
+        try {
+            Connection connection = this.getConnection();
+            PreparedStatement ps = connection.prepareStatement(INSERT);
+            ps.setString(1, product.getName());
+            ps.setString(2, product.getDescription());
+            ps.setInt(3, Integer.parseInt(product.getPrice()));
+
+
+            ResultSet rs =  ps.executeQuery();
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 }
