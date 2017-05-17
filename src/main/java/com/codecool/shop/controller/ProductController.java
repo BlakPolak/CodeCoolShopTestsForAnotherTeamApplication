@@ -50,14 +50,4 @@ public class ProductController {
         return new ThymeleafTemplateEngine().render(render);
 
     }
-
-    public void listProductBySupplier(){
-        List<Supplier> suppliers= supplierDao.getAll();
-        view.displaySupplierList(suppliers);
-        Integer supplierID = UserInput.getUserInput();
-        Supplier supplier = supplierDao.find(supplierID);
-        List<Product> products = productDao.getBy(supplier);
-        view.displayList(products);
-    }
-
 }
