@@ -29,8 +29,26 @@
 
 <body>
 
+<nav class="navbar navbar-inverse lead">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Admin</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <a href="#" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-tags"></span> Total cost: 25.5 PLN
+        </a>
+    </ul>
+  </div>
+</nav>
+
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
+
 </div>
 
 <div class="container">
@@ -44,14 +62,13 @@
             <div class="thumbnail">
                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="caption">
-                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
-                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
+                    <h4 class="group inner list-group-item-heading" th:text="${prod.getProduct().name}">Product name</h4>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            <p class="lead" th:text="${prod.getProduct().getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-warning" href="#">Delete</a>
+                            <a class="btn btn-danger" href="#">Delete</a>
                         </div>
                     </div>
                 </div>
