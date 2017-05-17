@@ -40,7 +40,8 @@ public class Application {
     }
 
     private void appRoutes(){
-        get("/", this.productController::showAll);
+        get("/products", this.productController::showAll);
+        post("/products/byCategory/", this.productController::indexFilter);
     }
     public static void run(){
         Application.getApp().setConnection();
