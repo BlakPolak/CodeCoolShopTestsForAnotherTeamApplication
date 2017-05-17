@@ -39,14 +39,10 @@ public class ProductController {
 
     public String indexFilter(Request request, Response response){
         List<ProductCategory> productCategories = productCategoryDao.getAll();
-        List<Product> products = null;
-        if(request.queryParams("category").equals("all")) {
-            products = productDao.getAll();
-        }else {
-            Integer categoryId = Integer.parseInt(request.queryParams("category"));
-            ProductCategory category = productCategoryDao.find(categoryId);
-            products = productDao.getBy(category);
-        }
+        String productName = request.queryParams("name");
+        String categoryId = request.queryParams("category");
+        String supplierId = request.queryParams("supplier");
+        List<Product> products = this.productDao.getByFilters(productName, categoryId, supplierId);
         Map<String, Object> model= new HashMap<>();
         model.put("products", products);
         model.put("categories", productCategories);
@@ -63,6 +59,5 @@ public class ProductController {
         List<Product> products = productDao.getBy(supplier);
         view.displayList(products);
     }
-
 
 }
