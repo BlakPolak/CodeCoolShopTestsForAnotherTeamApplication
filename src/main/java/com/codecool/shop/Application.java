@@ -64,9 +64,4 @@ public class Application {
         Application.getApp().appRoutes();
     }
 
-
-
-
-
-
 }
