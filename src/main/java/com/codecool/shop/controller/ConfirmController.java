@@ -26,6 +26,22 @@ public class ConfirmController {
 
     }
 
+    public String saveOrder(Request req, Response res) {
+        Basket basketToSave = getBasket();
+        Integer userId = saveUser(Request req, Response res);
+
+        return "";
+    }
+
+    public Integer saveUser(Request req, Response res) {
+        String firstName = req.queryParams("firstName");
+        String lastName = req.queryParams("lastName");
+        String adres = req.queryParams("adres");
+        String phone = req.queryParams("phone");
+        String email = req.queryParams("email");
+
+    }
+
     private Basket getBasket() {
         if (basket == null) {
             basket = new Basket();
