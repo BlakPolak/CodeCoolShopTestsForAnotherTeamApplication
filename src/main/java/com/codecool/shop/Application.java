@@ -1,14 +1,16 @@
 package com.codecool.shop;
 
 
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
+import spark.Request;
+import spark.Response;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static spark.Spark.exception;
-import static spark.Spark.port;
-import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
 
 public class Application {
 
@@ -45,7 +47,15 @@ public class Application {
 
     public void appRoutes(){
 
+//        get("admin/addproduct", (Request req, Response res) -> {
+//            return new ThymeleafTemplateEngine().render(ProductController.adminProductAdd(req, res));
+//        });
+        get("admin/addproduct", ProductController::adminProductAdd, new ThymeleafTemplateEngine());
+        post("admin/addproduct", ProductController::adminProductAdd, new ThymeleafTemplateEngine());
+
     }
+
+
     public static void run(){
         Application.getApp().setConnection();
         Application.getApp().appSettings();
