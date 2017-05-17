@@ -68,18 +68,8 @@ public class Application {
                 request.session().attribute("basket",basket);
             }
         });
+        get("/basket", basketController::renderBasket);
 
-        get("/basket", (Request req, Response res) -> {
-            Basket basket = req.session().attribute("basket");
-
-            ProductCategory category = new ProductCategory("Category", "Department", "Description");
-            Supplier supplier = new Supplier("Supplier", "Description");
-            Product product = new Product("Jakis", 15.2f, "PLN", "Desc", category, supplier);
-            product.setId(1);
-
-            basket.add(product, 1);
-            return basketController.renderBasket(basket);
-        });
         get("/hello", (req, res) -> "Hello World");
 
         get("/confirm", confirmController::displayConfirmForm);
