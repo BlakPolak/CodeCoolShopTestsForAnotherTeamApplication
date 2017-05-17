@@ -35,14 +35,30 @@
 
 <div class="container">
     <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+        <form method="post" th:action="@{~/products/byCategory/}">
+            <label for="name">Name: </label>
+            <input type="text" id="name" placeholder="name" name="name">
+            <label for="category">Category: </label>
+            <select name="category" id="category">
+                <!--/*@thymesVar id="category" type="model.Category"*/-->
+                <option value="all" >all</option>
+                <option th:if="${categories}" th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+            </select>
+            <label for="supplier">Supplier: </label>
+            <select name="supplier" id="supplier">
+                <!--/*@thymesVar id="category" type="model.Category"*/-->
+                <option value="all" >all</option>
+                <option th:if="${suppliers}" th:each="supplier : ${suppliers}" th:value="${supplier.getId()}" th:text="${supplier.getName()}"></option>
+            </select>
+            <button type="submit">filter</button>
+        </form>
     </div>
 
     <div id="products" class="row list-group">
 
         <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt=""/>
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
                     <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>

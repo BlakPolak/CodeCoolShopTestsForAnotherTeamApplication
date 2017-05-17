@@ -27,19 +27,33 @@ public class ProductController {
     private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private static SupplierDao supplierDao = new SupplierDaoSqlite();
 
-    public void displayList(){
+    public String showAll(Request request, Response response){
         List<Product> products = productDao.getAll();
-        view.displayList(products);
+        List<ProductCategory> productCategories = productCategoryDao.getAll();
+        List<Supplier> suppliers = supplierDao.getAll();
+        Map<String, Object> model= new HashMap<>();
+        model.put("products", products);
+        model.put("suppliers", suppliers);
+        model.put("categories", productCategories);
+        ModelAndView render = new ModelAndView(model, "product/index");
+        return new ThymeleafTemplateEngine().render(render);
     }
 
-    public void listProductByCategory(){
-        List<ProductCategory> productCategoryList = productCategoryDao.getAll();
-        view.displayCategoryList(productCategoryList);
-        Integer categoryId = UserInput.getUserInput();
-        ProductCategory category = productCategoryDao.find(categoryId);
-        List<Product> products = productDao.getBy(category);
-        view.displayList(products);
+    public String indexFilter(Request request, Response response){
+        List<ProductCategory> productCategories = productCategoryDao.getAll();
+        List<Supplier> suppliers = supplierDao.getAll();
+        String productName = request.queryParams("name");
+        String categoryId = request.queryParams("category");
+        String supplierId = request.queryParams("supplier");
+        List<Product> products = this.productDao.getByFilters(productName, categoryId, supplierId);
+        Map<String, Object> model= new HashMap<>();
+        model.put("products", products);
+        model.put("suppliers", suppliers);
+        model.put("categories", productCategories);
+        ModelAndView render = new ModelAndView(model, "product/index");
+        return new ThymeleafTemplateEngine().render(render);
     }
+
 
     public void listProductBySupplier(){
         List<Supplier> suppliers= supplierDao.getAll();
@@ -50,7 +64,7 @@ public class ProductController {
         view.displayList(products);
     }
 
-    public String showAll(Request request, Response response) {
+    public String adminshowAll(Request request, Response response) {
 
         Map params = new HashMap<>();
         params.put("products", productDao.getAll());
@@ -81,12 +95,5 @@ public class ProductController {
         ModelAndView render = new ModelAndView(params, "admin/productAdd");
         return new ThymeleafTemplateEngine().render(render);
     }
-
-//    public static ModelAndView adminProductList(Request request, Response response) {
-//
-//        Map params = new HashMap<>();
-//        params.put("products", productDao.getAll());
-//        return new ModelAndView(params,"admin/productlist");
-//    }
 
 }
