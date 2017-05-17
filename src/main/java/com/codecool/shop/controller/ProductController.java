@@ -53,18 +53,19 @@ public class ProductController {
 
         if (!request.queryParams().isEmpty()) {
 
-            String name = request.queryParams("name");
-            Float price = Float.parseFloat(request.queryParams("price"));
-            String description = request.queryParams("description");
-            String currency = request.queryParams("currency");
+              String name = request.queryParams("name");
+              Float price = Float.parseFloat(request.queryParams("price"));
+//            String description = request.queryParams("description");
+//            String currency = request.queryParams("currency");
+//            System.out.println("supplier");
+//            Supplier supplier = supplierDao.find(Integer.parseInt(request.queryParams("supplier")));
+//            System.out.println("category");
+//            ProductCategory category = productCategoryDao.find(Integer.parseInt(request.queryParams("category")));
 
-            Supplier supplier = supplierDao.find(Integer.parseInt(request.queryParams("supplier")));
-            ProductCategory category = productCategoryDao.find(Integer.parseInt(request.queryParams("category")));
+           // Product product = new Product(name, price, currency, description, category, supplier);
 
-            Product product = new Product(name, price, currency, description, category, supplier);
+           // System.out.println(product);
 
-            System.out.println(product);
-            
             //productDao.add(product);
         }
 
