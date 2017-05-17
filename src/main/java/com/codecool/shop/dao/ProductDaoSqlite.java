@@ -5,12 +5,15 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductDaoSqlite extends BaseDao implements ProductDao {
     private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
@@ -126,4 +129,60 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
         }
         return products;
     }
+
+    @Override
+    public List<Product> getByFilters(String productName, String categoryId, String supplierId) {
+        String sqlQury = "SELECT * FROM products";
+        Map<Integer, String> params = new HashMap<>();
+        List<Product> products = new ArrayList<>();
+        Boolean isWhere = false;
+        if(!productName.equals("")){
+            sqlQury += " WHERE name LIKE '%"+productName+"%'";
+            isWhere = true;
+        }
+        if(!categoryId.equals("all")){
+            if(!isWhere) {
+                sqlQury += " WHERE ";
+            }else{
+                sqlQury += " AND ";
+            }
+            sqlQury += "category_id = ?";
+            params.put(params.size()+1, categoryId);
+            System.out.println("categoryId: " + categoryId);;
+        }
+        if(!supplierId.equals("all")){
+            if(!isWhere) {
+                sqlQury += " WHERE ";
+            }else{
+                sqlQury += " AND ";
+            }
+            sqlQury += "supplier_id = ?";
+            params.put(params.size()+1, supplierId);
+        }
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(sqlQury);
+            for(Integer index : params.keySet()){
+                preparedStatement.setString(index, params.get(index));
+            }
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                Product product = new Product(
+                        rs.getString("name"),
+                        rs.getFloat("price"),
+                        "PLN",
+                        rs.getString("description"),
+                        productCategoryDao.find(rs.getInt("category_id")),
+                        supplierDao.find(rs.getInt("supplier_id"))
+                );
+                product.setId(rs.getInt("id"));
+                products.add(product);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+
+
 }
