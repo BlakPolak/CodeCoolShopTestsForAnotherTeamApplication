@@ -43,23 +43,60 @@
             <div class="modal-dialog ">
                 <div class="modal-content col-sm-10">
                     <div class="modal-header">
-                        <h6>BLABLA</h6>
-                        <h3 class="modal-title">123</h3>
-                        <p></p>
-                        <h6>TRALALA</h6>
-                        <h4 class="modal-title">12345</h4>
+                        <!--<h6>BLABLA</h6>-->
+                        <h3 class="modal-title">Order summary:</h3>
+                        <!--<p></p>-->
+                        <!--<h6>TRALALA</h6>-->
+                        <!--<h4 class="modal-title">12345</h4>-->
                     </div>
                     <div class="modal-body">
-                        <h6>STRATSRA</h6>
-                        <h3 >sedjhg</h3>
-                        <p></p>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Nr</th>
+                                <th>Product name</th>
+                                <th>Quantity</th>
+                                <th>Unit price</th>
+                                <th>Total price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="item,iterStat : ${basket.getItems()}">
+                                <tr>
+                                    <td th:text="${iterStat.index+1}"></td>
+                                    <td th:text="${item.getProduct().getName()}"></td>
+                                    <td th:text="${item.getQuantity()}"></td>
+                                    <td th:text="${item.getProduct().getPrice()}"></td>
+                                    <td th:text="${item.getTotalPrice()} + ${item.getProduct().getDefaultCurrency()}"></td>
 
-                        <h6>LALALA</h6>
-                        <h4>Open in new page</h4>
+
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                        <!--<h6>STRATSRA</h6>-->
+                        <!--<h3 >sedjhg</h3>-->
+                        <!--<p></p>-->
+
+                        <!--<h6>LALALA</h6>-->
+                        <!--<h4>Open in new page</h4>-->
 
                     </div>
                     <div class="modal-footer">
-                        <h6>Llalalala</h6>
+                        <table class="table col-sm-6" align="right">
+                            <tr>
+                                <th>Netto</th>
+                                <td>1234</td>
+                            </tr>
+                            <tr>
+                                <th>Vat</th>
+                                <td>1234</td>
+                            </tr>
+                            <tr>
+                                <th>Brutto</th>
+                                <td>1234</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
 

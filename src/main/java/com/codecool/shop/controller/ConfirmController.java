@@ -27,7 +27,7 @@ public class ConfirmController {
     }
 
     private Basket getBasket() {
-        if (basket.equals(null)) {
+        if (basket == null) {
             basket = new Basket();
             basket.add(productDaoSqlite.find(1), 5);
             basket.add(productDaoSqlite.find(2), 10);
