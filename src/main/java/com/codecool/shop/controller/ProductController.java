@@ -30,8 +30,10 @@ public class ProductController {
     public String showAll(Request request, Response response){
         List<Product> products = productDao.getAll();
         List<ProductCategory> productCategories = productCategoryDao.getAll();
+        List<Supplier> suppliers = supplierDao.getAll();
         Map<String, Object> model= new HashMap<>();
         model.put("products", products);
+        model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         ModelAndView render = new ModelAndView(model, "product/index");
         return new ThymeleafTemplateEngine().render(render);
@@ -39,15 +41,16 @@ public class ProductController {
 
     public String indexFilter(Request request, Response response){
         List<ProductCategory> productCategories = productCategoryDao.getAll();
+        List<Supplier> suppliers = supplierDao.getAll();
         String productName = request.queryParams("name");
         String categoryId = request.queryParams("category");
         String supplierId = request.queryParams("supplier");
         List<Product> products = this.productDao.getByFilters(productName, categoryId, supplierId);
         Map<String, Object> model= new HashMap<>();
         model.put("products", products);
+        model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         ModelAndView render = new ModelAndView(model, "product/index");
         return new ThymeleafTemplateEngine().render(render);
-
     }
 }
