@@ -4,7 +4,6 @@ package com.codecool.shop;
 import com.codecool.shop.controller.BasketController;
 import com.codecool.shop.controller.ConfirmController;
 import com.codecool.shop.controller.ProductController;
-import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Product;
@@ -12,7 +11,6 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import spark.Request;
 import spark.Response;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,10 +19,8 @@ import static spark.Spark.before;
 import static spark.Spark.*;
 import static spark.Spark.exception;
 import static spark.Spark.get;
-import static spark.Spark.halt;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
-import static spark.Spark.*;
 
 
 public class Application {
@@ -34,8 +30,6 @@ public class Application {
     private BasketController basketController = null;
     private ProductController productController = null;
     private ConfirmController confirmController = new ConfirmController();
-
-    private ProductController productController = new ProductController();
 
     private Application() {
         basketController = new BasketController();
@@ -64,7 +58,8 @@ public class Application {
         port(8888);
     }
 
-    public void appRoutes(){
+    private void appRoutes() {
+
         before((request, response) -> {
             boolean newSession = request.session().isNew();
             // ... check if authenticated
@@ -90,12 +85,10 @@ public class Application {
         get("/confirm", confirmController::displayConfirmForm);
         post("/confirm", confirmController::saveOrder);
 
-  private void appRoutes(){
+
         get("/products", this.productController::showAll);
         post("/products/byCategory/", this.productController::indexFilter);
     }
-
-    public static void run(){
 
   public static void run(){
         Application.getApp().setConnection();
