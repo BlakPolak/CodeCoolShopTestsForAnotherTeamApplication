@@ -1,15 +1,8 @@
 package com.codecool.shop;
 
 
-import com.codecool.shop.controller.BasketController;
-import com.codecool.shop.controller.ProductController;
+import com.codecool.shop.controller.ConfirmController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
-import com.codecool.shop.model.Basket;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
-import spark.Request;
-import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.sql.Connection;
@@ -21,6 +14,8 @@ import static spark.Spark.get;
 import static spark.Spark.halt;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
+
 
 public class Application {
 
@@ -28,6 +23,7 @@ public class Application {
     private Connection connection;
     private BasketController basketController = null;
     private ProductController productController = null;
+    private ConfirmController confirmController = new ConfirmController();
 
 
     private Application() {
@@ -78,6 +74,11 @@ public class Application {
             basket.add(product, 1);
             return basketController.renderBasket(basket);
         });
+        get("/hello", (req, res) -> "Hello World");
+
+        get("/confirm", confirmController::displayConfirmForm);
+        post("/confirm", confirmController::saveOrder);
+
     }
 
     public static void run(){
