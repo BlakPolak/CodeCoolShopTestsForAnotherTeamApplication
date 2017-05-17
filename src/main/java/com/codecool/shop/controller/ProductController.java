@@ -11,15 +11,20 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.view.ProductView;
 import com.codecool.shop.view.UserInput;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductController {
-    private ProductDao productDao = new ProductDaoSqlite();
+    private static ProductDao productDao = new ProductDaoSqlite();
     private ProductView view = new ProductView();
-    private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
-    private SupplierDao supplierDao = new SupplierDaoSqlite();
+    private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
+    private static SupplierDao supplierDao = new SupplierDaoSqlite();
 
     public void displayList(){
         List<Product> products = productDao.getAll();
@@ -42,6 +47,29 @@ public class ProductController {
         Supplier supplier = supplierDao.find(supplierID);
         List<Product> products = productDao.getBy(supplier);
         view.displayList(products);
+    }
+
+    public static ModelAndView adminProductAdd(Request request, Response response) {
+
+        if (!request.queryParams().isEmpty()) {
+
+            String name = request.queryParams("name");
+            Float price = Float.parseFloat(request.queryParams("price"));
+            String description = request.queryParams("description");
+            String currency = request.queryParams("currency");
+
+            Supplier supplier = supplierDao.find(Integer.parseInt(request.queryParams("supplier")));
+            ProductCategory category = productCategoryDao.find(Integer.parseInt(request.queryParams("category")));
+
+            Product product = new Product(name, price, currency, description, category, supplier);
+
+            System.out.println(product);
+            
+            //productDao.add(product);
+        }
+
+        Map params = new HashMap<>();
+        return new ModelAndView(params,"admin/productAdd");
     }
 
 
