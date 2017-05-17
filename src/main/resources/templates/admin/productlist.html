@@ -1,0 +1,95 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="head::copy"></head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Add product</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="btn-group">
+                <form th:action="@{~/admin/addproduct}" method="POST">
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="name">Name: </label>
+                            </td>
+                            <td>
+                                <input id="name" type="text" name="name" th:required="required"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="price">Price: </label>
+                            </td>
+                            <td>
+                                <input id="price" type="number" name="price" th:required="required"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="supplier">Supplier: </label>
+                            </td>
+                            <td>
+                                <select id="supplier" name="supplier">
+
+                                    <option th:each="supplier : ${suppliers}"
+                                            th:value="${supplier.id}" th:text="${supplier.name}"></option>
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="category">Category</label>
+                            </td>
+                            <td>
+                                <select id="category" name="category">
+                                    <option th:each="category : ${categories}"
+                                        th:value="${category.id}" th:text="${category.name}"></option>
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="photo">Image: </label>
+                            </td>
+                            <td>
+                                <input type="file" name="photo" id="photo" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="description">Description: </label>
+                            </td>
+                            <td>
+                                <textarea name="description" id="description"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                               <input type="Submit" value="Add" />
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="footer :: copy"></div>
+</div>
+
+</body>
+</html>

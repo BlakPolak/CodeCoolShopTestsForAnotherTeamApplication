@@ -52,6 +52,7 @@ public class Application {
 //        });
         get("admin/addproduct", ProductController::adminProductAdd, new ThymeleafTemplateEngine());
         post("admin/addproduct", ProductController::adminProductAdd, new ThymeleafTemplateEngine());
+        get("admin/products", ProductController::adminProductList, new ThymeleafTemplateEngine());
 
     }
 
