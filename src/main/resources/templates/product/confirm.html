@@ -67,7 +67,7 @@
                                     <td th:text="${item.getProduct().getName()}"></td>
                                     <td th:text="${item.getQuantity()}"></td>
                                     <td th:text="${item.getProduct().getPrice()}"></td>
-                                    <td th:text="${item.getTotalPrice()} + ${item.getProduct().getDefaultCurrency()}"></td>
+                                    <td th:text="${item.getPrice()} + ${item.getProduct().getDefaultCurrency()}"></td>
 
 
                                 </tr>
@@ -86,15 +86,15 @@
                         <table class="table col-sm-6" align="right">
                             <tr>
                                 <th>Netto</th>
-                                <td>1234</td>
+                                <td th:text="${basket.getPriceNetto()} + ' PLN'"></td>
                             </tr>
                             <tr>
                                 <th>Vat</th>
-                                <td>1234</td>
+                                <td>23%</td>
                             </tr>
                             <tr>
                                 <th>Brutto</th>
-                                <td>1234</td>
+                                <td th:text="${basket.getPriceNetto()} + ' PLN'"> </td>
                             </tr>
                         </table>
                     </div>

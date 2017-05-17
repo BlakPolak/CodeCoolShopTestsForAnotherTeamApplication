@@ -27,7 +27,7 @@ public class BasketItem extends BaseModel{
         this.quantity = quantity;
     }
 
-    public Float getTotalPrice() {
+    public Float getPrice() {
         return product.getDefaultPrice() * quantity;
     }
 }
