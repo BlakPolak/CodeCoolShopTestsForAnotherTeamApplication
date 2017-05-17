@@ -3,12 +3,13 @@ package com.codecool.shop.dao;
 import com.codecool.shop.model.User;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-/**
- * Created by pati on 17.05.17.
- */
+
 public class UserDaoSqlite extends BaseDao implements UserDao {
 
     @Override
@@ -34,7 +35,45 @@ public class UserDaoSqlite extends BaseDao implements UserDao {
 
     @Override
     public User find(int id) {
-        return null;
+        User user = null;
+
+        try {
+            PreparedStatement statement = this.getConnection().
+                    prepareStatement("SELECT * FROM users WHERE id = ?");
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+
+                user = new User(
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("adres"),
+                        rs.getString("phone"),
+                        rs.getString("email")
+                );
+                user.setId(rs.getInt("id"));
+            }
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public Integer findId(String email) {
+        Integer userId = null;
+
+        try {
+            PreparedStatement statement = this.getConnection().
+                    prepareStatement("SELECT id FROM events WHERE email = ?");
+            statement.setString(1, email);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                userId = rs.getInt("id");
+            }
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
+        return userId;
     }
 
     @Override
@@ -46,4 +85,22 @@ public class UserDaoSqlite extends BaseDao implements UserDao {
     public List<User> getAll() {
         return null;
     }
+//
+//    private List<User> getUser(PreparedStatement statement) throws SQLException {
+//        List<User> users = new ArrayList<User>();
+//        ResultSet rs = statement.executeQuery();
+//        while(rs.next()) {
+//
+//                User user = new User(
+//                        rs.getString("first_name"),
+//                        rs.getString("last_name"),
+//                        rs.getString("adres"),
+//                        rs.getString("phone"),
+//                        rs.getString("email")
+//                        );
+//                user.setId(rs.getInt("id"));
+//                users.add(user);
+//            }
+//        return users;
+//    }
 }
