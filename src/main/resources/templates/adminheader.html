@@ -4,13 +4,13 @@
     <header>
         <div class="row">
             <div class="col-xs-8">
-                <h1>Codecool Events admin</h1>
-                <form th:action="@{~/admin/search}" method="POST"><input type="text"  name="search" /> </form>
+                <h1>Shop admin panel</h1>
             </div>
             <div class="col-xs-4">
                 <div class="btn-group">
                     <a type="button" class="btn btn-primary"  th:href="@{~/admin/orders}">Orders</a>
-                    <a type="button" class="btn btn-primary"  th:href="@{~/admin/products}">Products</a>
+                    <a type="button" class="btn btn-primary"  th:href="@{~/admin/products}">Products list</a>
+                    <a type="button" class="btn btn-primary"  th:href="@{~/admin/addproduct}">Add new product</a>
                 </div>
             </div>
         </div>
