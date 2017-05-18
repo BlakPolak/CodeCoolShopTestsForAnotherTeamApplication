@@ -68,6 +68,15 @@ public class ProductController extends BaseController{
         view.displayList(products);
     }
 
+    public String removeProduct(Request request, Response response) {
+
+        productDao.remove(Integer.parseInt(request.params(":id")));
+        response.redirect("../../admin/products");
+
+        Map params = new HashMap<>();
+        ModelAndView render = new ModelAndView(params, "admin/productEdit");
+        return new ThymeleafTemplateEngine().render(render);
+    }
     public String adminProductEdit(Request request, Response response) {
 
         if (!request.queryParams().isEmpty()) {
