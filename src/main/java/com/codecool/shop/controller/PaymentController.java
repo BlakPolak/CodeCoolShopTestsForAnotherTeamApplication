@@ -37,8 +37,7 @@ public class PaymentController {
         Integer m = req.session().attribute("userId");
         if (m != null ) {
             User user = userDao.find(req.session().attribute("userId"));
-            sendEmail.send("codecool.shop@gmail.com","codecool2016","pp.mikulska@gmail.com",
-                    "hello javatpoint","How r u?");
+            sendEmail.send(user, req.session().attribute("basket"));
         }
         res.redirect("/products");
 
