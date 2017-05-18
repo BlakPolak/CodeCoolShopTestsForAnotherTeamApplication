@@ -71,8 +71,9 @@ public class Application {
             }
         });
         get("/basket", basketController::renderBasket);
-        get("/basket/:id/:quantity/add", basketController::addToCartAction);
+        post("/basket/add", basketController::addToCartAction);
         get("/basket/:id/:quantity/delete", basketController::deleteFromCartAction);
+        post("/basket/remove", basketController::deleteFromCartAction);
 
         get("/hello", (req, res) -> "Hello World");
 

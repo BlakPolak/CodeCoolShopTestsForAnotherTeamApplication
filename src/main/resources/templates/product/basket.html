@@ -53,9 +53,11 @@
                             <p class="lead" th:text="${basketItem.getProduct().getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-12">
-                            <p class="lead d-inline" th:text="'Quantity: ' + ${basketItem.getQuantity()}">100 USD</p>
-                            <span class="lead d-inline" th:text="'Total price: ' + ${basketItem.getPrice()}">100 USD</span>
-                            <a class="btn btn-danger pull-right" th:href="@{'~/basket/' + ${basketItem.getProduct().getId()} + '/1/delete'}">Delete</a>
+                            <p class="lead d-inline quantity" th:text="'Quantity: ' + ${basketItem.getQuantity()}">100 USD</p>
+                            <span class="lead d-inline itemPrice" th:text="'Total price: ' + ${basketItem.getPrice()}">100 USD</span>
+                            <button th:attr="data-id=${basketItem.getProduct().getId()}" class="btn btn-danger pull-right delete-from-basket" data-toggle="modal" data-target="#addToBasketModal">
+                                Delete
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -65,10 +67,26 @@
     <div class="col-md-12">
         <a class="btn btn-success pull-right" th:href="@{'~/confirm'}">Confirm</a>
     </div>
+    <div class="modal fade text-center" id="addToBasketModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This is a small modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
 <div th:replace="footer :: copy"></div>
-
+<script src="/js/main.js"></script>
 </body>
 </html>
