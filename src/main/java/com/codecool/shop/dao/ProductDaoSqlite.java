@@ -22,6 +22,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
 
     private static final String INSERT ="INSERT INTO products (name, description, price, category_id, supplier_id) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE ="UPDATE products SET name=?, description=?, price=?, category_id=?, supplier_id=? WHERE id=?";
+    private static final String DELETE ="DELETE FROM products WHERE id=?";
 
     @Override
     public void add(Product product) {
@@ -56,7 +57,16 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
 
     @Override
     public void remove(int id) {
+        System.out.println(id);
+        try {
+            Connection connection = this.getConnection();
+            PreparedStatement ps = connection.prepareStatement(DELETE);
+            ps.setInt(1, id);
+            ps.executeUpdate();
 
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
