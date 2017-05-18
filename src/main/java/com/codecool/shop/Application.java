@@ -66,7 +66,11 @@ public class Application {
 
         get("admin/addproduct", this.productController::adminProductInsert);
         post("admin/addproduct", this.productController::adminProductInsert);
+        get("admin/editproduct/:id", this.productController::adminProductEdit);
+        get("admin/updateproduct/:id", this.productController::adminProductEdit);
+        post("admin/updateproduct/:id", this.productController::adminProductEdit);
         get("admin/products", this.productController::adminshowAll);
+        get("admin", this.productController::adminshowAll);
 
         get("/basket", basketController::renderBasket);
         get("/basket/:id/:quantity/add", basketController::addToCartAction);
