@@ -34,13 +34,13 @@ public class SqliteJDBCConnector {
                 "name VARCHAR(255) NOT NULL," +
                 "description TEXT NOT NULL," +
                 "department TEXT NOT NULL)" );
-        statement.execute("CREATE TABLE suppliers\n" +
+        statement.execute("CREATE TABLE IF NOT EXISTS suppliers\n" +
                 "(\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name VARCHAR(255) NOT NULL,\n" +
                 "    description TEXT NOT NULL\n" +
                 ")");
-        statement.execute("CREATE TABLE users\n" +
+        statement.execute("CREATE TABLE IF NOT EXISTS users\n" +
                 "(\n" +
                 "    id INT PRIMARY KEY NOT NULL,\n" +
                 "    first_name VARCHAR(50) NOT NULL,\n" +
@@ -49,12 +49,19 @@ public class SqliteJDBCConnector {
                 "    phone TEXT NOT NULL,\n" +
                 "    email TEXT\n" +
                 ");");
-        statement.execute("CREATE TABLE orders\n" +
+        statement.execute("CREATE TABLE IF NOT EXISTS orders\n" +
                 "(\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    user_id INTEGER NOT NULL,\n" +
                 "    paid BOOLEAN NOT NULL,\n" +
                 "    send BOOLEAN NOT NULL\n" +
                 ")");
+        statement.execute("CREATE TABLE IF NOT EXISTS baskets\n" +
+                "(\n" +
+                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "    order_id INTEGER NOT NULL,\n" +
+                "    product_id INTEGER NOT NULL,\n" +
+                "    quantity INTEGER NOT NULL\n" +
+                ");")
     }
 }
