@@ -16,6 +16,7 @@ public interface ProductDao {
     List<Product> getBy(Supplier supplier);
     List<Product> getBy(ProductCategory productCategory);
     boolean insert(Product product);
+    boolean update(Product product);
 
     List<Product> getByFilters(String productName, String categoryId, String supplierId);
 }
