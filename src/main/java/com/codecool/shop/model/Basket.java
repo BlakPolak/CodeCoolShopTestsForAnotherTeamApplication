@@ -53,11 +53,20 @@ public class Basket{
                 if (newQuantity > 0) {
                     basketItem.setQuantity(newQuantity);
                 } else {
+                    basketItem.setQuantity(0);
                     basketItems.remove(basketItem);
                     this.setItems(basketItems);
                 }
                 break;
             }
         }
+    }
+    public BasketItem getItemById (Integer id) {
+        for (BasketItem basketItem : this.getItems()) {
+            if (basketItem.getProduct().getId() == id) {
+                return basketItem;
+            }
+        }
+        return null;
     }
 }
