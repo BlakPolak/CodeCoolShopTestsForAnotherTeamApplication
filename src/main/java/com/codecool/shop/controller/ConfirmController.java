@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class ConfirmController extends BaseController{
 
-    private static Basket basket = null;
     private ProductDao productDao = new ProductDaoSqlite();
     private UserDao userDao = new UserDaoSqlite();
     private OrderDao orderDao = new OrderDaoSqlite();
@@ -34,7 +33,8 @@ public class ConfirmController extends BaseController{
         Integer orderId = saveOrder(userId);
         saveBasket(req, res, orderId);
         req.session().attribute("orderId", orderId);
-//        res.redirect();
+        req.session().attribute("userId", userId);
+        res.redirect("/payment");
         return "";
     }
 
@@ -55,16 +55,5 @@ public class ConfirmController extends BaseController{
         return orderDao.add(new Order(userId));
 
     }
-
-    private Basket getBasket() {
-        if (basket == null) {
-            basket = new Basket();
-            basket.add(productDao.find(1), 5);
-            basket.add(productDao.find(2), 10);
-            basket.add(productDao.find(3), 15);
-        }
-        return basket;
-
-    }
-
+    
 }

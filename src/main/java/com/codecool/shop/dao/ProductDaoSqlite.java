@@ -41,6 +41,8 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
                         supplierDao.find(rs.getInt("supplier_id"))
                 );
                 product.setId(rs.getInt("id"));
+                rs.close();
+                statement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,6 +64,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             ResultSet rs = statement.executeQuery("SELECT * FROM products");
             products = createProductList(rs);
             rs.close();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,6 +79,8 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE supplier_id = " + supplier.getId());
             products = createProductList(rs);
+            rs.close();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,6 +96,8 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products WHERE category_id = " + productCategory.getId());
             products = createProductList(rs);
+            rs.close();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,6 +141,8 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             }
             ResultSet rs = preparedStatement.executeQuery();
             products = createProductList(rs);
+            rs.close();
+            preparedStatement.close();
         }catch (SQLException e){
             e.printStackTrace();
         }

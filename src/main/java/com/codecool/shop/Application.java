@@ -3,6 +3,7 @@ package com.codecool.shop;
 
 import com.codecool.shop.controller.BasketController;
 import com.codecool.shop.controller.ConfirmController;
+import com.codecool.shop.controller.PaymentController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 import com.codecool.shop.model.Basket;
@@ -30,6 +31,7 @@ public class Application {
     private BasketController basketController = null;
     private ProductController productController = null;
     private ConfirmController confirmController = new ConfirmController();
+    private PaymentController paymentController = new PaymentController();
 
     private Application() {
         basketController = new BasketController();
@@ -76,6 +78,8 @@ public class Application {
 
         get("/confirm", confirmController::displayConfirmForm);
         post("/confirm", confirmController::processOrder);
+        get("payment", paymentController::displayPaymentForm);
+        post("payment", paymentController::processPayment);
 
 
         get("/products", this.productController::index);
