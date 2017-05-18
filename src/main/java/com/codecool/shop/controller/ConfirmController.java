@@ -12,9 +12,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by pati on 16.05.17.
- */
+
 public class ConfirmController {
 
     private static Basket basket = null;
