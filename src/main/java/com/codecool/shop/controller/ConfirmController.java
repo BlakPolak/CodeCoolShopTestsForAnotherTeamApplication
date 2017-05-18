@@ -13,10 +13,8 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by pati on 16.05.17.
- */
-public class ConfirmController {
+
+public class ConfirmController extends BaseController{
 
     private static Basket basket = null;
     private ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
@@ -26,7 +24,7 @@ public class ConfirmController {
         Map params = new HashMap<>();
         params.put("basket", getBasket());
         ModelAndView render = new ModelAndView(params, "product/confirm");
-        return new ThymeleafTemplateEngine().render(render);
+        return this.render("product/confirm", params);
 
     }
 
