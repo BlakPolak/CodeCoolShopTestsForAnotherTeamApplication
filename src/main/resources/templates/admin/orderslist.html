@@ -17,9 +17,28 @@
     <div class="row">
         <div class="col-xs-12">
             <table class="table table-striped">
+                <tr>
+                    <th>Order number</th>
+                    <th>Customer details</th>
+                    <th>Payment</th>
+                    <th>Delivery</th>
+                </tr>
                 <tr th:each="order : ${orders}">
-                    <td th:text="${order.number}"></td><td th:text="${product.defaultPrice}"></td>
-                    <td><a th:href="@{~/admin/editproduct/{id}(id=${product.id})}" class="btn btn-primary">Edit</a></td>
+                    <td th:text="${order.id}"></td>
+                    <td>
+                        <span th:text="${order.user.firstName}"></span>
+                        <span th:text="${order.user.lastName}"></span>
+                        <div th:text="${order.user.adres}"></div>
+                        <div th:text="${order.user.email}"></div>
+                        <div th:text="${order.user.phone}"></div>
+                    </td>
+                    <td>
+                        <div th:text="${order.paid}"></div>
+                    </td>
+                    <td>
+                        <div th:text="${order.send}"></div>
+                    </td>
+
 
                 </tr>
             </table>
