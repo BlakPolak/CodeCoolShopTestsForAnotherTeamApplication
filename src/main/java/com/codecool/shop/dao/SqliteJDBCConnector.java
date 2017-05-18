@@ -49,5 +49,12 @@ public class SqliteJDBCConnector {
                 "    phone TEXT NOT NULL,\n" +
                 "    email TEXT\n" +
                 ");");
+        statement.execute("CREATE TABLE orders\n" +
+                "(\n" +
+                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "    user_id INTEGER NOT NULL,\n" +
+                "    paid BOOLEAN NOT NULL,\n" +
+                "    send BOOLEAN NOT NULL\n" +
+                ")");
     }
 }
