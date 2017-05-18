@@ -92,7 +92,7 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
                                    rs.getString("phone"),
                                    rs.getString("email")
             ));
-            
+
 
             orders.add(order);
         }
