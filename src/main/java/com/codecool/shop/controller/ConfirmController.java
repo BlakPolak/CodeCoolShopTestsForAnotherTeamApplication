@@ -55,7 +55,13 @@ public class ConfirmController {
         return orderDao.add(new Order(userId));
 
     }
-    
+
+
+
+    public Integer createOrder() {
+        return 1;
+    }
+
     private Basket getBasket() {
         if (basket == null) {
             basket = new Basket();
