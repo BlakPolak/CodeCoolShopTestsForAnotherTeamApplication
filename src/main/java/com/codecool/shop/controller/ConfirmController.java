@@ -34,7 +34,7 @@ public class ConfirmController {
         Integer orderId = saveOrder(userId);
         saveBasket(req, res, orderId);
         req.session().attribute("orderId", orderId);
-//        res.redirect();
+        res.redirect("/payment");
         return "";
     }
 

@@ -17,7 +17,7 @@ public class PaymentController {
     public String displayPaymentForm(Request req, Response res) {
         Map params = new HashMap<>();
         params.put("basket", req.session().attribute("basket"));
-        ModelAndView render = new ModelAndView(params, "product/confirm");
+        ModelAndView render = new ModelAndView(params, "product/payment");
         return new ThymeleafTemplateEngine().render(render);
 
     }
