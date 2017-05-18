@@ -20,6 +20,11 @@ public class PaymentController {
 
 
     public String displayPaymentForm(Request req, Response res) {
+        Integer userId = req.session().attribute("userId");
+        if (userId !=null) {
+            User user = userDao.find(req.session().attribute("userId"));
+            res.redirect("/products");
+        }
         Map params = new HashMap<>();
         params.put("basket", req.session().attribute("basket"));
         ModelAndView render = new ModelAndView(params, "product/payment");
@@ -28,9 +33,10 @@ public class PaymentController {
     }
 
     public String processPayment(Request req, Response res) {
-        String m = req.session().attribute("userId");
+        Integer m = req.session().attribute("userId");
         if (m!=null) {
             User user = userDao.find(req.session().attribute("userId"));
+
         }
         res.redirect("/products");
 
