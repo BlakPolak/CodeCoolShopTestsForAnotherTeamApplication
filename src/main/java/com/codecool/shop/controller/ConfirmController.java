@@ -34,8 +34,12 @@ public class ConfirmController {
         Basket basketToSave = getBasket();
         Integer userId = saveUser(req, res);
         Integer orderId = saveOrder(userId);
+        saveBasket(req, res);
 
         return "";
+    }
+
+    private void saveBasket(Request req, Response res) {
     }
 
     public Integer saveUser(Request req, Response res) {
@@ -52,7 +56,7 @@ public class ConfirmController {
 
     }
 
-    
+
 
     public Integer createOrder() {
         return 1;
