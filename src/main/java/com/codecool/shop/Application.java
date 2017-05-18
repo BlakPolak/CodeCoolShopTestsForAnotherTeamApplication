@@ -82,7 +82,8 @@ public class Application {
         post("payment", paymentController::processPayment);
 
 
-        get("/products", this.productController::showAll);
+        get("/products", this.productController::index);
+        get("/products/:id", this.productController::showProduct);
         post("/products/byCategory/", this.productController::indexFilter);
     }
 

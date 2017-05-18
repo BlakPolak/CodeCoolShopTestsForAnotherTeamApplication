@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ConfirmController {
+public class ConfirmController extends BaseController{
 
     private ProductDao productDao = new ProductDaoSqlite();
     private UserDao userDao = new UserDaoSqlite();
@@ -24,7 +24,7 @@ public class ConfirmController {
         Map params = new HashMap<>();
         params.put("basket", req.session().attribute("basket"));
         ModelAndView render = new ModelAndView(params, "product/confirm");
-        return new ThymeleafTemplateEngine().render(render);
+        return this.render("product/confirm", params);
 
     }
 
@@ -55,6 +55,5 @@ public class ConfirmController {
         return orderDao.add(new Order(userId));
 
     }
-
-
+    
 }
