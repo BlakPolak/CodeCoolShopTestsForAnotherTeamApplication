@@ -78,7 +78,8 @@ public class Application {
         post("/confirm", confirmController::saveOrder);
 
 
-        get("/products", this.productController::showAll);
+        get("/products", this.productController::index);
+        get("/products/:id", this.productController::showProduct);
         post("/products/byCategory/", this.productController::indexFilter);
     }
 
