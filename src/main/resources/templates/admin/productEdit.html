@@ -38,10 +38,8 @@
                             </td>
                             <td>
                                 <select id="supplier" name="supplier">
-
-                                    <option th:each="supplier : ${suppliers}"
+                                    <option th:each="supplier : ${suppliers}" th:selected="${supplier.id} == *{product.supplier.id}"
                                             th:value="${supplier.id}" th:text="${supplier.name}"></option>
-
                                 </select>
                             </td>
                         </tr>
@@ -51,7 +49,7 @@
                             </td>
                             <td>
                                 <select id="category" name="category">
-                                    <option th:each="category : ${categories}"
+                                    <option th:each="category : ${categories}" th:selected="${category.id} == *{product.productCategory.id}"
                                         th:value="${category.id}" th:text="${category.name}"></option>
                                 </select>
 

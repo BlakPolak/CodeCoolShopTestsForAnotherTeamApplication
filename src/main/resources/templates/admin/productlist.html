@@ -15,7 +15,7 @@
             <table class="table table-striped">
                 <tr th:each="product : ${products}">
                     <td th:text="${product.name}"></td><td th:text="${product.defaultPrice}"></td>
-                    <td><a th:href="@{~/admin/edit/{id}(id=${product.id})}" class="btn btn-primary">Edit</a></td>
+                    <td><a th:href="@{~/admin/editproduct/{id}(id=${product.id})}" class="btn btn-primary">Edit</a></td>
 
                 </tr>
             </table>

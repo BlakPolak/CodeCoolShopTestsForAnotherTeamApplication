@@ -7,18 +7,12 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h3>Products</h3>
+            <h3>Admin panel</h3>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <table class="table table-striped">
-                <tr th:each="product : ${products}">
-                    <td th:text="${product.name}"></td><td th:text="${product.defaultPrice}"></td>
-                    <td><a th:href="@{~/admin/editproduct/{id}(id=${product.id})}" class="btn btn-primary">Edit</a></td>
-
-                </tr>
-            </table>
+            tu bedzie panel
         </div>
     </div>
 
