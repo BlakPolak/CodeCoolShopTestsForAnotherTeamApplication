@@ -7,10 +7,8 @@ import com.codecool.shop.model.BasketItem;
 import com.codecool.shop.model.Product;
 
 import com.google.gson.Gson;
-import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
