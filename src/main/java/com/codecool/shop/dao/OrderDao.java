@@ -2,6 +2,8 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.model.Order;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface OrderDao {
@@ -10,5 +12,6 @@ public interface OrderDao {
     Order find(int id);
     void remove(int id);
     List<Order> getAll();
+    List<Order> createOrdersList(ResultSet rs) throws SQLException;
 
 }
