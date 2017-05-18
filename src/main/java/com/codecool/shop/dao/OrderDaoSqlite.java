@@ -1,17 +1,23 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.User;
+import spark.ModelAndView;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by pati on 18.05.17.
  */
 public class OrderDaoSqlite extends BaseDao implements OrderDao{
+
+    private final String SELECTALL = "SELECT user_id as userid, paid as paid, send as send, users.first_name as name, last_name as last, adres as address, phone as phone, email as email, orders.id as id FROM orders, users WHERE orders.user_id==users.id";
+    private BasketDao basketDao = new BasketDaoSqlite();
 
     @Override
     public Integer add(Order order) {
@@ -52,6 +58,48 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
 
     @Override
     public List<Order> getAll() {
-        return null;
+
+        List<Order> orders = new ArrayList<>();
+
+        try {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(SELECTALL);
+
+            orders = createOrdersList(rs);
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(orders);
+        return orders;
     }
+
+    @Override
+    public List<Order> createOrdersList(ResultSet rs) throws SQLException {
+
+        List<Order> orders = new ArrayList<>();
+
+        while (rs.next()){
+
+            Basket basket;
+            Order order = new Order(rs.getInt("id"), rs.getInt("userid"));
+            order.setPaid(rs.getBoolean("paid"));
+            order.setSend(rs.getBoolean("send"));
+            order.setUser(new User(rs.getString("name"),
+                                   rs.getString("last"),
+                                   rs.getString("address"),
+                                   rs.getString("phone"),
+                                   rs.getString("email")
+            ));
+
+
+            order.setBasket(basketDao.find(rs.getInt("id")));
+            orders.add(order);
+        }
+
+        return orders;
+    }
+
 }
