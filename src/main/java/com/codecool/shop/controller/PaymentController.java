@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.UserDaoSqlite;
+import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.SendEmail;
 import com.codecool.shop.model.User;
 import spark.ModelAndView;
@@ -39,6 +40,7 @@ public class PaymentController {
             User user = userDao.find(req.session().attribute("userId"));
             sendEmail.send(user, req.session().attribute("basket"));
         }
+        req.session().attribute("basket", new Basket());
         res.redirect("/products");
 
         return "";
