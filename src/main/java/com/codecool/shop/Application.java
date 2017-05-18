@@ -47,7 +47,7 @@ public class Application {
         get("/hello", (req, res) -> "Hello World");
 
         get("/confirm", confirmController::displayConfirmForm);
-        post("/confirm", confirmController::saveOrder);
+        post("/confirm", confirmController::processOrder);
 
     }
     public static void run(){

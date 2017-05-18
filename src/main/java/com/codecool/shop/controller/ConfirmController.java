@@ -1,9 +1,8 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductDaoSqlite;
-import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.UserDaoSqlite;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.model.Basket;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.User;
 import spark.ModelAndView;
 import spark.Request;
@@ -19,8 +18,9 @@ import java.util.Map;
 public class ConfirmController {
 
     private static Basket basket = null;
-    private ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-    private UserDaoSqlite userDaoSqlite = new UserDaoSqlite();
+    private ProductDao productDao = new ProductDaoSqlite();
+    private UserDao userDao = new UserDaoSqlite();
+    private OrderDao orderDao = new OrderDaoSqlite();
 
     public String displayConfirmForm(Request req, Response res) {
         Map params = new HashMap<>();
@@ -30,10 +30,11 @@ public class ConfirmController {
 
     }
 
-    public String saveOrder(Request req, Response res) {
+    public String processOrder(Request req, Response res) {
         Basket basketToSave = getBasket();
         Integer userId = saveUser(req, res);
-        Integer orderId = createOrder();
+        Integer orderId = saveOrder(userId);
+
         return "";
     }
 
@@ -43,9 +44,15 @@ public class ConfirmController {
         String adres = req.queryParams("adres");
         String phone = req.queryParams("phone");
         String email = req.queryParams("email");
-        return userDaoSqlite.add(new User(firstName, lastName, adres, phone, email));
+        return userDao.add(new User(firstName, lastName, adres, phone, email));
+    }
+
+    public Integer saveOrder(Integer userId) {
+        return orderDao.add(new Order(userId));
 
     }
+
+
 
     public Integer createOrder() {
         return 1;
@@ -54,9 +61,9 @@ public class ConfirmController {
     private Basket getBasket() {
         if (basket == null) {
             basket = new Basket();
-            basket.add(productDaoSqlite.find(1), 5);
-            basket.add(productDaoSqlite.find(2), 10);
-            basket.add(productDaoSqlite.find(3), 15);
+            basket.add(productDao.find(1), 5);
+            basket.add(productDao.find(2), 10);
+            basket.add(productDao.find(3), 15);
         }
         return basket;
 
