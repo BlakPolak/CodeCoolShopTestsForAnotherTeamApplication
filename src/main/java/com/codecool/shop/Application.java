@@ -67,6 +67,7 @@ public class Application {
         });
 
         get("admin/orders", this.orderController::showAll);
+        get("admin/remove/:id", this.productController::removeProduct);
         get("admin/addproduct", this.productController::adminProductInsert);
         post("admin/addproduct", this.productController::adminProductInsert);
         get("admin/editproduct/:id", this.productController::adminProductEdit);
