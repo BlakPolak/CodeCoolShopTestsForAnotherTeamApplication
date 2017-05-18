@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoSqlite implements SupplierDao {
+public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
     @Override
     public void add(Supplier supplier) {
 
@@ -20,7 +20,7 @@ public class SupplierDaoSqlite implements SupplierDao {
     public Supplier find(int id) {
         Supplier supplier = null;
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM suppliers WHERE id = " + Integer.toString(id));
             if(rs.next()){

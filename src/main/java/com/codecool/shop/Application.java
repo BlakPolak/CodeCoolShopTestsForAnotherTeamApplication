@@ -3,25 +3,18 @@ package com.codecool.shop;
 
 import com.codecool.shop.controller.BasketController;
 import com.codecool.shop.controller.ConfirmController;
+import com.codecool.shop.controller.OrderController;
 import com.codecool.shop.controller.PaymentController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
-import com.codecool.shop.model.Basket;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.*;
 import spark.Request;
 import spark.Response;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static spark.Spark.before;
 import static spark.Spark.*;
-import static spark.Spark.exception;
-import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.staticFileLocation;
 
 
 public class Application {
@@ -29,6 +22,7 @@ public class Application {
     private static Application app = new Application();
     private Connection connection;
     private BasketController basketController = null;
+    private OrderController orderController = null;
     private ProductController productController = null;
     private ConfirmController confirmController = new ConfirmController();
     private PaymentController paymentController = new PaymentController();
@@ -36,6 +30,7 @@ public class Application {
     private Application() {
         basketController = new BasketController();
         productController = new ProductController();
+        orderController = new OrderController();
     }
 
     public static Application getApp() {
@@ -70,9 +65,21 @@ public class Application {
                 request.session().attribute("basket",basket);
             }
         });
+
+        get("admin/orders", this.orderController::showAll);
+        get("admin/addproduct", this.productController::adminProductInsert);
+        post("admin/addproduct", this.productController::adminProductInsert);
+        get("admin/editproduct/:id", this.productController::adminProductEdit);
+        get("admin/updateproduct/:id", this.productController::adminProductEdit);
+        post("admin/updateproduct/:id", this.productController::adminProductEdit);
+        get("admin/products", this.productController::adminshowAll);
+        get("admin/products/search", this.productController::adminshowAll);
+        get("admin", this.productController::adminshowAll);
+
         get("/basket", basketController::renderBasket);
-        get("/basket/:id/:quantity/add", basketController::addToCartAction);
+        post("/basket/add", basketController::addToCartAction);
         get("/basket/:id/:quantity/delete", basketController::deleteFromCartAction);
+        post("/basket/remove", basketController::deleteFromCartAction);
 
         get("/hello", (req, res) -> "Hello World");
 
@@ -85,11 +92,14 @@ public class Application {
         get("/products", this.productController::index);
         get("/products/:id", this.productController::showProduct);
         post("/products/byCategory/", this.productController::indexFilter);
+
     }
 
-  public static void run(){
+    public static void run(){
+
         Application.getApp().setConnection();
         Application.getApp().appSettings();
         Application.getApp().appRoutes();
     }
+
 }

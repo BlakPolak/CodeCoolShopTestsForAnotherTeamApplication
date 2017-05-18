@@ -1,0 +1,101 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="head::copy"></head>
+<body>
+
+<div class="container">
+    <div th:replace="adminheader::copy"></div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-primary pull-left" th:href="@{~/admin/products}">Back</a>
+            <a class="btn btn-danger pull-right" th:href="@{~/admin/deleteproduct/{id}(id=${product.id})}">Delete</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Add product</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="btn-group">
+                <form th:action="@{~/admin/updateproduct/{id}(id=${product.id})}" method="POST">
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="name">Name: </label>
+                            </td>
+                            <td>
+                                <input id="name" type="text" name="name" th:required="required" th:value="*{product.name}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="price">Price: </label>
+                            </td>
+                            <td>
+                                <input id="price" type="number" name="price" th:required="required" th:value="*{product.defaultPrice}"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="supplier">Supplier: </label>
+                            </td>
+                            <td>
+                                <select id="supplier" name="supplier">
+                                    <option th:each="supplier : ${suppliers}" th:selected="${supplier.id} == *{product.supplier.id}"
+                                            th:value="${supplier.id}" th:text="${supplier.name}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="category">Category</label>
+                            </td>
+                            <td>
+                                <select id="category" name="category">
+                                    <option th:each="category : ${categories}" th:selected="${category.id} == *{product.productCategory.id}"
+                                        th:value="${category.id}" th:text="${category.name}"></option>
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="photo">Image: </label>
+                            </td>
+                            <td>
+                                <input type="file" name="photo" id="photo" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="description">Description: </label>
+                            </td>
+                            <td>
+                                <textarea name="description" id="description" th:text="*{product.description}"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                               <input type="Submit" value="Add" />
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="footer :: copy"></div>
+</div>
+
+</body>
+</html>

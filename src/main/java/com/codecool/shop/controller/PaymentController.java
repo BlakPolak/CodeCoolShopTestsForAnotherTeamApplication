@@ -25,7 +25,6 @@ public class PaymentController {
         Integer userId = req.session().attribute("userId");
         System.out.println(userId);
         if (userId == null) {
-            User user = userDao.find(req.session().attribute("userId"));
             res.redirect("/products");
         }
         Map params = new HashMap<>();
