@@ -82,7 +82,7 @@ public class ProductController {
             ProductCategory category = productCategoryDao.find(Integer.parseInt(request.queryParams("category")));
             Product product = new Product(id, name, price, currency, description, category, supplier);
             productDao.update(product);
-            response.redirect("admin/products");
+            response.redirect("../products");
 
         }
         Map params = new HashMap<>();
@@ -115,6 +115,7 @@ public class ProductController {
             ProductCategory category = productCategoryDao.find(Integer.parseInt(request.queryParams("category")));
             Product product = new Product(name, price, currency, description, category, supplier);
             productDao.insert(product);
+            response.redirect("../admin/products");
 
         }
 
