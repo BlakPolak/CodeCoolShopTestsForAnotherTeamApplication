@@ -22,9 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductController {
+public class ProductController extends BaseController{
     private ProductDao productDao = new ProductDaoSqlite();
-    private ProductView view = new ProductView();
     private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private SupplierDao supplierDao = new SupplierDaoSqlite();
 
@@ -39,8 +38,7 @@ public class ProductController {
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         model.put("basket", basket);
-        ModelAndView render = new ModelAndView(model, "product/index");
-        return new ThymeleafTemplateEngine().render(render);
+        return this.render("product/index", model);
     }
 
     public String indexFilter(Request request, Response response){
@@ -57,7 +55,6 @@ public class ProductController {
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         model.put("basket", basket);
-        ModelAndView render = new ModelAndView(model, "product/index");
-        return new ThymeleafTemplateEngine().render(render);
+        return this.render("product/index", model);
     }
 }
