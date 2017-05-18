@@ -70,15 +70,37 @@ public class ProductController {
         view.displayList(products);
     }
 
+    public String adminProductEdit(Request request, Response response) {
+
+        if (!request.queryParams().isEmpty()) {
+            Integer id = Integer.parseInt(request.params(":id"));
+            String name = request.queryParams("name");
+            Float price = Float.parseFloat(request.queryParams("price"));
+            String description = request.queryParams("description");
+            String currency = "PLN";
+            Supplier supplier = supplierDao.find(Integer.parseInt(request.queryParams("supplier")));
+            ProductCategory category = productCategoryDao.find(Integer.parseInt(request.queryParams("category")));
+            Product product = new Product(id, name, price, currency, description, category, supplier);
+            productDao.update(product);
+            response.redirect("admin/products");
+
+        }
+        Map params = new HashMap<>();
+        params.put("product", productDao.find(Integer.parseInt(request.params(":id"))));
+        params.put("categories", productCategoryDao.getAll());
+        params.put("suppliers", supplierDao.getAll());
+
+        ModelAndView render = new ModelAndView(params, "admin/productEdit");
+        return new ThymeleafTemplateEngine().render(render);
+    }
+
     public String adminshowAll(Request request, Response response) {
 
         Map params = new HashMap<>();
         params.put("products", productDao.getAll());
-        System.out.println(params.get(1));
 
         ModelAndView render = new ModelAndView(params, "admin/productlist");
         return new ThymeleafTemplateEngine().render(render);
-
     }
 
     public String adminProductInsert(Request request, Response response) {
