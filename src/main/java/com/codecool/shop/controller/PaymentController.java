@@ -23,7 +23,6 @@ public class PaymentController {
 
     public String displayPaymentForm(Request req, Response res) {
         Integer userId = req.session().attribute("userId");
-        System.out.println(userId);
         if (userId == null) {
             res.redirect("/products");
         }
