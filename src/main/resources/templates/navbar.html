@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="copy">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            &copy; 2016 Codecool Budapest
+        </div>
+    </div>
+</div>
+
+
+<nav th:fragment="navbar" class="navbar navbar-inverse lead">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" th:href="@{~/products}">Codecool shop</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a th:href="@{~/products}">Home</a></li>
+      <li><a href="#">Admin</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <a th:href="@{~/basket}" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-tags"></span>
+            Total cost: <span th:text="${basket.getPrice()}">25.5 PLN</span>
+        </a>
+    </ul>
+  </div>
+</nav>
+
+
+</body>
+</html>

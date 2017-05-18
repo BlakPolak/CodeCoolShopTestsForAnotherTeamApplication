@@ -22,7 +22,7 @@ public class SupplierDaoSqlite implements SupplierDao {
         try {
             Connection connection = SqliteJDBCConnector.connection();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM suppplier WHERE id = " + Integer.toString(id));
+            ResultSet rs = statement.executeQuery("SELECT * FROM suppliers WHERE id = " + Integer.toString(id));
             if(rs.next()){
                 supplier = new Supplier(
                         rs.getString("name"),
@@ -47,7 +47,7 @@ public class SupplierDaoSqlite implements SupplierDao {
         try {
             Connection connection = SqliteJDBCConnector.connection();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM suppplier");
+            ResultSet rs = statement.executeQuery("SELECT * FROM suppliers");
             while(rs.next()){
                 Supplier supplier = new Supplier(
                         rs.getString("name"),
