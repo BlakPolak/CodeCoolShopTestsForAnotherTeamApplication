@@ -6,6 +6,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.SupplierDaoSqlite;
+import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -27,7 +28,9 @@ public class ProductController {
     private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private static SupplierDao supplierDao = new SupplierDaoSqlite();
 
-    public String showAll(Request request, Response response){
+    public String index(Request request, Response response){
+        Basket basket = request.session().attribute("basket");
+
         List<Product> products = productDao.getAll();
         List<ProductCategory> productCategories = productCategoryDao.getAll();
         List<Supplier> suppliers = supplierDao.getAll();
@@ -35,11 +38,14 @@ public class ProductController {
         model.put("products", products);
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
+        model.put("basket", basket);
         ModelAndView render = new ModelAndView(model, "product/index");
         return new ThymeleafTemplateEngine().render(render);
     }
 
     public String indexFilter(Request request, Response response){
+        Basket basket = request.session().attribute("basket");
+
         List<ProductCategory> productCategories = productCategoryDao.getAll();
         List<Supplier> suppliers = supplierDao.getAll();
         String productName = request.queryParams("name");
@@ -50,10 +56,10 @@ public class ProductController {
         model.put("products", products);
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
+        model.put("basket", basket);
         ModelAndView render = new ModelAndView(model, "product/index");
         return new ThymeleafTemplateEngine().render(render);
     }
-
 
     public void listProductBySupplier(){
         List<Supplier> suppliers= supplierDao.getAll();
@@ -94,6 +100,18 @@ public class ProductController {
         params.put("categories", productCategoryDao.getAll());
         params.put("suppliers", supplierDao.getAll());
         ModelAndView render = new ModelAndView(params, "admin/productAdd");
+        return new ThymeleafTemplateEngine().render(render);
+    }
+
+
+    public String showProduct(Request request, Response response){
+        Basket basket = request.session().attribute("basket");
+        Integer productId = Integer.parseInt(request.params("id"));
+        Product product = this.productDao.find(productId);
+        Map<String, Object> model= new HashMap<>();
+        model.put("product",product);
+        model.put("basket", basket);
+        ModelAndView render = new ModelAndView(model, "product/product");
         return new ThymeleafTemplateEngine().render(render);
     }
 
