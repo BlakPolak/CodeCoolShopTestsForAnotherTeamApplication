@@ -78,11 +78,12 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
 
     @Override
     public List<Order> createOrdersList(ResultSet rs) throws SQLException {
+
         List<Order> orders = new ArrayList<>();
 
         while (rs.next()){
 
-
+            Basket basket;
             Order order = new Order(rs.getInt("id"), rs.getInt("userid"));
             order.setPaid(rs.getBoolean("paid"));
             order.setSend(rs.getBoolean("send"));
@@ -94,6 +95,7 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
             ));
 
 
+            order.setBasket(basketDao.find(rs.getInt("id")));
             orders.add(order);
         }
 

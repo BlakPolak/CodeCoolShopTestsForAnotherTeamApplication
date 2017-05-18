@@ -9,7 +9,7 @@ public class Order {
     private Boolean paid;
     private Boolean send;
     private User user;
-    private List<Basket> basket;
+    private Basket basket;
 
     public Order(Integer id, Integer userId) {
         this.id = id;
@@ -22,14 +22,14 @@ public class Order {
         this.userId = userId;
     }
 
-    public void setBasket(List<Basket> basket) {
+    public void setBasket(Basket basket) {
         this.basket = basket;
     }
     public void setUser(User user) {
         this.user=user;
     }
 
-    public List<Basket> getBasket() {
+    public Basket getBasket() {
         return this.basket;
     }
 

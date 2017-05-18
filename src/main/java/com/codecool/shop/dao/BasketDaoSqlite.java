@@ -39,18 +39,17 @@ public class BasketDaoSqlite extends BaseDao implements BasketDao{
     @Override
     public Basket find(int id) {
 
-        Connection conn = this.getConnection();
-
         Basket basket;
 
         try {
-            PreparedStatement ps = conn.prepareStatement(FINDID);
+            Connection connection = this.getConnection();
+            PreparedStatement ps = connection.prepareStatement(FINDID);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             basket = createBasketList(rs);
 
             rs.close();
-            conn.close();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
