@@ -62,6 +62,6 @@ public class SqliteJDBCConnector {
                 "    order_id INTEGER NOT NULL,\n" +
                 "    product_id INTEGER NOT NULL,\n" +
                 "    quantity INTEGER NOT NULL\n" +
-                ");")
+                ");");
     }
 }
