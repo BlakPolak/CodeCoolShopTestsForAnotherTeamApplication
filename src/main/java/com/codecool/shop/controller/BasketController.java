@@ -3,8 +3,10 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Basket;
+import com.codecool.shop.model.BasketItem;
 import com.codecool.shop.model.Product;
 
+import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -18,13 +20,10 @@ public class BasketController {
 
     public String addToCartAction(Request req, Response res){
         Basket basket = req.session().attribute("basket");
-        Integer id = Integer.parseInt(req.params("id"));
-
+        Integer id = Integer.parseInt(req.queryParams("id"));
         Product product = productDao.find(id);
         basket.add(product, 1);
-
-        res.redirect("/products");
-        return null;
+        return basket.getPrice().toString();
     }
 
     public String renderBasket(Request req, Response res) {
@@ -36,15 +35,25 @@ public class BasketController {
 
     public String deleteFromCartAction(Request req, Response res) {
         Basket basket = req.session().attribute("basket");
-
-        String baseRoute = req.headers("Referer");
-        Integer id = Integer.parseInt(req.params("id"));
-        Integer quantity = Integer.parseInt(req.params("quantity"));
-
+        Integer id = Integer.parseInt(req.queryParams("id"));
+        BasketItem basketItem = basket.getItemById(id);
+        Integer quantity = Integer.parseInt(req.queryParams("quantity"));
         Product product = productDao.find(id);
-        basket.delete(product, quantity);
 
-        res.redirect(baseRoute);
-        return null;
+        Map<String,Object> params = new HashMap<>();
+        basket.delete(product, quantity);
+        if (basketItem.getQuantity() > 0) {
+            Float itemPrice = basketItem.getPrice();
+            params.put("itemPrice", itemPrice);
+        }
+
+        params.put("id", id);
+        params.put("quantity", basketItem.getQuantity());
+        params.put("totalPrice", basket.getPrice());
+
+        Gson gson = new Gson();
+        String json = gson.toJson(params);
+
+        return json;
     }
 }
