@@ -27,7 +27,7 @@ public class ProductController extends BaseController{
     private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private SupplierDao supplierDao = new SupplierDaoSqlite();
 
-    public String showAll(Request request, Response response){
+    public String index(Request request, Response response){
         Basket basket = request.session().attribute("basket");
 
         List<Product> products = productDao.getAll();
@@ -56,5 +56,16 @@ public class ProductController extends BaseController{
         model.put("categories", productCategories);
         model.put("basket", basket);
         return this.render("product/index", model);
+    }
+
+    public String showProduct(Request request, Response response){
+        Basket basket = request.session().attribute("basket");
+        Integer productId = Integer.parseInt(request.params("id"));
+        Product product = this.productDao.find(productId);
+        Map<String, Object> model= new HashMap<>();
+        model.put("product",product);
+        model.put("basket", basket);
+        ModelAndView render = new ModelAndView(model, "product/product");
+        return new ThymeleafTemplateEngine().render(render);
     }
 }
