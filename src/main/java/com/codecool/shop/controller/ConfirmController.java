@@ -41,7 +41,8 @@ public class ConfirmController {
     }
 
     private void saveBasket(Request req, Response res, Integer orderId) {
-        basketDao.add(req.session().attribute("basket")), orderId);
+          basketDao.add(getBasket(), orderId);
+//        basketDao.add(req.session().attribute("basket")), orderId);
     }
 
     public Integer saveUser(Request req, Response res) {
