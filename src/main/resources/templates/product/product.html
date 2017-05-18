@@ -36,6 +36,7 @@
         <div class="text-center">
             <h2 th:text="${product.name}">Product Name</h2>
             <p th:text="${product.description}"> Description</p>
+            <span>Category: </span><span th:text="${product.category.name}">Category</span>
         </div>
     </div>
 </div>
