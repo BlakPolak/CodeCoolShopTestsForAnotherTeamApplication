@@ -23,25 +23,23 @@ public class ConfirmController {
 
     public String displayConfirmForm(Request req, Response res) {
         Map params = new HashMap<>();
-        params.put("basket", getBasket());
+        params.put("basket", req.session().attribute("basket"));
         ModelAndView render = new ModelAndView(params, "product/confirm");
         return new ThymeleafTemplateEngine().render(render);
 
     }
 
     public String processOrder(Request req, Response res) {
-        Basket basketToSave = getBasket();
         Integer userId = saveUser(req, res);
         Integer orderId = saveOrder(userId);
         saveBasket(req, res, orderId);
         req.session().attribute("orderId", orderId);
 //        res.redirect();
-        return null;
+        return "";
     }
 
     private void saveBasket(Request req, Response res, Integer orderId) {
-          basketDao.add(getBasket(), orderId);
-//        basketDao.add(req.session().attribute("basket")), orderId);
+        basketDao.add(req.session().attribute("basket"), orderId);
     }
 
     public Integer saveUser(Request req, Response res) {
@@ -57,13 +55,7 @@ public class ConfirmController {
         return orderDao.add(new Order(userId));
 
     }
-
-
-
-    public Integer createOrder() {
-        return 1;
-    }
-
+    
     private Basket getBasket() {
         if (basket == null) {
             basket = new Basket();
