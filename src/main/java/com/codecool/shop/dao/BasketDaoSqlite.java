@@ -5,8 +5,9 @@ import com.codecool.shop.model.Basket;
 import java.util.List;
 
 public class BasketDaoSqlite extends BaseDao implements BasketDao{
+
     @Override
-    public void add(Basket basket) {
+    public void add(Basket basket, Integer orderId) {
 
     }
 

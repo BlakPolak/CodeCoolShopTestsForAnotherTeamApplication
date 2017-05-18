@@ -21,6 +21,7 @@ public class ConfirmController {
     private ProductDao productDao = new ProductDaoSqlite();
     private UserDao userDao = new UserDaoSqlite();
     private OrderDao orderDao = new OrderDaoSqlite();
+    private BasketDao basketDao = new BasketDaoSqlite();
 
     public String displayConfirmForm(Request req, Response res) {
         Map params = new HashMap<>();
@@ -34,12 +35,13 @@ public class ConfirmController {
         Basket basketToSave = getBasket();
         Integer userId = saveUser(req, res);
         Integer orderId = saveOrder(userId);
-        saveBasket(req, res);
+        saveBasket(req, res, orderId);
 
         return "";
     }
 
-    private void saveBasket(Request req, Response res) {
+    private void saveBasket(Request req, Response res, Integer orderId) {
+        basketDao.add(req.session().attribute("basket")), orderId);
     }
 
     public Integer saveUser(Request req, Response res) {
