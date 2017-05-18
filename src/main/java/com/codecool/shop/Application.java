@@ -79,6 +79,7 @@ public class Application {
         get("/confirm", confirmController::displayConfirmForm);
         post("/confirm", confirmController::processOrder);
         get("payment", paymentController::displayPaymentForm);
+        post("payment", paymentController::processPayment);
 
 
         get("/products", this.productController::showAll);
