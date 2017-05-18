@@ -30,6 +30,8 @@ public class ProductCategoryDaoSqlite extends BaseDao implements ProductCategory
                         rs.getString("description")
                 );
                 productCategory.setId(rs.getInt("id"));
+                rs.close();
+                statement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,6 +59,8 @@ public class ProductCategoryDaoSqlite extends BaseDao implements ProductCategory
                 );
                 productCategory.setId(rs.getInt("id"));
                 productCategoryList.add(productCategory);
+                rs.close();
+                statement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();

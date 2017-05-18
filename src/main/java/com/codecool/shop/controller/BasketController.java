@@ -15,7 +15,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BasketController {
+public class BasketController extends BaseController{
     private ProductDao productDao = new ProductDaoSqlite();
 
     public String addToCartAction(Request req, Response res){
@@ -30,7 +30,7 @@ public class BasketController {
         Basket basket = req.session().attribute("basket");
         Map<String,Object> params = new HashMap<>();
         params.put("basket", basket);
-        return new ThymeleafTemplateEngine().render(new ModelAndView(params, "product/basket"));
+        return this.render("product/basket", params);
     }
 
     public String deleteFromCartAction(Request req, Response res) {

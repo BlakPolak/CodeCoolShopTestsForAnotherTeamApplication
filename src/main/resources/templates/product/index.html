@@ -62,7 +62,7 @@
             <div class="thumbnail">
                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt=""/>
                 <div class="caption">
-                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
+                    <a th:href="@{'~/products/' + ${prod.id}} "> <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name </h4></a>
                     <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">

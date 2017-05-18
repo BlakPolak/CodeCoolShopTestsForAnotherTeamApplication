@@ -1,9 +1,8 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductDaoSqlite;
-import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.UserDaoSqlite;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.model.Basket;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.User;
 import spark.ModelAndView;
 import spark.Request;
@@ -13,28 +12,34 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by pati on 16.05.17.
- */
-public class ConfirmController {
 
-    private static Basket basket = null;
-    private ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-    private UserDaoSqlite userDaoSqlite = new UserDaoSqlite();
+public class ConfirmController extends BaseController{
+
+    private ProductDao productDao = new ProductDaoSqlite();
+    private UserDao userDao = new UserDaoSqlite();
+    private OrderDao orderDao = new OrderDaoSqlite();
+    private BasketDao basketDao = new BasketDaoSqlite();
 
     public String displayConfirmForm(Request req, Response res) {
         Map params = new HashMap<>();
-        params.put("basket", getBasket());
+        params.put("basket", req.session().attribute("basket"));
         ModelAndView render = new ModelAndView(params, "product/confirm");
-        return new ThymeleafTemplateEngine().render(render);
+        return this.render("product/confirm", params);
 
     }
 
-    public String saveOrder(Request req, Response res) {
-        Basket basketToSave = getBasket();
+    public String processOrder(Request req, Response res) {
         Integer userId = saveUser(req, res);
-        Integer orderId = createOrder();
+        Integer orderId = saveOrder(userId);
+        saveBasket(req, res, orderId);
+        req.session().attribute("orderId", orderId);
+        req.session().attribute("userId", userId);
+        res.redirect("/payment");
         return "";
+    }
+
+    private void saveBasket(Request req, Response res, Integer orderId) {
+        basketDao.add(req.session().attribute("basket"), orderId);
     }
 
     public Integer saveUser(Request req, Response res) {
@@ -43,23 +48,12 @@ public class ConfirmController {
         String adres = req.queryParams("adres");
         String phone = req.queryParams("phone");
         String email = req.queryParams("email");
-        return userDaoSqlite.add(new User(firstName, lastName, adres, phone, email));
-
+        return userDao.add(new User(firstName, lastName, adres, phone, email));
     }
 
-    public Integer createOrder() {
-        return 1;
-    }
-
-    private Basket getBasket() {
-        if (basket == null) {
-            basket = new Basket();
-            basket.add(productDaoSqlite.find(1), 5);
-            basket.add(productDaoSqlite.find(2), 10);
-            basket.add(productDaoSqlite.find(3), 15);
-        }
-        return basket;
+    public Integer saveOrder(Integer userId) {
+        return orderDao.add(new Order(userId));
 
     }
-
+    
 }
