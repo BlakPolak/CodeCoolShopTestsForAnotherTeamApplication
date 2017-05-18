@@ -21,6 +21,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
     private static SupplierDao supplierDao = new SupplierDaoSqlite();
 
     private static final String INSERT ="INSERT INTO products (name, description, price, category_id, supplier_id) VALUES (?, ?, ?, ?, ?)";
+    private static final String UPDATE ="UPDATE products SET name=?, description=?, price=?, category_id=?, supplier_id=? WHERE id=?";
 
     @Override
     public void add(Product product) {
@@ -126,6 +127,25 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
             ps.setDouble(3, Double.valueOf(product.getDefaultPrice()));
             ps.setInt(4, product.getProductCategory().getId());
             ps.setInt(5, product.getSupplier().getId());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean update(Product product) {
+        try {
+            Connection connection = this.getConnection();
+            PreparedStatement ps = connection.prepareStatement(UPDATE);
+            ps.setString(1, product.getName());
+            ps.setString(2, product.getDescription());
+            ps.setDouble(3, Double.valueOf(product.getDefaultPrice()));
+            ps.setInt(4, product.getProductCategory().getId());
+            ps.setInt(5, product.getSupplier().getId());
+            ps.setInt(6, product.getId());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
