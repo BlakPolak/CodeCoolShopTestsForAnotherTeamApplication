@@ -22,11 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductController {
-    private static ProductDao productDao = new ProductDaoSqlite();
+public class ProductController extends BaseController{
     private ProductView view = new ProductView();
-    private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
-    private static SupplierDao supplierDao = new SupplierDaoSqlite();
+    private ProductDao productDao = new ProductDaoSqlite();
+    private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
+    private SupplierDao supplierDao = new SupplierDaoSqlite();
 
     public String index(Request request, Response response){
         Basket basket = request.session().attribute("basket");
@@ -39,8 +39,7 @@ public class ProductController {
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         model.put("basket", basket);
-        ModelAndView render = new ModelAndView(model, "product/index");
-        return new ThymeleafTemplateEngine().render(render);
+        return this.render("product/index", model);
     }
 
     public String indexFilter(Request request, Response response){
@@ -57,8 +56,7 @@ public class ProductController {
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         model.put("basket", basket);
-        ModelAndView render = new ModelAndView(model, "product/index");
-        return new ThymeleafTemplateEngine().render(render);
+        return this.render("product/index", model);
     }
 
     public void listProductBySupplier(){

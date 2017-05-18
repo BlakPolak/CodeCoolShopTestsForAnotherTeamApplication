@@ -29,6 +29,8 @@ public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
                         rs.getString("description")
                 );
                 supplier.setId(rs.getInt("id"));
+                rs.close();
+                statement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,6 +57,8 @@ public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
                 );
                 supplier.setId(rs.getInt("id"));
                 suppliers.add(supplier);
+                rs.close();
+                statement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
