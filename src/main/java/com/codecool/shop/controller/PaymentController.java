@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.UserDaoSqlite;
+import com.codecool.shop.model.SendEmail;
 import com.codecool.shop.model.User;
 import spark.ModelAndView;
 import spark.Request;
@@ -17,11 +18,13 @@ import java.util.Map;
 public class PaymentController {
 
     private UserDao userDao = new UserDaoSqlite();
+    private SendEmail sendEmail = new SendEmail();
 
 
     public String displayPaymentForm(Request req, Response res) {
         Integer userId = req.session().attribute("userId");
-        if (userId !=null) {
+        System.out.println(userId);
+        if (userId == null) {
             User user = userDao.find(req.session().attribute("userId"));
             res.redirect("/products");
         }
@@ -34,9 +37,10 @@ public class PaymentController {
 
     public String processPayment(Request req, Response res) {
         Integer m = req.session().attribute("userId");
-        if (m!=null) {
+        if (m != null ) {
             User user = userDao.find(req.session().attribute("userId"));
-
+            sendEmail.send("codecool.shop@gmail.com","codecool2016","pp.mikulska@gmail.com",
+                    "hello javatpoint","How r u?");
         }
         res.redirect("/products");
 
