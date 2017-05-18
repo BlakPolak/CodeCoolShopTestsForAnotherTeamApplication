@@ -24,9 +24,9 @@ public class OrderController {
     public String showAll(Request request, Response response) {
 
         List<Order> orderList = orderDao.getAll();
-        System.out.println(orderList);
         Map params = new HashMap<>();
         params.put("orders", orderList);
+
         ModelAndView render = new ModelAndView(params, "admin/orderslist");
         return new ThymeleafTemplateEngine().render(render);
     }

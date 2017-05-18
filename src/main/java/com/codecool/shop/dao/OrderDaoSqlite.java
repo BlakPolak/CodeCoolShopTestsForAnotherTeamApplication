@@ -1,5 +1,6 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.User;
@@ -15,7 +16,8 @@ import java.util.List;
  */
 public class OrderDaoSqlite extends BaseDao implements OrderDao{
 
-    private final String SELECTALL = "SELECT * FROM orders, users WHERE orders.user_id==users.id";
+    private final String SELECTALL = "SELECT user_id as userid, paid as paid, send as send, users.first_name as name, last_name as last, adres as address, phone as phone, email as email, orders.id as id FROM orders, users WHERE orders.user_id==users.id";
+    private BasketDao basketDao = new BasketDaoSqlite();
 
     @Override
     public Integer add(Order order) {
@@ -58,8 +60,6 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
     public List<Order> getAll() {
 
         List<Order> orders = new ArrayList<>();
-//        ProductCategoryDao category = new ProductCategoryDaoSqlite();
-//        SupplierDao supplier = new SupplierDaoSqlite();
 
         try {
             Connection connection = this.getConnection();
@@ -67,27 +67,32 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
             ResultSet rs = statement.executeQuery(SELECTALL);
 
             orders = createOrdersList(rs);
+
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println(orders);
         return orders;
     }
 
     @Override
     public List<Order> createOrdersList(ResultSet rs) throws SQLException {
-        List<Order> orders = null;
+        List<Order> orders = new ArrayList<>();
 
         while (rs.next()){
-            Order order = new Order(rs.getInt("id"), rs.getInt("user_id"));
+
+
+            Order order = new Order(rs.getInt("id"), rs.getInt("userid"));
             order.setPaid(rs.getBoolean("paid"));
             order.setSend(rs.getBoolean("send"));
-            order.setUser(new User(rs.getString("firstName"),
-                                   rs.getString("lastName"),
-                                   rs.getString("adres"),
+            order.setUser(new User(rs.getString("name"),
+                                   rs.getString("last"),
+                                   rs.getString("address"),
                                    rs.getString("phone"),
                                    rs.getString("email")
             ));
+            
 
             orders.add(order);
         }

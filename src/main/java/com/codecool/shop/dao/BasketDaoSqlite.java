@@ -2,17 +2,19 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.BasketItem;
+import com.codecool.shop.model.Order;
+import com.codecool.shop.model.Product;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BasketDaoSqlite extends BaseDao implements BasketDao{
 
+    private ProductDao productDao = new ProductDaoSqlite();
+
     private final String SELECTALL = "SELECT * FROM basket, products WHERE basket.product_id = products.id";
-    private final String FINDID = "SELECT * FROM basket, products WHERE basket.product_id = products.id AND order_id=?";
+    private final String FINDID = "SELECT product_id as product_id, products.name as name, description as description, price as price, quantity as quantity FROM baskets, products WHERE baskets.product_id = products.id AND order_id=?";
 
     @Override
     public void add(Basket basket, Integer orderId) {
@@ -39,19 +41,21 @@ public class BasketDaoSqlite extends BaseDao implements BasketDao{
 
         Connection conn = this.getConnection();
 
-        Basket basket = null;
+        Basket basket;
+
         try {
             PreparedStatement ps = conn.prepareStatement(FINDID);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            //basket = new Basket();
+            basket = createBasketList(rs);
+
             rs.close();
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return basket;
 
+        return basket;
     }
 
     @Override
@@ -60,7 +64,20 @@ public class BasketDaoSqlite extends BaseDao implements BasketDao{
     }
 
     @Override
-    public List<Basket> getAll() {
-        return null;
+    public void getAll() {
+    }
+
+    @Override
+    public Basket createBasketList(ResultSet rs) throws SQLException {
+
+        List<BasketItem> basketItems = new ArrayList<>();
+        Basket singleBasket = new Basket();
+        while (rs.next()) {
+            BasketItem basketItem = new BasketItem(this.productDao.find(rs.getInt("product_id")), rs.getInt("quantity"));
+            basketItems.add(basketItem);
+        }
+        singleBasket.setItems(basketItems);
+
+        return singleBasket;
     }
 }
