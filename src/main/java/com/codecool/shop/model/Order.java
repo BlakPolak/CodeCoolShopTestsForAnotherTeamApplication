@@ -6,6 +6,7 @@ public class Order {
     private Integer userId;
     private Boolean paid;
     private Boolean send;
+    private User user;
 
     public Order(Integer id, Integer userId) {
         this.id = id;
@@ -17,6 +18,14 @@ public class Order {
 
     public Order(Integer userId) {
         this.userId = userId;
+    }
+
+    public void setUser(User user) {
+        this.user=user;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     public Integer getId() {
