@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="author" content="Codecool" />
@@ -33,44 +33,31 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
+
 </div>
 
 <div class="container">
-    <div class="well well-sm">
-        <form method="post" th:action="@{~/products/byCategory/}">
-            <label for="name">Name: </label>
-            <input type="text" id="name" placeholder="name" name="name">
-            <label for="category">Category: </label>
-            <select name="category" id="category">
-                <!--/*@thymesVar id="category" type="model.Category"*/-->
-                <option value="all" >all</option>
-                <option th:if="${categories}" th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
-            </select>
-            <label for="supplier">Supplier: </label>
-            <select name="supplier" id="supplier">
-                <!--/*@thymesVar id="category" type="model.Category"*/-->
-                <option value="all" >all</option>
-                <option th:if="${suppliers}" th:each="supplier : ${suppliers}" th:value="${supplier.getId()}" th:text="${supplier.getName()}"></option>
-            </select>
-            <button type="submit">filter</button>
-        </form>
+    <div class="well well-sm basket-well">
+        <strong>My basket</strong>
+        <a class="btn btn-success pull-right" th:href="@{'~/confirm'}">Confirm</a>
     </div>
 
     <div id="products" class="row list-group">
 
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div class="item col-xs-12 col-lg-4" th:each="basketItem,iterStat : ${basket.getItems()}">
             <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt=""/>
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
                 <div class="caption">
-                    <a th:href="@{'~/products/' + ${prod.id}} "> <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name </h4></a>
-                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
+                    <h4 class="group inner list-group-item-heading" th:text="${basketItem.getProduct().name}">Product name</h4>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            <p class="lead" th:text="${basketItem.getProduct().getPrice()}">100 USD</p>
                         </div>
-                        <div class="col-xs-12 col-md-6">
-                            <button th:attr="data-id=${prod.getId()}" class="btn btn-success add-to-basket" data-toggle="modal" data-target="#addToBasketModal">
-                                Add to cart
+                        <div class="col-xs-12 col-md-12">
+                            <p class="lead d-inline quantity" th:text="'Quantity: ' + ${basketItem.getQuantity()}">100 USD</p>
+                            <span class="lead d-inline itemPrice" th:text="'Total price: ' + ${basketItem.getPrice()} + ' PLN'">100 USD</span>
+                            <button th:attr="data-id=${basketItem.getProduct().getId()}" class="btn btn-danger pull-right delete-from-basket" data-toggle="modal" data-target="#addToBasketModal">
+                                Delete
                             </button>
                         </div>
                     </div>
@@ -94,8 +81,8 @@
             </div>
         </div>
     </div>
-</div>
 
+</div>
 
 <div th:replace="footer :: copy"></div>
 <script src="/js/main.js"></script>

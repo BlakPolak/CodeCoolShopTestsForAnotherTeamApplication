@@ -1,25 +1,29 @@
-import com.codecool.shop.controller.MainMenuController;
-import com.codecool.shop.controller.ProductController;
+import com.codecool.shop.Application;
 import com.codecool.shop.dao.SqliteJDBCConnector;
-import com.codecool.shop.view.UserInput;
 
 import java.sql.SQLException;
-import java.util.Scanner;
 
 
 public class Main {
-    private static MainMenuController mainMenuController = new MainMenuController();
 
     public static void main(String[] args) {
-        if(args.length > 0 && args[0].equals("--create-tables")){
-            System.out.println("Test");
+        if(args.length > 0 && args[0].equals("--init-db")){
+            System.out.println("Created new tables");
             try{
                 SqliteJDBCConnector.createTables();
             }catch (SQLException e){
                 e.printStackTrace();
             }
         }
-        mainMenuController.mainMenuAction();
+        if(args.length > 0 && args[0].equals("--migrate-db")){
+            System.out.println("Drop And create");
+            try{
+                SqliteJDBCConnector.dropTables();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        Application.run();
 
     }
 

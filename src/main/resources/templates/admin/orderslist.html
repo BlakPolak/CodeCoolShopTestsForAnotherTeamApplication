@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="head::copy"></head>
+<body>
+
+<div class="container">
+    <head th:replace="adminheader::copy"></head>
+
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Orders</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped">
+                <tr>
+                    <th>Order number</th>
+                    <th>Customer details</th>
+                    <th>Payment</th>
+                    <th>Delivery</th>
+                    <th>Details</th>
+                </tr>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td>
+                        <span th:text="${order.user.firstName}"></span>
+                        <span th:text="${order.user.lastName}"></span>
+                        <div th:text="${order.user.adres}"></div>
+                        <div th:text="${order.user.email}"></div>
+                        <div th:text="${order.user.phone}"></div>
+                    </td>
+                    <td>
+                        <div th:text="${order.paid}"></div>
+                    </td>
+                    <td>
+                        <div th:text="${order.send}"></div>
+                    </td>
+                    <td>
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Name</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                            </tr>
+                        <tr th:each="orderitem : ${order.basket.items}">
+
+                            <td th:text="${orderitem.product.name}"></td>
+                            <td th:text="${orderitem.quantity}"></td>
+                            <td th:text="${orderitem.product.price}"></td>
+                        </tr>
+                            <tr>
+                                <td></td>
+                                <td><strong>Netto price:</strong></td>
+                                <td>[[${order.basket.getPriceNetto}]]</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><strong>Total price:</strong></td>
+                                <td>[[${order.basket.getPrice}]]</td>
+                            </tr>
+                        </table>
+
+                    </td>
+
+
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="footer :: copy"></div>
+</div>
+
+</body>
+</html>

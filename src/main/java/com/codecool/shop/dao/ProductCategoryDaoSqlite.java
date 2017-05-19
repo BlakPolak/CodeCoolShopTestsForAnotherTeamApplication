@@ -1,6 +1,5 @@
 package com.codecool.shop.dao;
 
-import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
 import java.sql.Connection;
@@ -10,10 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kamil on 04.05.17.
- */
-public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
+public class ProductCategoryDaoSqlite extends BaseDao implements ProductCategoryDao{
     @Override
     public void add(ProductCategory category) {
 
@@ -23,7 +19,7 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
     public ProductCategory find(int id) {
         ProductCategory productCategory = null;
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM categories WHERE id = " + Integer.toString(id));
             if(rs.next()){
@@ -33,6 +29,8 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
                         rs.getString("description")
                 );
                 productCategory.setId(rs.getInt("id"));
+                rs.close();
+                statement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,7 +47,7 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
     public List<ProductCategory> getAll() {
         List<ProductCategory> productCategoryList = new ArrayList<>();
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM categories");
             while (rs.next()){
@@ -61,6 +59,8 @@ public class ProductCategoryDaoSqlite  implements ProductCategoryDao{
                 productCategory.setId(rs.getInt("id"));
                 productCategoryList.add(productCategory);
             }
+            rs.close();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

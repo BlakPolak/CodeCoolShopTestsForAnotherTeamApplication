@@ -3,29 +3,53 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Basket;
+import com.codecool.shop.model.BasketItem;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.view.BasketView;
-import com.codecool.shop.view.ProductView;
-import com.codecool.shop.view.UserInput;
 
-import java.util.List;
+import com.google.gson.Gson;
+import spark.Request;
+import spark.Response;
 
-public class BasketController {
+import java.util.HashMap;
+import java.util.Map;
+
+public class BasketController extends BaseController{
     private ProductDao productDao = new ProductDaoSqlite();
-    private BasketView basketView = new BasketView();
-    private Basket basket = new Basket();
-    private ProductView productView = new ProductView();
 
-    public void addToCartAction(){
-        List<Product> products = this.productDao.getAll();
-        productView.displayList(products);
-        Integer userInput = UserInput.getUserInput();
-        Product product = productDao.find(userInput);
+    public String addToCartAction(Request req, Response res){
+        Basket basket = req.session().attribute("basket");
+        Integer id = Integer.parseInt(req.queryParams("id"));
+        Product product = productDao.find(id);
         basket.add(product, 1);
-        basketView.displayBasket(basket.getItems());
+        return basket.getPrice().toString();
     }
 
-    public void displayBasketItem() {
-        basketView.displayBasket(basket.getItems());
+    public String renderBasket(Request req, Response res) {
+        Basket basket = req.session().attribute("basket");
+        Map<String,Object> params = new HashMap<>();
+        params.put("basket", basket);
+        return this.render("product/basket", params);
+    }
+
+    public String deleteFromCartAction(Request req, Response res) {
+        Basket basket = req.session().attribute("basket");
+        Integer id = Integer.parseInt(req.queryParams("id"));
+        BasketItem basketItem = basket.getItemById(id);
+        Integer quantity = Integer.parseInt(req.queryParams("quantity"));
+        Product product = productDao.find(id);
+
+        Map<String,Object> params = new HashMap<>();
+        basket.delete(product, quantity);
+        if (basketItem.getQuantity() > 0) {
+            Float itemPrice = basketItem.getPrice();
+            params.put("itemPrice", itemPrice);
+        }
+
+        params.put("id", id);
+        params.put("quantity", basketItem.getQuantity());
+        params.put("totalPrice", basket.getPrice());
+
+        Gson gson = new Gson();
+        return gson.toJson(params);
     }
 }
