@@ -17,7 +17,6 @@ import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,29 +42,22 @@ public class ProductController extends BaseController{
     }
 
     public String indexFilter(Request request, Response response){
-        Basket basket = request.session().attribute("basket");
-
-        List<ProductCategory> productCategories = productCategoryDao.getAll();
-        List<Supplier> suppliers = supplierDao.getAll();
         String productName = request.queryParams("name");
         String categoryId = request.queryParams("category");
         String supplierId = request.queryParams("supplier");
+
+        Basket basket = request.session().attribute("basket");
+        List<ProductCategory> productCategories = productCategoryDao.getAll();
+        List<Supplier> suppliers = supplierDao.getAll();
         List<Product> products = this.productDao.getByFilters(productName, categoryId, supplierId);
+
         Map<String, Object> model= new HashMap<>();
         model.put("products", products);
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         model.put("basket", basket);
-        return this.render("product/index", model);
-    }
 
-    public void listProductBySupplier(){
-        List<Supplier> suppliers= supplierDao.getAll();
-        view.displaySupplierList(suppliers);
-        Integer supplierID = UserInput.getUserInput();
-        Supplier supplier = supplierDao.find(supplierID);
-        List<Product> products = productDao.getBy(supplier);
-        view.displayList(products);
+        return this.render("product/index", model);
     }
 
     public String removeProduct(Request request, Response response) {
