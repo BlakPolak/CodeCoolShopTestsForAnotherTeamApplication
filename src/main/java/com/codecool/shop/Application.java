@@ -66,16 +66,18 @@ public class Application {
             }
         });
 
-        get("admin/orders", this.orderController::showAll);
-        get("admin/remove/:id", this.productController::removeProduct);
-        get("admin/addproduct", this.productController::adminProductInsert);
-        post("admin/addproduct", this.productController::adminProductInsert);
-        get("admin/editproduct/:id", this.productController::adminProductEdit);
-        get("admin/updateproduct/:id", this.productController::adminProductEdit);
-        post("admin/updateproduct/:id", this.productController::adminProductEdit);
-        get("admin/products", this.productController::adminshowAll);
-        get("admin/products/search", this.productController::adminshowAll);
-        get("admin", this.productController::adminshowAll);
+        path("/admin", () -> {
+                get("/orders", this.orderController::showAll);
+                get("/remove/:id", this.productController::removeProduct);
+                get("/addproduct", this.productController::adminProductInsert);
+                post("/addproduct", this.productController::adminProductInsert);
+                get("/editproduct/:id", this.productController::adminProductEdit);
+                get("/updateproduct/:id", this.productController::adminProductEdit);
+                post("/updateproduct/:id", this.productController::adminProductEdit);
+                get("/products", this.productController::adminshowAll);
+                get("/products/search", this.productController::adminshowAll);
+                get("/", this.productController::adminshowAll);
+        });
 
         get("/basket", basketController::renderBasket);
         post("/basket/add", basketController::addToCartAction);
