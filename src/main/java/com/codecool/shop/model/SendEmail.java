@@ -1,5 +1,6 @@
 package com.codecool.shop.model;
 
+import java.net.UnknownHostException;
 import java.text.MessageFormat;
 import java.util.Properties;
 import javax.mail.*;
@@ -42,14 +43,17 @@ public class SendEmail {
             //send message
             Transport.send(message);
             System.out.println("message sent successfully");
-        } catch (MessagingException e) {throw new RuntimeException(e);}
+        } catch (MessagingException e) {
+            System.out.println(e.getMessage());}
+//        } catch (UnknownHostException f) {f.printStackTrace();}
+
 
     }
 
     private String createMessage(User user, Basket basket) {
         String message = MessageFormat.format("<h1>Hello {0}!!</h1>\n <h3>This is Your order summary\n",
                 user.getFirstName());
-        message += "<table style='border: black solid 1px'>\n" +
+        message += "<table style='border: solid black 1px'>\n" +
                 "<thead>\n" +
                 "<tr>\n" +
                 "<th>Nr</th>\n" +
@@ -62,19 +66,22 @@ public class SendEmail {
                 "<tbody>";
         int i = 1;
         for (BasketItem item : basket.getItems()) {
-            message += MessageFormat.format("<tr style='border: black solid 1px'>" +
-                            "<td style='border: black solid 1px'>{0}</td>" +
-                            "<td style='border: black solid 1px'>{1}</td>" +
-                            "<td style='border: black solid 1px'>{2}</td>" +
-                            "<td style='border: black solid 1px'>{3}</td>" +
-                            "<td style='border: black solid 1px'>{4} PLN</td></tr>",
+            message += MessageFormat.format("<tr>" +
+                            "<td >{0}</td>" +
+                            "<td >{1}</td>" +
+                            "<td>{2}</td>" +
+                            "<td >{3}</td>" +
+                            "<td >{4} PLN</td></tr>",
                     i,
                     item.getProduct().getName(),
                     item.getQuantity(),
                     item.getProduct().getPrice(),
                     item.getPrice());
         }
-        message += "</tbody></table>";
+        message += "</tbody></table></hr><h4>Basket summary:</h4>";
+        message += MessageFormat.format("<p>Total price netto:  {0} PLN</p>" +
+                "<p>Total price brutto: {1} PLN", basket.getPriceNetto(), basket.getPriceNetto());
+        
         return message;
     }
 
@@ -82,6 +89,11 @@ public class SendEmail {
         return user.getFirstName() + ", thanks for shopping!";
     }
 
+    private String createCSS() {
+        return "table, th, td {border: 1px solid #ddd; text-align: left; padding: 15px;}";
+    }
 
 }
+
+
 
