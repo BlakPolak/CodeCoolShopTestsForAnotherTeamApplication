@@ -5,9 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * Created by kamil on 02.05.17.
- */
+
 public class SqliteJDBCConnector {
 
 
@@ -19,28 +17,6 @@ public class SqliteJDBCConnector {
     public static void createTables() throws SQLException{
         Connection connection = connection();
         Statement statement = connection.createStatement();
-//<<<<<<< HEAD
-//        statement.execute("CREATE TABLE IF NOT EXISTS \"products\"\n" +
-//
-//                "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-//                "name VARCHAR(100)," +
-//                "description TEXT," +
-//                "price DOUBLE DEFAULT 0.00," +
-//                "category_id INTEGER," +
-//                "supplier_id INTEGER," +
-//                "CONSTRAINT products_categories_id_fk FOREIGN KEY (category_id) REFERENCES categories (id)," +
-//                "CONSTRAINT products_suppliers_id_fk FOREIGN KEY (supplier_id) REFERENCES suppliers (id))");
-//       statement.execute("CREATE TABLE IF NOT EXISTS categories" +
-//                "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-//                "name VARCHAR(255) NOT NULL," +
-//                "description TEXT NOT NULL," +
-//                "department TEXT NOT NULL)" );
-//        statement.execute("CREATE TABLE suppliers\n" +
-//                "(\n" +
-//                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-//                "    name VARCHAR(255) NOT NULL,\n" +
-//                "    description TEXT NOT NULL\n" +
-//                ")");
 
 //        products table
         statement.execute("CREATE TABLE IF NOT EXISTS \"products\"\n" +
@@ -52,20 +28,10 @@ public class SqliteJDBCConnector {
                 "supplier_id INTEGER," +
                 "CONSTRAINT products_categories_id_fk FOREIGN KEY (category_id) REFERENCES categories (id)," +
                 "CONSTRAINT products_suppliers_id_fk FOREIGN KEY (supplier_id) REFERENCES suppliers (id))");
-//        statement.execute("CREATE TABLE IF NOT EXISTS categories" +
-//                "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-//                "name VARCHAR(255) NOT NULL," +
-//                "description TEXT NOT NULL," +
-//                "department TEXT NOT NULL)" );
-//        statement.execute("CREATE TABLE IF NOT EXISTS suppliers\n" +
-//                "(\n" +
-//                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-//                "    name VARCHAR(255) NOT NULL,\n" +
-//                "    description TEXT NOT NULL\n" +
-//                ")");
+
         statement.execute("CREATE TABLE IF NOT EXISTS users\n" +
                 "(\n" +
-                "    id INT PRIMARY KEY NOT NULL,\n" +
+                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    first_name VARCHAR(50) NOT NULL,\n" +
                 "    last_name VARCHAR(100),\n" +
                 "    adres TEXT NOT NULL,\n" +
@@ -101,7 +67,7 @@ public class SqliteJDBCConnector {
                 "    name VARCHAR(255) NOT NULL\n" +
                 ", description TEXT NULL)");
 
-        statement.execute("INSERT INTO users (id, first_name, last_name, adres, phone, email) VALUES (1, 'Michael', 'Osak', 'olkusz', '12345', 'osakmichal@gmail.com');");
+        statement.execute("INSERT INTO users (first_name, last_name, adres, phone, email) VALUES ('Michael', 'Osak', 'olkusz', '12345', 'osakmichal@gmail.com');");
         statement.execute("INSERT INTO suppliers (name, description) VALUES ('audi', 'nice cars');");
         statement.execute("INSERT INTO suppliers (name, description) VALUES ('apple', 'nice phones');");
         statement.execute("INSERT INTO categories (name, description) VALUES ('cars', 'nice cars cat');");
