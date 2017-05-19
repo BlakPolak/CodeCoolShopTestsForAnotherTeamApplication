@@ -78,6 +78,18 @@ public class SqliteJDBCConnector {
         statement.execute("INSERT INTO baskets (order_id, product_id, quantity) VALUES (1, 1, 1);");
         statement.execute("INSERT INTO baskets (order_id, product_id, quantity) VALUES (1, 2, 1);");
         statement.execute("INSERT INTO orders (user_id, paid, send) VALUES (1, 1, 1);");
+        connection.close();
     }
 
+    public static void dropTables() throws SQLException {
+        Connection connection = connection();
+        Statement statement = connection.createStatement();
+        statement.execute("DROP TABLE products");
+        statement.execute("DROP TABLE suppliers");
+        statement.execute("DROP TABLE categories");
+        statement.execute("DROP TABLE baskets");
+        statement.execute("DROP TABLE users");
+        statement.execute("DROP TABLE orders");
+        createTables();
+    }
 }
