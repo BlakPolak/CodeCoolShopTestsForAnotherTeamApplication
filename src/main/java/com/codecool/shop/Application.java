@@ -22,16 +22,32 @@ public class Application {
 
     private static Application app = new Application();
     private Connection connection;
-    private BasketController basketController = null;
-    private OrderController orderController = null;
-    private ProductController productController = null;
-    private ConfirmController confirmController = new ConfirmController();
-    private PaymentController paymentController = new PaymentController();
+    private BasketController basketController;
+    private OrderController orderController;
+    private ProductController productController;
+    private ConfirmController confirmController;
+    private PaymentController paymentController;
 
     private Application() {
         basketController = new BasketController();
         productController = new ProductController();
         orderController = new OrderController();
+        confirmController = new ConfirmController();
+        paymentController = new PaymentController();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                Thread.sleep(200);
+                getApp().dropConnection();
+                System.out.println("Shouting down ...");
+
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }));
+    }
+
+    public void dropConnection() throws SQLException {
+        this.getConnection().close();
     }
 
     public static Application getApp() {
