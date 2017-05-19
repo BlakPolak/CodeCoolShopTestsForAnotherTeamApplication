@@ -27,7 +27,7 @@ public class PaymentController {
         if (userId == null) {
             res.redirect("/products");
         }
-        Map params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("basket", req.session().attribute("basket"));
         ModelAndView render = new ModelAndView(params, "product/payment");
         return new ThymeleafTemplateEngine().render(render);

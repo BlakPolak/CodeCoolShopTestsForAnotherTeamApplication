@@ -2,8 +2,6 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.BasketItem;
-import com.codecool.shop.model.Order;
-import com.codecool.shop.model.Product;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -50,8 +50,6 @@ public class BasketController extends BaseController{
         params.put("totalPrice", basket.getPrice());
 
         Gson gson = new Gson();
-        String json = gson.toJson(params);
-
-        return json;
+        return gson.toJson(params);
     }
 }
