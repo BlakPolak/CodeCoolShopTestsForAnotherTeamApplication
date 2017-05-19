@@ -10,8 +10,6 @@ import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import com.codecool.shop.view.ProductView;
-import com.codecool.shop.view.UserInput;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -22,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductController extends BaseController{
-    private ProductView view = new ProductView();
     private ProductDao productDao = new ProductDaoSqlite();
     private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
     private SupplierDao supplierDao = new SupplierDaoSqlite();
@@ -84,7 +81,7 @@ public class ProductController extends BaseController{
             response.redirect("../products");
 
         }
-        Map params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("product", productDao.find(Integer.parseInt(request.params(":id"))));
         params.put("categories", productCategoryDao.getAll());
         params.put("suppliers", supplierDao.getAll());
@@ -95,7 +92,7 @@ public class ProductController extends BaseController{
 
     public String adminshowAll(Request request, Response response) {
 
-        Map params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("products", productDao.getAll());
 
         ModelAndView render = new ModelAndView(params, "admin/productlist");
@@ -118,7 +115,7 @@ public class ProductController extends BaseController{
 
         }
 
-        Map params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("categories", productCategoryDao.getAll());
         params.put("suppliers", supplierDao.getAll());
         ModelAndView render = new ModelAndView(params, "admin/productAdd");
