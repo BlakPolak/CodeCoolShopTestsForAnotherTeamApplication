@@ -2,18 +2,12 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Order;
-import com.codecool.shop.model.Product;
 import com.codecool.shop.model.User;
-import spark.ModelAndView;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by pati on 18.05.17.
- */
 public class OrderDaoSqlite extends BaseDao implements OrderDao{
 
     private final String SELECTALL = "SELECT user_id as userid, paid as paid, send as send, users.first_name as name, last_name as last, adres as address, phone as phone, email as email, orders.id as id FROM orders, users WHERE orders.user_id==users.id";
