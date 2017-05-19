@@ -22,7 +22,7 @@ public class ConfirmController extends BaseController{
         if (basket.getItems().size() == 0) {
             res.redirect("/products");
         }
-        Map params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("basket", req.session().attribute("basket"));
         return this.render("product/confirm", params);
 
@@ -42,7 +42,7 @@ public class ConfirmController extends BaseController{
         basketDao.add(req.session().attribute("basket"), orderId);
     }
 
-    public Integer saveUser(Request req, Response res) {
+    private Integer saveUser(Request req, Response res) {
         String firstName = req.queryParams("firstName");
         String lastName = req.queryParams("lastName");
         String adres = req.queryParams("adres");
@@ -51,7 +51,7 @@ public class ConfirmController extends BaseController{
         return userDao.add(new User(firstName, lastName, adres, phone, email));
     }
 
-    public Integer saveOrder(Integer userId) {
+    private Integer saveOrder(Integer userId) {
         return orderDao.add(new Order(userId));
 
     }
