@@ -31,7 +31,7 @@ public class SqliteJDBCConnector {
 
         statement.execute("CREATE TABLE IF NOT EXISTS users\n" +
                 "(\n" +
-                "    id INT PRIMARY KEY NOT NULL,\n" +
+                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    first_name VARCHAR(50) NOT NULL,\n" +
                 "    last_name VARCHAR(100),\n" +
                 "    adres TEXT NOT NULL,\n" +
@@ -67,7 +67,7 @@ public class SqliteJDBCConnector {
                 "    name VARCHAR(255) NOT NULL\n" +
                 ", description TEXT NULL)");
 
-        statement.execute("INSERT INTO users (id, first_name, last_name, adres, phone, email) VALUES (1, 'Michael', 'Osak', 'olkusz', '12345', 'osakmichal@gmail.com');");
+        statement.execute("INSERT INTO users (first_name, last_name, adres, phone, email) VALUES ('Michael', 'Osak', 'olkusz', '12345', 'osakmichal@gmail.com');");
         statement.execute("INSERT INTO suppliers (name, description) VALUES ('audi', 'nice cars');");
         statement.execute("INSERT INTO suppliers (name, description) VALUES ('apple', 'nice phones');");
         statement.execute("INSERT INTO categories (name, description) VALUES ('cars', 'nice cars cat');");
