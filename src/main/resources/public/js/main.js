@@ -14,7 +14,7 @@ $(document).ready(function(){
         function(data){
             modal.find('.modal-title').html('ADDED');
             modal.find('.modal-body p').html(item.find('h4').html());
-            $("#basket-price").html(data);
+            $("#basket-price").html(data + ' PLN');
         });
     });
 
@@ -35,10 +35,10 @@ $(document).ready(function(){
                 if(quantity === 0) {
                     item.remove();
                 } else {
-                    item.find('.itemPrice').html('Total price: ' + json['itemPrice']);
+                    item.find('.itemPrice').html('Total price: ' + json['itemPrice'] + ' PLN');
                     item.find('.quantity').html('Quantity: ' + quantity);
                 }
-                $('#basket-price').html(json['totalPrice']);
+                $('#basket-price').html(json['totalPrice'] + ' PLN');
             });
 
     });

@@ -23,7 +23,7 @@
     <ul class="nav navbar-nav navbar-right">
         <a th:href="@{~/basket}" class="btn btn-info btn-lg">
             <span class="glyphicon glyphicon-tags"></span>
-            Total cost: <span id="basket-price" th:text="${basket.getPrice()}">25.5</span>PLN
+            Total cost: <span id="basket-price" th:text="${basket.getPrice()} + ' PLN'">25.5</span>
         </a>
     </ul>
   </div>
