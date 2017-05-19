@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static spark.Spark.*;
+import static spark.Spark.notFound;
 
 
 public class Application {
@@ -96,6 +97,10 @@ public class Application {
         get("/products/:id", this.productController::showProduct);
         post("/products/byCategory/", this.productController::indexFilter);
 
+        notFound(((request, response) -> {
+            response.redirect("/products");
+            return null;
+        } ));
     }
 
     public static void run(){
