@@ -14,4 +14,5 @@ public interface OrderDao {
     List<Order> getAll();
     List<Order> createOrdersList(ResultSet rs) throws SQLException;
 
+    void updatePaid(Integer orderId);
 }

@@ -12,7 +12,7 @@ public class SendEmail {
     private String from;
     private String password;
 
-    public void send(User user, Basket basket){
+    public void send(User user, Basket basket, Boolean paid){
         //Get properties object
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
@@ -39,7 +39,7 @@ public class SendEmail {
             MimeMessage message = new MimeMessage(session);
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(user.getEmail()));
             message.setSubject(createSub(user));
-            message.setContent(createMessage(user, basket), "text/html; charset=utf-8");
+            message.setContent(createMessage(user, basket, paid), "text/html; charset=utf-8");
             //send message
             Transport.send(message);
             System.out.println("message sent successfully");
@@ -50,7 +50,7 @@ public class SendEmail {
 
     }
 
-    private String createMessage(User user, Basket basket) {
+    private String createMessage(User user, Basket basket, Boolean paid) {
         String message = MessageFormat.format("<h1>Hello {0}!!</h1>\n <h3>This is Your order summary\n",
                 user.getFirstName());
         message += "<table style='border: solid black 1px'>\n" +
@@ -80,8 +80,13 @@ public class SendEmail {
         }
         message += "</tbody></table></hr><h4>Basket summary:</h4>";
         message += MessageFormat.format("<p>Total price netto:  {0} PLN</p>" +
-                "<p>Total price brutto: {1} PLN", basket.getPriceNetto(), basket.getPriceNetto());
-        
+                "<p>Total price brutto: {1} PLN", basket.getPriceNetto(), basket.getPrice());
+        if (paid) {
+            message += "</hr> <p> Your order has been paid. </p>";
+        } else {
+            message += "</hr> <p> We waiting for your payment. </p>";
+
+        }
         return message;
     }
 
