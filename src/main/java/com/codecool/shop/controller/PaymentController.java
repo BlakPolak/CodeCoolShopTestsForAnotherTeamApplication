@@ -13,9 +13,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by pati on 18.05.17.
- */
+
 public class PaymentController {
 
     private UserDao userDao = new UserDaoSqlite();
@@ -27,7 +25,7 @@ public class PaymentController {
         if (userId == null) {
             res.redirect("/products");
         }
-        Map params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("basket", req.session().attribute("basket"));
         ModelAndView render = new ModelAndView(params, "product/payment");
         return new ThymeleafTemplateEngine().render(render);
