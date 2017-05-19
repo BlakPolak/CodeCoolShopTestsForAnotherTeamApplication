@@ -27,7 +27,6 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
             if(rs.next())
             {
                 id = rs.getInt(1);
-                System.out.println(id);
 
             }
             rs.close();
@@ -83,7 +82,6 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(orders);
         return orders;
     }
 

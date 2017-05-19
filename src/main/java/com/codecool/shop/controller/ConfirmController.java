@@ -18,7 +18,6 @@ public class ConfirmController extends BaseController{
 
     public String displayConfirmForm(Request req, Response res) {
         Basket basket = req.session().attribute("basket");
-        System.out.println(basket.getItems());
         if (basket.getItems().size() == 0) {
             res.redirect("/products");
         }
