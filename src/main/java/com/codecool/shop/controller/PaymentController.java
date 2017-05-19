@@ -5,7 +5,6 @@ import com.codecool.shop.dao.OrderDaoSqlite;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.UserDaoSqlite;
 import com.codecool.shop.model.Basket;
-import com.codecool.shop.model.Order;
 import com.codecool.shop.model.SendEmail;
 import com.codecool.shop.model.User;
 import spark.ModelAndView;
@@ -16,9 +15,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by pati on 18.05.17.
- */
+
 public class PaymentController {
 
     private UserDao userDao = new UserDaoSqlite();

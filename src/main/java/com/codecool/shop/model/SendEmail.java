@@ -1,6 +1,5 @@
 package com.codecool.shop.model;
 
-import java.net.UnknownHostException;
 import java.text.MessageFormat;
 import java.util.Properties;
 import javax.mail.*;
@@ -45,8 +44,6 @@ public class SendEmail {
             System.out.println("message sent successfully");
         } catch (MessagingException e) {
             System.out.println(e.getMessage());}
-//        } catch (UnknownHostException f) {f.printStackTrace();}
-
 
     }
 
