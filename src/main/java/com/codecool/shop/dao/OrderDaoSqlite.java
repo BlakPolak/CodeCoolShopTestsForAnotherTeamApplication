@@ -47,6 +47,23 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
 
     @Override
     public void remove(int id) {
+    }
+
+    @Override
+    public void updatePaid(Integer id) {
+        try {
+            String query = "UPDATE orders SET paid = ? WHERE id = ?";
+            PreparedStatement statement = this.getConnection().prepareStatement(query);
+            statement.setBoolean(1, true);
+            statement.setInt(2, id);
+
+            statement.executeUpdate();
+            statement.close();
+
+
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
 
     }
 
