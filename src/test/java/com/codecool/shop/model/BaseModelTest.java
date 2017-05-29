@@ -26,15 +26,22 @@ class BaseModelTest {
     }
 
     @Test
-    void testForGetDescriptionWithoutSettingDescriptionInConstructor() {
-        BaseModel baseModel = new BaseModel("name");
-        assertEquals(null,baseModel.getDescription());
+    void testSetAndGetId() {
+        BaseModel baseModel = new BaseModel(1, "name", "description");
+        baseModel.setId(-1);
+        assertEquals(-1,baseModel.getId());
+    }
+    @Test
+    void testSetAndGetName() {
+        BaseModel baseModel = new BaseModel(1, "name", "description");
+        baseModel.setName("expectedName");
+        assertEquals("expectedName",baseModel.getName());
+    }
+    @Test
+    void testSetAndGetDescription() {
+        BaseModel baseModel = new BaseModel(1, "name", "description");
+        baseModel.setDescription("expectedDescription");
+        assertEquals("expectedDescription",baseModel.getDescription());
     }
 
-    @Test
-    void testForSetIdWithoutSettingIdInConstructor() {
-        BaseModel baseModel = new BaseModel("name");
-        baseModel.setId(1);
-        assertEquals(1,baseModel.getId());
-    }
 }
