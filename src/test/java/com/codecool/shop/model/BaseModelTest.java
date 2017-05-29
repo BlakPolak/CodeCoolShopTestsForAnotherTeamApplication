@@ -24,4 +24,10 @@ class BaseModelTest {
         BaseModel baseModel = new BaseModel("name");
         assertEquals("name",baseModel.getName());
     }
+
+    @Test
+    void testForGetDescriptionWithoutSettingDescriptionInConstructor() {
+        BaseModel baseModel = new BaseModel("name");
+        assertEquals(null,baseModel.getDescription());
+    }
 }
