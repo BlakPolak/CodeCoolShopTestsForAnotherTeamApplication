@@ -30,4 +30,11 @@ class BaseModelTest {
         BaseModel baseModel = new BaseModel("name");
         assertEquals(null,baseModel.getDescription());
     }
+
+    @Test
+    void testForSetIdWithoutSettingIdInConstructor() {
+        BaseModel baseModel = new BaseModel("name");
+        baseModel.setId(1);
+        assertEquals(1,baseModel.getId());
+    }
 }
