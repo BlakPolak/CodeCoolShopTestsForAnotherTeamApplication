@@ -1,7 +1,6 @@
 package com.codecool.shop.model;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -12,7 +11,6 @@ class BaseModelTest {
         BaseModel baseModel = new BaseModel("name");
         assertEquals(null, baseModel.getId());
     }
-
 
     @Test
     void testForGetNameWhenNameInConstructor() {
@@ -26,17 +24,18 @@ class BaseModelTest {
         baseModel.setId(-1);
         assertEquals(-1,baseModel.getId());
     }
+
     @Test
     void testSetAndGetName() {
         BaseModel baseModel = new BaseModel(1, "name", "description");
         baseModel.setName("expectedName");
         assertEquals("expectedName",baseModel.getName());
     }
+
     @Test
     void testSetAndGetDescription() {
         BaseModel baseModel = new BaseModel(1, "name", "description");
         baseModel.setDescription("expectedDescription");
         assertEquals("expectedDescription",baseModel.getDescription());
     }
-
 }
