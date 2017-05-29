@@ -13,11 +13,6 @@ class BaseModelTest {
         assertEquals(null, baseModel.getId());
     }
 
-    @Test
-    void testForGetIdWhenIdInConstructor() {
-        BaseModel baseModel = new BaseModel(1, "name", "description");
-        assertEquals(1,baseModel.getId());
-    }
 
     @Test
     void testForGetNameWhenNameInConstructor() {
