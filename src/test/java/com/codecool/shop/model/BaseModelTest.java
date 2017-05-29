@@ -18,4 +18,10 @@ class BaseModelTest {
         BaseModel baseModel = new BaseModel(1, "name", "description");
         assertEquals(1,baseModel.getId());
     }
+
+    @Test
+    void testForGetNameWhenNameInConstructor() {
+        BaseModel baseModel = new BaseModel("name");
+        assertEquals("name",baseModel.getName());
+    }
 }
