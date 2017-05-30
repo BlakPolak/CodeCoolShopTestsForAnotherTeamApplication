@@ -24,4 +24,11 @@ class BasketTest {
         this.items = new ArrayList<>();
         this.item = new BasketItem(product, 1);
     }
+
+    @Test
+    public void testSetAndGetItems() {
+        items.add(item);
+        basket.setItems(items);
+        assertEquals(items, basket.getItems());
+    }
 }
