@@ -15,6 +15,7 @@ public class Basket{
     }
 
     public void add(Product product, Integer quantity){
+        if(quantity < 1) throw new IllegalArgumentException("Quantity can't be lower than 1.");
         Boolean productExists = false;
         for(BasketItem item: this.getItems()){
             if(item.getProduct().getId() == product.getId()){
