@@ -32,6 +32,12 @@ class ProductTest {
         String expected = "5.0 USD";
         assertEquals(expected, product.getPrice());
     }
+    @Test
+    void testForGetDefaultPrice() {
+        Product product = new Product("name", (float) 10.0, "PLN", "description",mockedProductCategory,mockedSupplier);
+        product.setPrice(5, "USD");
+        assertEquals(5, product.getDefaultPrice());
+    }
 
     @Test
     void testConstructProductWithNegativePrice() {
