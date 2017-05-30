@@ -32,4 +32,9 @@ class ProductTest {
         String expected = "5.0 USD";
         assertEquals(expected, product.getPrice());
     }
+
+    @Test
+    void testConstructProductWithNegativePrice() {
+        assertThrows(IllegalArgumentException.class, () ->  new Product(1,"name", (float) -1, "PLN", "description",mockedProductCategory,mockedSupplier));
+    }
 }
