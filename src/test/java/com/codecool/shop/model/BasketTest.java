@@ -55,4 +55,9 @@ class BasketTest {
         assertEquals(basket.getPriceNetto(), 1.000000001f/ 1.23f, 0.0f);
         // try using big decimal instead of float when counting money
     }
+
+    @Test
+    public void testDeleteFailsWhenProductIsNull() {
+        assertThrows(NullPointerException.class, ()-> basket.delete(null, 1));
+    }
 }
