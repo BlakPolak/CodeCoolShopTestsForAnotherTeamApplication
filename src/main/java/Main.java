@@ -1,5 +1,7 @@
 import com.codecool.shop.Application;
 import com.codecool.shop.dao.SqliteJDBCConnector;
+import com.codecool.shop.model.Basket;
+import com.codecool.shop.model.Product;
 
 import java.sql.SQLException;
 
