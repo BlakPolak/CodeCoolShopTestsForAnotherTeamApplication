@@ -42,10 +42,16 @@ class ProductTest {
     void testIfCurrencyIsSupportedISO4217code() {
         assertThrows(IllegalArgumentException.class, () ->new Product(1,"name", (float) 10.0, "fsfsafasfasfsa", "description", mockedProductCategory, mockedSupplier));
     }
+    @Test
+    void testFailIfConstructorDoNotThrowNullPointerExceptionWhenCurrencyIsNull() {
+        assertThrows(NullPointerException.class, () ->new Product(1,"name", (float) 10.0, null, "description", mockedProductCategory, mockedSupplier));
+    }
 
     @Test
     void testForGetIdWithoutSettingIdInConstructor() {
         Product product = new Product("name", (float) 10.0, "PLN", "description", mockedProductCategory, mockedSupplier);
         assertEquals(null, product.getId());
     }
+
+
 }
