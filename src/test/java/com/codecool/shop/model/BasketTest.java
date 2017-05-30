@@ -67,7 +67,7 @@ class BasketTest {
     }
 
     @Test
-    public void testGetItemByIdFailsWhenIdIsNull() {
-        assertThrows(IllegalArgumentException.class, ()-> basket.getItemById(null));
+    public void testGetItemByIdFailsWhenIdLT0() {
+        assertThrows(IllegalArgumentException.class, ()-> basket.getItemById(-1));
     }
 }
