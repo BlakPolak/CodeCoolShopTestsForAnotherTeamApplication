@@ -36,4 +36,9 @@ class BasketTest {
     public void testAddToBasketFailsWhenQuantityLT1() {
         assertThrows(IllegalArgumentException.class, ()-> basket.add(product, -1));
     }
+
+    @Test
+    public void testAddFailsIfProductIsNull() {
+        assertThrows(NullPointerException.class, ()-> basket.add(null, 1));
+    }
 }
