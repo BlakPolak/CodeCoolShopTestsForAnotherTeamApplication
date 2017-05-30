@@ -27,7 +27,7 @@ class BaseModelTest {
 
     @Test
     void testSetAndGetName() {
-        BaseModel baseModel = new BaseModel(1, "name", "description");
+        BaseModel baseModel = new BaseModel("name", "description");
         baseModel.setName("expectedName");
         assertEquals("expectedName",baseModel.getName());
     }
