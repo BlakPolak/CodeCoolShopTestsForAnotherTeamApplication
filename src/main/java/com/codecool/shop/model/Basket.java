@@ -48,6 +48,8 @@ public class Basket{
 
     public void delete(Product product, int quantity) {
         List<BasketItem> basketItems =  this.getItems();
+        if(quantity < 1) throw new IllegalArgumentException("Quantity can't be lower than 1.");
+        if(product == null) throw new NullPointerException("Product has to have a value.");
 
         for (BasketItem basketItem : basketItems) {
             if (basketItem.getProduct().getId() == product.getId()) {
