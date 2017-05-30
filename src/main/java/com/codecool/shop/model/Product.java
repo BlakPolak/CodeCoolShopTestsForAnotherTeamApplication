@@ -29,16 +29,8 @@ public class Product extends BaseModel {
         return (float) roundOff;
     }
 
-    public void setDefaultPrice(float defaultPrice) {
-        this.defaultPrice = defaultPrice;
-    }
-
     public Currency getDefaultCurrency() {
-        return defaultCurrency;
-    }
-
-    public void setDefaultCurrency(Currency defaultCurrency) {
-        this.defaultCurrency = defaultCurrency;
+        return this.defaultCurrency;
     }
 
     public String getPrice() {
