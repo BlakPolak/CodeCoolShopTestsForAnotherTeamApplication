@@ -17,4 +17,11 @@ class ProductTest {
         mockedProductCategory = mock(ProductCategory.class);
         mockedSupplier = mock(Supplier.class);
     }
+
+    @Test
+    void testForSetAndGetCurrency() {
+        Product product = new Product("name", (float) 10.0, "PLN", "description", mockedProductCategory, mockedSupplier);
+        product.setPrice(5, "USD");
+        assertEquals("USD", product.getDefaultCurrency().toString());
+    }
 }
