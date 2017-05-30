@@ -41,4 +41,11 @@ class BasketTest {
     public void testAddFailsIfProductIsNull() {
         assertThrows(NullPointerException.class, ()-> basket.add(null, 1));
     }
+
+    @Test
+    public void testGetPriceReturnsAccurateFloat() {
+        basket.add(product, 1);
+        assertEquals(basket.getPrice(), 1.000000001f, 0.0f);
+        // try using big decimal instead of float when counting money
+    }
 }
