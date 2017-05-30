@@ -20,7 +20,7 @@ class BasketTest {
         this.basket = new Basket();
         this.category = new ProductCategory("","","");
         this.supplier = new Supplier("", "");
-        this.product = new Product("", 1.000000001f, "", "", category, supplier);
+        this.product = new Product("", 1.1f, "PLN", "", category, supplier);
         this.items = new ArrayList<>();
         this.item = new BasketItem(product, 1);
     }
@@ -45,14 +45,14 @@ class BasketTest {
     @Test
     public void testGetPriceReturnsAccurateFloat() {
         basket.add(product, 1);
-        assertEquals(basket.getPrice(), 1.000000001f, 0.0f);
+        assertEquals(basket.getPrice(), 1.1f, 0.00000001f);
         // try using big decimal instead of float when counting money
     }
 
     @Test
     public void testGetPriceNettoReturnsAccurateFloat() {
         basket.add(product, 1);
-        assertEquals(basket.getPriceNetto(), 1.000000001f/ 1.23f, 0.0f);
+        assertEquals(basket.getPriceNetto(), 1.1f/ 1.23f, 0.00000001f);
         // try using big decimal instead of float when counting money
     }
 
