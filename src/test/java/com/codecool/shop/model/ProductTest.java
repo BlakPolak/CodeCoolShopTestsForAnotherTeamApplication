@@ -24,4 +24,12 @@ class ProductTest {
         product.setPrice(5, "USD");
         assertEquals("USD", product.getDefaultCurrency().toString());
     }
+
+    @Test
+    void testForSetAndGetPrice() {
+        Product product = new Product("name", (float) 10.0, "PLN", "description",mockedProductCategory,mockedSupplier);
+        product.setPrice(5, "USD");
+        String expected = "5.0 USD";
+        assertEquals(expected, product.getPrice());
+    }
 }
