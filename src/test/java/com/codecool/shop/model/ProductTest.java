@@ -53,5 +53,10 @@ class ProductTest {
         assertEquals(null, product.getId());
     }
 
+    @Test
+    void testForGetSupplier() {
+        Product product = new Product("name", (float) 10.0, "PLN", "description", mockedProductCategory, mockedSupplier);
+        assertEquals(mockedSupplier, product.getSupplier());
+    }
 
 }
