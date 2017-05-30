@@ -31,4 +31,9 @@ class BasketTest {
         basket.setItems(items);
         assertEquals(items, basket.getItems());
     }
+
+    @Test
+    public void testAddToBasketFailsWhenQuantityLT1() {
+        assertThrows(IllegalArgumentException.class, ()-> basket.add(product, -1));
+    }
 }
