@@ -24,4 +24,11 @@ class SupplierTest {
         supplier.setDescription("NewDescription");
         assertEquals("NewDescription", supplier.getDescription());
     }
+
+    @Test
+    void testFailIfAddProductTakeNull() {
+        assertThrows(NullPointerException.class, () -> {
+            supplier.addProduct(null);
+        });
+    }
 }
