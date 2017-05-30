@@ -25,4 +25,10 @@ class BasketItemTest {
         assertEquals(product, basketItem.getProduct());
     }
 
+    @Test
+    public void testSetAndGetQuantity() {
+        basketItem.setQuantity(5);
+        assertEquals(5, basketItem.getQuantity(), 0.00000001);
+    }
+
 }
