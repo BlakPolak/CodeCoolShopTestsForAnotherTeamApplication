@@ -66,6 +66,7 @@ public class Basket{
         }
     }
     public BasketItem getItemById (Integer id) {
+        if(id < 0) throw new IllegalArgumentException("Id can't be lower than 0.");
         for (BasketItem basketItem : this.getItems()) {
             if (basketItem.getProduct().getId() == id) {
                 return basketItem;
