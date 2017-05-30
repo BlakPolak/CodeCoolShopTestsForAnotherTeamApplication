@@ -37,4 +37,9 @@ class ProductTest {
     void testConstructProductWithNegativePrice() {
         assertThrows(IllegalArgumentException.class, () ->  new Product(1,"name", (float) -1, "PLN", "description",mockedProductCategory,mockedSupplier));
     }
+
+    @Test
+    void testIfCurrencyIsSupportedISO4217code() {
+        assertThrows(IllegalArgumentException.class, () ->new Product(1,"name", (float) 10.0, "fsfsafasfasfsa", "description", mockedProductCategory, mockedSupplier));
+    }
 }
