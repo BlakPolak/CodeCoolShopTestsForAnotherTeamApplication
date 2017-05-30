@@ -65,4 +65,9 @@ class BasketTest {
     public void testDeleteFailsWhenQuantityLT1() {
         assertThrows(IllegalArgumentException.class, ()-> basket.delete(product, -1));
     }
+
+    @Test
+    public void testGetItemByIdFailsWhenIdIsNull() {
+        assertThrows(IllegalArgumentException.class, ()-> basket.getItemById(null));
+    }
 }
