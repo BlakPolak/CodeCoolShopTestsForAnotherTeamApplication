@@ -18,4 +18,11 @@ class BasketItemTest {
         this.product = new Product("", 1.1f, "PLN", "", category, supplier);
         this.basketItem = new BasketItem(product, 1);
     }
+
+    @Test
+    public void testSetAndGetProduct() {
+        basketItem.setProduct(product);
+        assertEquals(product, basketItem.getProduct());
+    }
+
 }
