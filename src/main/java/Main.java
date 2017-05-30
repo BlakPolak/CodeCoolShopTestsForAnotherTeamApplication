@@ -15,17 +15,16 @@ public class Main {
                 e.printStackTrace();
             }
         }
-        if(args.length > 0 && args[0].equals("--migrate-db")){
+        else if(args.length > 0 && args[0].equals("--migrate-db")){
             System.out.println("Drop And create");
             try{
                 SqliteJDBCConnector.dropTables();
             }catch (SQLException e){
                 e.printStackTrace();
             }
+        } else if(args.length > 0){
+            throw new IllegalArgumentException("Invalid program argument");
         }
         Application.run();
-
     }
-
-
 }
