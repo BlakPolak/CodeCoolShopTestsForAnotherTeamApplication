@@ -31,4 +31,8 @@ class BasketItemTest {
         assertEquals(5, basketItem.getQuantity(), 0.00000001);
     }
 
+    @Test
+    public void testGetPriceReturnsAccurateFloat() {
+        assertEquals(1.1f, basketItem.getPrice(), 0.00000001);
+    }
 }
