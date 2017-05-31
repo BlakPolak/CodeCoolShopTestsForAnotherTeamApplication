@@ -27,4 +27,9 @@ class OrderDaoSqliteTest {
     public void testUpdatePaidFailsWhenIdLT0() {
         assertThrows(IllegalArgumentException.class, ()-> orderDaoSq.updatePaid(-1));
     }
+
+    @Test
+    public void testGetAllReturnsExpectedList() {
+        assertEquals(null, orderDaoSq.getAll());
+    }
 }
