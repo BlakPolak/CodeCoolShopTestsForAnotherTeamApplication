@@ -11,7 +11,6 @@ public class BasketDaoSqlite extends BaseDao implements BasketDao{
 
     private ProductDao productDao = new ProductDaoSqlite(SqliteJDBCConnector.getConnection());
 
-    private final String SELECTALL = "SELECT * FROM basket, products WHERE basket.product_id = products.id";
     private final String FINDID = "SELECT product_id as product_id, products.name as name, description as description, price as price, quantity as quantity FROM baskets, products WHERE baskets.product_id = products.id AND order_id=?";
 
     public BasketDaoSqlite(Connection connection) {
