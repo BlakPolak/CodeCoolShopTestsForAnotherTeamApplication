@@ -3,8 +3,6 @@ package com.codecool.shop.dao;
 import com.codecool.shop.model.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

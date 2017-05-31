@@ -8,10 +8,6 @@ import com.codecool.shop.controller.PaymentController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 import com.codecool.shop.model.*;
-import spark.Request;
-import spark.Response;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import static spark.Spark.*;
