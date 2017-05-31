@@ -5,6 +5,7 @@ import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.BasketItem;
 import com.codecool.shop.model.Product;
+import java.sql.Connection;
 
 import com.google.gson.Gson;
 import spark.Request;
@@ -14,7 +15,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BasketController extends BaseController{
-    private ProductDao productDao = new ProductDaoSqlite();
+    private ProductDao productDao;
+    private Basket basket;
+
+    public BasketController(Connection connection) {
+        this.productDao = new ProductDaoSqlite(connection);
+        this.basket = new Basket();
+    }
+
+    public Basket getBasket() {
+        return basket;
+    }
+
 
     public String addToCartAction(Request req, Response res){
         Basket basket = req.session().attribute("basket");
