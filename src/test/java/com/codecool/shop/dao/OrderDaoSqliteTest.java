@@ -32,4 +32,9 @@ class OrderDaoSqliteTest {
     public void testGetAllReturnsExpectedList() {
         assertEquals(null, orderDaoSq.getAll());
     }
+
+    @Test
+    public void testCreateOrdersListFailsWhenRsIsNull() {
+        assertThrows(NullPointerException.class, ()-> orderDaoSq.createOrdersList(null));
+    }
 }
