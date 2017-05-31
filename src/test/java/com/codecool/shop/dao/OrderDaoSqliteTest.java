@@ -22,4 +22,9 @@ class OrderDaoSqliteTest {
     public void testAddFailsWhenProductIsNull() {
         assertThrows(NullPointerException.class, ()-> orderDaoSq.add(null));
     }
+
+    @Test
+    public void testUpdatePaidFailsWhenIdLT0() {
+        assertThrows(IllegalArgumentException.class, ()-> orderDaoSq.updatePaid(-1));
+    }
 }
