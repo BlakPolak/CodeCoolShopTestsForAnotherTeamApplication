@@ -23,4 +23,10 @@ class OrderTest {
         this.order.setBasket(this.basket);
         assertEquals(this.order.getBasket(), this.basket);
     }
+
+    @Test
+    void testGetAndSetUser() {
+        this.order.setUser(this.user);
+        assertEquals(this.order.getUser(), this.user);
+    }
 }
