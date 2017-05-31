@@ -17,6 +17,12 @@ class UserTest {
 
         @Test
         void testSetAndGetId() {
+            user.setId(1);
+            assertEquals(1, user.getId(), 0.0000001);
+        }
+
+        @Test
+        void testSetIdLTZero() {
             user.setId(-1);
             assertEquals(-1, user.getId(), 0.0000001);
         }
@@ -27,4 +33,13 @@ class UserTest {
                 user.setId(-1);
             });
         }
+
+        @Test
+        void ifIdIsNullThrowsNullPointerException() {
+            assertThrows(NullPointerException.class, () -> {
+                user.setId(null);
+            });
+        }
+
+
     }
