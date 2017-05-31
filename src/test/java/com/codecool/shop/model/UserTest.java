@@ -20,4 +20,11 @@ class UserTest {
             user.setId(-1);
             assertEquals(-1, user.getId(), 0.0000001);
         }
+
+        @Test
+        void ifIdLTZeroThrowsIllegalArgumentException() {
+            assertThrows(IllegalArgumentException.class, () -> {
+                user.setId(-1);
+            });
+        }
     }
