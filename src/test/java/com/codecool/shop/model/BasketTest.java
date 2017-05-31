@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 
 class BasketTest {
@@ -18,8 +19,8 @@ class BasketTest {
     @BeforeEach
     void setup() {
         this.basket = new Basket();
-        this.category = new ProductCategory("","","");
-        this.supplier = new Supplier("", "");
+        this.category = mock(ProductCategory.class);
+        this.supplier = mock(Supplier.class);
         this.product = new Product("", 1.1f, "PLN", "", category, supplier);
         this.items = new ArrayList<>();
         this.item = new BasketItem(product, 1);
