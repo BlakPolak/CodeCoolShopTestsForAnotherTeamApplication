@@ -29,4 +29,10 @@ class OrderTest {
         this.order.setUser(this.user);
         assertEquals(this.order.getUser(), this.user);
     }
+
+    @Test
+    void testGetAndSetId() {
+        this.order.setId(1);
+        assertEquals((int) this.order.getId(), 1);
+    }
 }
