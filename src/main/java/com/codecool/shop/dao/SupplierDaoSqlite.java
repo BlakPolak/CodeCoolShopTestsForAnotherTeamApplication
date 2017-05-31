@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
+
+    public SupplierDaoSqlite(Connection connection) {
+        super(connection);
+    }
+
     @Override
     public void add(Supplier supplier) {
 
@@ -46,7 +51,7 @@ public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
     public List<Supplier> getAll() {
         List<Supplier> suppliers = new ArrayList<>();
         try {
-            Connection connection = SqliteJDBCConnector.connection();
+            Connection connection = SqliteJDBCConnector.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM suppliers");
             while(rs.next()){

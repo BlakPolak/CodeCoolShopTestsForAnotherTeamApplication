@@ -17,12 +17,16 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductDaoSqlite extends BaseDao implements ProductDao {
-    private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
-    private static SupplierDao supplierDao = new SupplierDaoSqlite();
+    private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite(SqliteJDBCConnector.getConnection());
+    private static SupplierDao supplierDao = new SupplierDaoSqlite(SqliteJDBCConnector.getConnection());
 
     private static final String INSERT ="INSERT INTO products (name, description, price, category_id, supplier_id) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE ="UPDATE products SET name=?, description=?, price=?, category_id=?, supplier_id=? WHERE id=?";
     private static final String DELETE ="DELETE FROM products WHERE id=?";
+
+    public ProductDaoSqlite(Connection connection) {
+        super(connection);
+    }
 
     @Override
     public void add(Product product) {
