@@ -17,4 +17,10 @@ class OrderTest {
         this.basket = mock(Basket.class);
         this.user = mock(User.class);
     }
+
+    @Test
+    void testGetAndSetBasket() {
+        this.order.setBasket(this.basket);
+        assertEquals(this.order.getBasket(), this.basket);
+    }
 }
