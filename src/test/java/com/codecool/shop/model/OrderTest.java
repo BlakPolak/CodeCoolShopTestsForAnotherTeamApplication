@@ -35,4 +35,10 @@ class OrderTest {
         this.order.setId(1);
         assertEquals((int) this.order.getId(), 1);
     }
+
+    @Test
+    void testGetAndSetPaid() {
+        this.order.setPaid(true);
+        assertEquals(this.order.getPaid(), true);
+    }
 }
