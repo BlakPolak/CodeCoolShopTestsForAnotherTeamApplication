@@ -6,15 +6,24 @@ import com.codecool.shop.model.Order;
 import com.codecool.shop.model.User;
 import spark.Request;
 import spark.Response;
+
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class ConfirmController extends BaseController{
 
-    private UserDao userDao = new UserDaoSqlite();
-    private OrderDao orderDao = new OrderDaoSqlite();
-    private BasketDao basketDao = new BasketDaoSqlite();
+    private UserDao userDao;
+    private OrderDao orderDao;
+    private BasketDao basketDao;
+
+
+    public ConfirmController(Connection connection) {
+        this.userDao = new UserDaoSqlite(connection);
+        this.orderDao = new OrderDaoSqlite(connection);
+        this.basketDao = new BasketDaoSqlite(connection);
+    }
 
     public String displayConfirmForm(Request req, Response res) {
         Basket basket = req.session().attribute("basket");

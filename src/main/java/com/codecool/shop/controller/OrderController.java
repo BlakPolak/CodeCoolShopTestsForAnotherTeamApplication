@@ -7,6 +7,7 @@ import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,11 @@ import java.util.Map;
 
 public class OrderController {
 
-    private OrderDao orderDao = new OrderDaoSqlite();
+    private OrderDao orderDao;
+
+    public OrderController(Connection connection) {
+        this.orderDao = new OrderDaoSqlite(connection);
+    }
 
     public String showAll(Request request, Response response) {
 
