@@ -17,4 +17,9 @@ class OrderDaoSqliteTest {
     public void setup() {
         this.orderDaoSq = new OrderDaoSqlite(connection);
     }
+
+    @Test
+    public void testAddFailsWhenProductIsNull() {
+        assertThrows(NullPointerException.class, ()-> orderDaoSq.add(null));
+    }
 }
