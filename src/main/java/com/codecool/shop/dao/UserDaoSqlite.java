@@ -2,16 +2,17 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.model.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 public class UserDaoSqlite extends BaseDao implements UserDao {
+
+    public UserDaoSqlite(Connection connection) {
+        super(connection);
+    }
 
 
     @Override
