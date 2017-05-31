@@ -8,14 +8,17 @@ import java.sql.Statement;
 
 public class SqliteJDBCConnector {
 
+    private static Connection connection;
 
-    public static Connection connection() throws SQLException{
-        return DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
+    public static void setConnection(String path) throws SQLException {
+        connection = DriverManager.getConnection(path);
     }
 
-
+    public static Connection getConnection() {
+        return connection;
+    }
     public static void createTables() throws SQLException{
-        Connection connection = connection();
+
         Statement statement = connection.createStatement();
 
 //        products table
@@ -82,7 +85,6 @@ public class SqliteJDBCConnector {
     }
 
     public static void dropTables() throws SQLException {
-        Connection connection = connection();
         Statement statement = connection.createStatement();
         statement.execute("DROP TABLE products");
         statement.execute("DROP TABLE suppliers");
