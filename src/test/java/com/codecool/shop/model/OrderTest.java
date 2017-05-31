@@ -47,4 +47,9 @@ class OrderTest {
         this.order.setSend(true);
         assertEquals(this.order.getSend(), true);
     }
+
+    @Test
+    void testGetIdWithoutSettingIdInConstructor() {
+        assertEquals(null, this.order.getId());
+    }
 }
