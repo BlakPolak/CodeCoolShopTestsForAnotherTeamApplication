@@ -3,6 +3,7 @@ package com.codecool.shop.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 class BasketItemTest {
@@ -13,8 +14,8 @@ class BasketItemTest {
 
     @BeforeEach
     void setup() {
-        this.category = new ProductCategory("","","");
-        this.supplier = new Supplier("", "");
+        this.category = mock(ProductCategory.class);
+        this.supplier = mock(Supplier.class);
         this.product = new Product("", 1.1f, "PLN", "", category, supplier);
         this.basketItem = new BasketItem(product, 1);
     }
