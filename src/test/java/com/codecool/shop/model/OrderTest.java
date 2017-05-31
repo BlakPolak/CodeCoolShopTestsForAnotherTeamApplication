@@ -41,4 +41,10 @@ class OrderTest {
         this.order.setPaid(true);
         assertEquals(this.order.getPaid(), true);
     }
+
+    @Test
+    void testGetAndSetSend() {
+        this.order.setSend(true);
+        assertEquals(this.order.getSend(), true);
+    }
 }
