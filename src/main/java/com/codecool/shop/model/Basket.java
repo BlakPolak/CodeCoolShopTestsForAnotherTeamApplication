@@ -65,6 +65,7 @@ public class Basket{
         }
     }
     public BasketItem getItemById (Integer id) {
+        if(id < 0) throw new IllegalArgumentException();
         for (BasketItem basketItem : this.getItems()) {
             if (basketItem.getProduct().getId() == id) {
                 return basketItem;
