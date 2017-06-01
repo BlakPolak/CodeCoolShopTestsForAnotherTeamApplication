@@ -1,12 +1,15 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import db.TestSqliteJDBCConnector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.stubbing.OngoingStubbing;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -31,6 +34,9 @@ class ProductControllerTest {
     Connection connection;
     ProductDao productDao;
     Basket basket;
+    ProductCategoryDao productCategoryDao;
+    SupplierDaoSqlite supplierDao;
+
 
     @BeforeEach
     void setup() throws IOException, SQLException {
@@ -44,6 +50,34 @@ class ProductControllerTest {
         basket = mock(Basket.class);
         session = mock(Session.class);
     }
+
+    @Test
+    void testIfRenderAdminProductInsertShowExpectedView () {
+        SupplierDaoSqlite supplierDao = new SupplierDaoSqlite(connection);
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite(connection);
+        ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite(connection);
+        when(request.queryParams("name")).thenReturn("name");
+        when(request.queryParams("name")).thenReturn("name");
+        when(request.queryParams("price")).thenReturn("20");
+        when(request.queryParams("supplier")).thenReturn("1");
+        when(request.queryParams("category")).thenReturn("1");
+        when(request.params("id")).thenReturn("1");
+        String name = request.queryParams("name");
+        String price = request.queryParams("price");
+        String description = request.queryParams("name");
+        String id = request.params("id");
+        String currency = "PLN";
+        Supplier supplier = supplierDao.find(Integer.parseInt(id));
+        ProductCategory productCategory = productCategoryDao.find(Integer.parseInt(id));
+        Product product = new Product(name, Float.parseFloat(price), currency, description, productCategory, supplier);
+        productDaoSqlite.insert(product);
+        Map<String, Object> params = new HashMap<>();
+        params.put("categories", productCategoryDao.getAll());
+        params.put("suppliers", supplierDao.getAll());
+        ModelAndView modelAndView = new ModelAndView(params, "admin/productAdd");
+        assertSame(modelAndView.getViewName(), productController.adminProductInsert(request, response).getViewName());
+    }
+
 
     @Test
     void testIfRenderShowProductShowAllExpectedModelAndView () {
