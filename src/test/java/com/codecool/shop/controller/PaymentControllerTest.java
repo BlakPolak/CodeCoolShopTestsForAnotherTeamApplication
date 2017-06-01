@@ -24,7 +24,7 @@ class PaymentControllerTest {
     Request request;
     Response response;
     Basket basket;
-    ConfirmController confirmController;
+    PaymentController paymentController;
     Session session;
     Connection connection;
 
@@ -35,7 +35,7 @@ class PaymentControllerTest {
         basket = mock(Basket.class, Mockito.RETURNS_DEEP_STUBS);
         session = mock(Session.class, Mockito.RETURNS_DEEP_STUBS);
         connection = mock(Connection.class);
-        confirmController = new ConfirmController(connection);
+        paymentController = new PaymentController(connection);
     }
     
     @Test
@@ -45,6 +45,6 @@ class PaymentControllerTest {
         Map<String, Object> params = new HashMap<>();
         params.put("basket", basket);
         ModelAndView modelAndView = new ModelAndView(params, "product/confirm");
-        assertSame(modelAndView.getViewName(), confirmController.displayConfirmForm(request, response).getViewName());
+        assertSame(modelAndView.getViewName(), paymentController.displayPaymentForm(request, response).getViewName());
     }
 }
