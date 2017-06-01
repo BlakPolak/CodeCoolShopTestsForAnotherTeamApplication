@@ -77,6 +77,14 @@ class ProductControllerTest {
     }
 
     @Test
+    void testIfRemoveProductActuallyRemoveProduct () {
+        when(request.session()).thenReturn(session);
+        Map<String, Object> params = new HashMap<>();
+        ModelAndView modelAndView = new ModelAndView(params, "admin/productEdit");
+        assertSame(modelAndView.getViewName(), productController.removeProduct(request, response).getViewName());
+    }
+
+    @Test
     void testIfRenderShowProductShowAllExpectedModelAndView () {
         when(request.session()).thenReturn(session);
         when(session.attribute("basket")).thenReturn(basket);
