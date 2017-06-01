@@ -60,4 +60,10 @@ class ProductDaoSqliteTest {
         productDaoSqlite.insert(product);
         assertEquals(8, productDaoSqlite.getAll().size());
     }
+
+    @Test
+    void testGetProductByCategoryWhenCategoryNoExistInDatabase() {
+        ProductCategory productCategory = new ProductCategory("name","department","description");
+        assertThrows(IllegalArgumentException.class, () -> {productDaoSqlite.getBy(productCategory);});
+    }
 }
