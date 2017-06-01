@@ -17,7 +17,8 @@ import static org.mockito.Mockito.*;
 
 
 class BasketDaoSqliteTest {
-
+    Supplier mockedSupplier;
+    ProductCategory mockedProductCategory;
     Connection connection;
     BasketDaoSqlite basketDaoSqlite;
 
@@ -34,6 +35,19 @@ class BasketDaoSqliteTest {
     @AfterEach
     void closeConnection() throws SQLException {
         connection.close();
+    }
+
+    @Test
+    void testForAddToBasket() {
+        mockedProductCategory = mock(ProductCategory.class);
+        mockedSupplier = mock(Supplier.class);
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite(connection);
+        Product product = new Product(1, "name", (float) 22, "PLN", "description", mockedProductCategory, mockedSupplier);
+        productDaoSqlite.insert(product);
+        Basket basket = new Basket();
+        basket.add(product, 3);
+        basketDaoSqlite.add(basket, 12);
+        assertEquals(basket, basketDaoSqlite.find(12));
     }
 
 
