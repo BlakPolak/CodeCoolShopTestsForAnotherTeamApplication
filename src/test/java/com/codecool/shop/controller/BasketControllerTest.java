@@ -44,20 +44,6 @@ class BasketControllerTest {
         Map<String, Object> params = new HashMap<>();
         params.put("basket", basket);
         ModelAndView modelAndView = new ModelAndView(params, "product/basket");
-        assertSame(modelAndView, basketController.renderBasket(request, response));
+        assertSame(modelAndView.getViewName(), basketController.renderBasket(request, response).getViewName());
     }
-
-
-
-
-
-//    @Test
-//    void testIfAddTCart () {
-//        when(request.session().attribute("basket")).thenReturn(basket);
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("basket", basket);
-//        ModelAndView modelAndView = new ModelAndView(params, "product/basket");
-//        basketController.renderBasket(request, response);
-//        assertEquals(modelAndView, basketController.renderBasket(request, response));
-//    }
 }
