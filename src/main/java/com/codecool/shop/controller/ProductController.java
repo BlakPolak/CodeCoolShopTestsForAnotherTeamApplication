@@ -14,7 +14,6 @@ import spark.ModelAndView;
 import java.sql.Connection;
 import spark.Request;
 import spark.Response;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +28,12 @@ public class ProductController extends BaseController{
         this.productDao = new ProductDaoSqlite(connection);
         this.productCategoryDao = new ProductCategoryDaoSqlite(connection);
         this.supplierDao = new SupplierDaoSqlite(connection);
+    }
+
+    public ProductController(Connection connection, ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao) {
+        this.productDao = productDao;
+        this.productCategoryDao = productCategoryDao;
+        this.supplierDao = supplierDao;
     }
 
     public ModelAndView index(Request request, Response response){
