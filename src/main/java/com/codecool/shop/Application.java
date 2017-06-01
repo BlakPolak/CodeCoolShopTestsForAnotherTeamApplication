@@ -8,10 +8,6 @@ import com.codecool.shop.controller.PaymentController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 import com.codecool.shop.model.*;
-import spark.Request;
-import spark.Response;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import static spark.Spark.*;
@@ -21,7 +17,6 @@ import static spark.Spark.notFound;
 public class Application {
 
     private static Application app = new Application();
-    private Connection connection;
     private BasketController basketController;
     private OrderController orderController;
     private ProductController productController;
@@ -29,15 +24,16 @@ public class Application {
     private PaymentController paymentController;
 
     private Application() {
-        basketController = new BasketController();
-        productController = new ProductController();
-        orderController = new OrderController();
-        confirmController = new ConfirmController();
-        paymentController = new PaymentController();
+        setConnection();
+        this.basketController = new BasketController(SqliteJDBCConnector.getConnection());
+        this.productController = new ProductController(SqliteJDBCConnector.getConnection());
+        this.orderController = new OrderController(SqliteJDBCConnector.getConnection());
+        this.confirmController = new ConfirmController(SqliteJDBCConnector.getConnection());
+        this.paymentController = new PaymentController(SqliteJDBCConnector.getConnection());
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 Thread.sleep(200);
-                getApp().dropConnection();
+                SqliteJDBCConnector.getConnection().close();
                 System.out.println("Shouting down ...");
 
             } catch (InterruptedException | SQLException e) {
@@ -46,24 +42,17 @@ public class Application {
         }));
     }
 
-    public void dropConnection() throws SQLException {
-        this.getConnection().close();
-    }
 
     public static Application getApp() {
         return app;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
 
     private void setConnection(){
-        try{
-            this.connection = SqliteJDBCConnector.connection();
-        } catch (SQLException e){
-            System.out.println("Connection to Database error");
-            System.exit(1);
+        try {
+            SqliteJDBCConnector.setConnection("jdbc:sqlite:src/main/resources/database.db");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     private void appSettings(){
@@ -121,7 +110,7 @@ public class Application {
 
     public static void run(){
 
-        Application.getApp().setConnection();
+        Application.getApp();
         Application.getApp().appSettings();
         Application.getApp().appRoutes();
     }

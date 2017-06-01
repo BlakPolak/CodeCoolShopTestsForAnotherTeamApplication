@@ -15,8 +15,8 @@ public class Basket{
     }
 
     public void add(Product product, Integer quantity){
-        if(quantity < 1) throw new IllegalArgumentException();
-        if(product == null) throw new NullPointerException();
+        if(quantity < 1) throw new IllegalArgumentException("Quantity can't be lower than 1.");
+        if(product == null) throw new NullPointerException("Product has to have a value.");
         Boolean productExists = false;
         for(BasketItem item: this.getItems()){
             if(item.getProduct().getId() == product.getId()){
@@ -47,8 +47,8 @@ public class Basket{
 
     public void delete(Product product, int quantity) {
         List<BasketItem> basketItems =  this.getItems();
-        if(quantity < 1) throw new IllegalArgumentException();
-        if(product == null) throw new NullPointerException();
+        if(quantity < 1) throw new IllegalArgumentException("Quantity can't be lower than 1.");
+        if(product == null) throw new NullPointerException("Product has to have a value.");
 
         for (BasketItem basketItem : basketItems) {
             if (basketItem.getProduct().getId() == product.getId()) {
@@ -65,7 +65,7 @@ public class Basket{
         }
     }
     public BasketItem getItemById (Integer id) {
-        if(id < 0) throw new IllegalArgumentException();
+        if(id < 0) throw new IllegalArgumentException("Id can't be lower than 0.");
         for (BasketItem basketItem : this.getItems()) {
             if (basketItem.getProduct().getId() == id) {
                 return basketItem;

@@ -12,15 +12,23 @@ import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class PaymentController {
 
-    private UserDao userDao = new UserDaoSqlite();
-    private SendEmail sendEmail = new SendEmail();
-    private OrderDao orderDao = new OrderDaoSqlite();
+    private UserDao userDao;
+    private SendEmail sendEmail;
+    private OrderDao orderDao;
+
+    public PaymentController(Connection connection) {
+        this.orderDao = new OrderDaoSqlite(connection);
+        this.sendEmail = new SendEmail();
+        this.orderDao = new OrderDaoSqlite(connection);
+        this.userDao = new UserDaoSqlite(connection);
+    }
 
     public String displayPaymentForm(Request req, Response res) {
         Integer userId = req.session().attribute("userId");

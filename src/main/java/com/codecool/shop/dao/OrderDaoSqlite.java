@@ -11,7 +11,12 @@ import java.util.List;
 public class OrderDaoSqlite extends BaseDao implements OrderDao{
 
     private final String SELECTALL = "SELECT user_id as userid, paid as paid, send as send, users.first_name as name, last_name as last, adres as address, phone as phone, email as email, orders.id as id FROM orders, users WHERE orders.user_id==users.id";
-    private BasketDao basketDao = new BasketDaoSqlite();
+    private BasketDao basketDao;
+
+    public OrderDaoSqlite(Connection connection) {
+        super(connection);
+        this.basketDao = new BasketDaoSqlite(connection);
+    }
 
     @Override
     public Integer add(Order order) {

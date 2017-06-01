@@ -11,6 +11,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import spark.ModelAndView;
+import java.sql.Connection;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -20,9 +21,19 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductController extends BaseController{
-    private ProductDao productDao = new ProductDaoSqlite();
-    private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
-    private SupplierDao supplierDao = new SupplierDaoSqlite();
+//    private ProductDao productDao = new ProductDaoSqlite();
+//    private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
+//    private SupplierDao supplierDao = new SupplierDaoSqlite();
+    private ProductDao productDao;
+    private ProductCategoryDao productCategoryDao;
+    private SupplierDao supplierDao;
+
+    public ProductController(Connection connection) {
+        this.productDao = new ProductDaoSqlite(connection);
+        this.productCategoryDao = new ProductCategoryDaoSqlite(connection);
+        this.supplierDao = new SupplierDaoSqlite(connection);
+    }
+
 
     public String index(Request request, Response response){
         Basket basket = request.session().attribute("basket");

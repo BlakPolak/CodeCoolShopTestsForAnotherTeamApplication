@@ -30,6 +30,9 @@ public class ProductCategory extends BaseModel {
     }
 
     public void addProduct(Product product) {
+        if (product == null) {
+            throw new NullPointerException();
+        }
         this.products.add(product);
     }
 
