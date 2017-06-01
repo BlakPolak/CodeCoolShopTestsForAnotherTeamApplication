@@ -16,11 +16,6 @@ public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
     }
 
     @Override
-    public void add(Supplier supplier) {
-
-    }
-
-    @Override
     public Supplier find(int id) {
         Supplier supplier = null;
         try {
@@ -43,15 +38,10 @@ public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
     }
 
     @Override
-    public void remove(int id) {
-
-    }
-
-    @Override
     public List<Supplier> getAll() {
         List<Supplier> suppliers = new ArrayList<>();
         try {
-            Connection connection = SqliteJDBCConnector.getConnection();
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM suppliers");
             while(rs.next()){
