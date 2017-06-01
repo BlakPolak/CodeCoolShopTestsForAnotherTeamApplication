@@ -1,7 +1,6 @@
 package com.codecool.shop.dao;
 
 import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.User;
 import db.TestSqliteJDBCConnector;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 
 class ProductCategoryDaoSqliteTest {
 
@@ -51,5 +48,4 @@ class ProductCategoryDaoSqliteTest {
         categories.add(productCategory);
         assertEquals(categories.size(), productCategoryDaoSqlite.getAll().size());
     }
-
 }
