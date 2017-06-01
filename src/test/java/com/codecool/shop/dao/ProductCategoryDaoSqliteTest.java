@@ -36,4 +36,11 @@ class ProductCategoryDaoSqliteTest {
     void closeConnection() throws SQLException {
         connection.close();
     }
+
+    @Test
+    void testIfFindMethodFailWhenIdLTZero() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            productCategoryDaoSqlite.find(-1);
+            });
+    }
 }
