@@ -43,4 +43,13 @@ class ProductCategoryDaoSqliteTest {
             productCategoryDaoSqlite.find(-1);
             });
     }
+
+    @Test
+    void testGetAllReturnsExpectedListSize() {
+        List<ProductCategory> categories = new ArrayList<>();
+        productCategory = new ProductCategory("test", "test", "test");
+        categories.add(productCategory);
+        assertEquals(categories.size(), productCategoryDaoSqlite.getAll().size());
+    }
+
 }
