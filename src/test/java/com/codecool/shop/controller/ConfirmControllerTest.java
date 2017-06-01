@@ -36,5 +36,13 @@ class ConfirmControllerTest {
         confirmController = new ConfirmController(connection);
     }
 
-
+    @Test
+    public void testDisplayConfirmFormReturnsExpectedModelAndView() {
+        when(request.session()).thenReturn(session);
+        when(request.session().attribute("basket")).thenReturn(basket);
+        Map<String, Object> params = new HashMap<>();
+        params.put("basket", basket);
+        ModelAndView modelAndView = new ModelAndView(params, "product/basket");
+        assertSame(modelAndView, confirmController.displayConfirmForm(request, response));
+    }
 }
