@@ -50,5 +50,10 @@ class BasketDaoSqliteTest {
         assertEquals(basket, basketDaoSqlite.find(12));
     }
 
+    @Test
+    void testIfFindMethodReturnNullWhenGivenIdIsNotInDatabase() throws SQLException {
+        assertEquals(null, basketDaoSqlite.find(123));
+    }
+
 
 }
