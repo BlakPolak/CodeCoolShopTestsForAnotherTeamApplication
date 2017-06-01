@@ -8,6 +8,7 @@ import com.codecool.shop.model.Product;
 import java.sql.Connection;
 
 import com.google.gson.Gson;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
@@ -36,11 +37,11 @@ public class BasketController extends BaseController{
         return basket.getPrice().toString();
     }
 
-    public String renderBasket(Request req, Response res) {
+    public ModelAndView renderBasket(Request req, Response res) {
         Basket basket = req.session().attribute("basket");
         Map<String,Object> params = new HashMap<>();
         params.put("basket", basket);
-        return this.render("product/basket", params);
+        return new ModelAndView(params, "product/basket");
     }
 
     public String deleteFromCartAction(Request req, Response res) {

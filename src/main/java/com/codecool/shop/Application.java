@@ -8,6 +8,11 @@ import com.codecool.shop.controller.PaymentController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.SqliteJDBCConnector;
 import com.codecool.shop.model.*;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
 import java.sql.SQLException;
 
 import static spark.Spark.*;
@@ -72,35 +77,82 @@ public class Application {
             }
         });
 
-        path("/admin", () -> {
-            get("/orders", this.orderController::showAll);
-            get("/remove/:id", this.productController::removeProduct);
-            get("/addproduct", this.productController::adminProductInsert);
-            post("/addproduct", this.productController::adminProductInsert);
-            get("/editproduct/:id", this.productController::adminProductEdit);
-            get("/updateproduct/:id", this.productController::adminProductEdit);
-            post("/updateproduct/:id", this.productController::adminProductEdit);
-            get("/products", this.productController::adminshowAll);
-            get("/products/search", this.productController::adminshowAll);
-            get("/", this.productController::adminshowAll);
+        get("/admin/products/search", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.adminshowAll(req, res));
+        });
+        post("/admin/updateproduct/:id", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.adminProductEdit(req, res));
+        });
+        get("/admin/updateproduct/:id", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.adminProductEdit(req, res));
+        });
+        get("/admin/editproduct/:id", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.adminProductEdit(req, res));
+        });
+        get("/admin/", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.adminshowAll(req, res));
+        });
+        get("/admin/remove/:id", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.removeProduct(req, res));
         });
 
-        get("/basket", basketController::renderBasket);
-        post("/basket/add", basketController::addToCartAction);
-        get("/basket/:id/:quantity/delete", basketController::deleteFromCartAction);
-        post("/basket/remove", basketController::deleteFromCartAction);
+        get("/admin/orders", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(orderController.showAll(req, res));
+        });
+        get("/admin/addproduct", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.adminProductInsert(req, res));
+        });
+        post("/admin/addproduct", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.adminProductInsert(req, res));
+        });
+        get("/admin/products", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.adminshowAll(req, res));
+        });
+
+
+        get("/basket", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(basketController.renderBasket(req, res));
+        });
+        post("/basket/add", (Request req, Response res) -> {
+            return basketController.addToCartAction(req, res);
+        });
+
+        get("/basket/:id/:quantity/delete", (Request req, Response res) -> {
+            return basketController.deleteFromCartAction(req, res);
+        });
+
+        post("/basket/remove", (Request req, Response res) -> {
+            return basketController.deleteFromCartAction(req, res);
+        });
 
         get("/hello", (req, res) -> "Hello World");
 
-        get("/confirm", confirmController::displayConfirmForm);
-        post("/confirm", confirmController::processOrder);
-        get("payment", paymentController::displayPaymentForm);
-        post("payment", paymentController::processPayment);
+        get("/confirm", (Request req, Response res) -> {
+             return new ThymeleafTemplateEngine().render(confirmController.displayConfirmForm(req, res));
+        });
 
+        post("/confirm", (Request req, Response res) -> {
+            return confirmController.processOrder(req, res);
+        });
 
-        get("/products", this.productController::index);
-        get("/products/:id", this.productController::showProduct);
-        post("/products/byCategory/", this.productController::indexFilter);
+        get("payment", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(paymentController.displayPaymentForm(req, res));
+        });
+
+        post("payment", (Request req, Response res) -> {
+            return paymentController.processPayment(req, res);
+        });
+
+        get("/products", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.index(req, res));
+        });
+        get("/products/:id", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.showProduct(req, res));
+        });
+        post("/products/byCategory/", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.indexFilter(req, res));
+        });
+
 
         notFound(((request, response) -> {
             response.redirect("/products");

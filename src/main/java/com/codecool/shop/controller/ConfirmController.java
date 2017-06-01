@@ -4,6 +4,7 @@ import com.codecool.shop.dao.*;
 import com.codecool.shop.model.Basket;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.User;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
@@ -25,14 +26,14 @@ public class ConfirmController extends BaseController{
         this.basketDao = new BasketDaoSqlite(connection);
     }
 
-    public String displayConfirmForm(Request req, Response res) {
+    public ModelAndView displayConfirmForm(Request req, Response res) {
         Basket basket = req.session().attribute("basket");
         if (basket.getItems().size() == 0) {
             res.redirect("/products");
         }
         Map<String, Object> params = new HashMap<>();
         params.put("basket", req.session().attribute("basket"));
-        return this.render("product/confirm", params);
+        return new ModelAndView(params, "product/confirm");
 
     }
 
