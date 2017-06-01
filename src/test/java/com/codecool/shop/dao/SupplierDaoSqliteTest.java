@@ -43,4 +43,11 @@ class SupplierDaoSqliteTest {
         });
     }
 
+    @Test
+    void testGetAllReturnsExpectedListSize() {
+        List<Supplier> suppliers = new ArrayList<>();
+        supplier = new Supplier("apple", "nice phones");
+        suppliers.add(supplier);
+        assertEquals(suppliers.size(), supplierDaoSqlite.getAll().size());
+    }
 }
