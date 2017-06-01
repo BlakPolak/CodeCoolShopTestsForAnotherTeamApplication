@@ -44,14 +44,6 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
         return id;
     }
 
-    @Override
-    public Order find(int id) {
-        return null;
-    }
-
-    @Override
-    public void remove(int id) {
-    }
 
     @Override
     public void updatePaid(Integer id) {
