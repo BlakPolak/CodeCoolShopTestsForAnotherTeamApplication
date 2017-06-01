@@ -50,6 +50,15 @@ class ProductControllerTest {
         basket = mock(Basket.class);
         session = mock(Session.class);
     }
+
+    @Test
+    void testIfRenderAdminShowAllShowExpectedView () {
+        Map<String, Object> params = new HashMap<>();
+        params.put("products", productDao.getAll());
+        ModelAndView modelAndView = new ModelAndView(params, "admin/productlist");
+        assertSame(modelAndView.getViewName(), productController.adminshowAll(request, response).getViewName());
+    }
+
     @Test
     void testIfRenderAdminProductEditShowExpectedView () {
         SupplierDaoSqlite supplierDao = new SupplierDaoSqlite(connection);
