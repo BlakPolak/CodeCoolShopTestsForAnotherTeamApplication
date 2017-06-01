@@ -71,6 +71,4 @@ class ProductTest {
         Product product = new Product("name", (float) 10.0, "PLN", "description", mockedProductCategory, mockedSupplier);
         assertEquals(mockedProductCategory, product.getProductCategory());
     }
-
-
 }
