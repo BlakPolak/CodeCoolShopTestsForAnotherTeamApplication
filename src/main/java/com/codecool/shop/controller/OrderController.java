@@ -26,7 +26,6 @@ public class OrderController {
         List<Order> orderList = orderDao.getAll();
         Map<String, Object> params = new HashMap<>();
         params.put("orders", orderList);
-        System.out.println(orderList.get(0).getBasket().getItems());
         return new ModelAndView(params, "admin/orderslist");
     }
 }

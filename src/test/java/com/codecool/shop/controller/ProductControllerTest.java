@@ -15,10 +15,13 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
+import db.TestSqliteJDBCConnector;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import java.io.IOException;
+import java.sql.SQLException;
+
 class ProductControllerTest {
 
     Request request;
@@ -33,7 +36,7 @@ class ProductControllerTest {
     SupplierDao supplierDao;
 
     @BeforeEach
-    void setup() {
+    void setup() throws IOException, SQLException {
         request = mock(Request.class);
         response = mock(Response.class);
         connection = mock(Connection.class);
@@ -44,6 +47,8 @@ class ProductControllerTest {
         basket = mock(Basket.class);
         session = mock(Session.class);
         productController = new ProductController(connection, productDao, productCategoryDao, supplierDao);
+        TestSqliteJDBCConnector.runSql(connection, "src/test/java/db/scripts/BaseStructure.sql");
+        TestSqliteJDBCConnector.runSql(connection, "src/test/java/db/scripts/ProductControllerTest.sql");
     }
 
     @Test
@@ -62,4 +67,18 @@ class ProductControllerTest {
         ModelAndView modelAndView = new ModelAndView(params, "product/index");
         assertSame(modelAndView.getViewName(), productController.index(request, response).getViewName());
     }
+
+    @Test
+    void testIfRenderShowProductShowAllExpectedModelAndView () {
+        when(request.session()).thenReturn(session);
+        when(session.attribute("basket")).thenReturn(basket);
+        when(request.params("id")).thenReturn("1");
+        Product product = productDao.find(1);
+        Map<String, Object> params = new HashMap<>();
+        params.put("product", product);
+        params.put("basket", basket);
+        ModelAndView modelAndView = new ModelAndView(params, "product/product");
+        assertSame(modelAndView.getViewName(), productController.showProduct(request, response).getViewName());
+    }
+
 }

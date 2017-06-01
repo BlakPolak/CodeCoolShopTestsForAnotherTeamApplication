@@ -73,7 +73,6 @@ public class OrderDaoSqlite extends BaseDao implements OrderDao{
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SELECTALL);
-
             orders = createOrdersList(rs);
 
             rs.close();
