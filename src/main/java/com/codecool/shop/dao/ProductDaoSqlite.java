@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductDaoSqlite extends BaseDao implements ProductDao {
-    private static ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite(SqliteJDBCConnector.getConnection());
-    private static SupplierDao supplierDao = new SupplierDaoSqlite(SqliteJDBCConnector.getConnection());
+    private static ProductCategoryDao productCategoryDao;
+    private static SupplierDao supplierDao;
 
     private static final String INSERT ="INSERT INTO products (name, description, price, category_id, supplier_id) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE ="UPDATE products SET name=?, description=?, price=?, category_id=?, supplier_id=? WHERE id=?";
@@ -26,6 +26,8 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
 
     public ProductDaoSqlite(Connection connection) {
         super(connection);
+        this.productCategoryDao = new ProductCategoryDaoSqlite(connection);
+        this.supplierDao = new SupplierDaoSqlite(connection);
     }
 
     @Override
