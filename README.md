@@ -24,6 +24,9 @@
     * SqliteJDBCConnector
         * 100% methods coverage
         * 2/4 tests failed
+    * ProductDaoSqliteTest
+         * 100% methods coverage
+         * 4/9 tests failed
 
 * MODEL:
     * BaseModelTest
