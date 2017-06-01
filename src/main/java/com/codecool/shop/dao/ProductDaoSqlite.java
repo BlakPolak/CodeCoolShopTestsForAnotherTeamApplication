@@ -26,8 +26,9 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
 
     public ProductDaoSqlite(Connection connection) {
         super(connection);
-        productCategoryDao = new ProductCategoryDaoSqlite(connection);
-        supplierDao =  new SupplierDaoSqlite(connection);
+        this.productCategoryDao = new ProductCategoryDaoSqlite(connection);
+        this.supplierDao = new SupplierDaoSqlite(connection);
+
     }
 
     @Override
@@ -78,26 +79,26 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
     @Override
     public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
-//        ProductCategoryDao category = new ProductCategoryDaoSqlite();
-//        SupplierDao supplier = new SupplierDaoSqlite();
+        ProductCategoryDao category = new ProductCategoryDaoSqlite();
+        SupplierDao supplier = new SupplierDaoSqlite();
 
         try {
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM products");
 
-//            while (rs.next()){
-//                Product product = new Product(
-//                        rs.getInt("id"),
-//                        rs.getString("name"),
-//                        rs.getFloat("price"),
-//                        "PLN",
-//                        rs.getString("description"),
-//                        category.find(rs.getInt("category_id")),
-//                        supplier.find(rs.getInt("supplier_id"))
-//                        );
-//                products.add(product);
-//            }
+           while (rs.next()){
+               Product product = new Product(
+                       rs.getInt("id"),
+                        rs.getString("name"),
+                       rs.getFloat("price"),
+                       "PLN",
+                        rs.getString("description"),
+                        category.find(rs.getInt("category_id")),
+                       supplier.find(rs.getInt("supplier_id"))
+                       );
+               products.add(product);
+            }
             products = createProductList(rs);
             rs.close();
             statement.close();

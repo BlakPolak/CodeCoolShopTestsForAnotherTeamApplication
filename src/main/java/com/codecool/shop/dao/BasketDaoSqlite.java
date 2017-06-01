@@ -15,8 +15,7 @@ public class BasketDaoSqlite extends BaseDao implements BasketDao{
 
     public BasketDaoSqlite(Connection connection) {
         super(connection);
-        productDao = new ProductDaoSqlite(connection);
-
+        this.productDao = new ProductDaoSqlite(connection);
     }
 
     @Override
