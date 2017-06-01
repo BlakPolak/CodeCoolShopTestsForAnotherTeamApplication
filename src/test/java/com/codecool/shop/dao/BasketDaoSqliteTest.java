@@ -63,4 +63,11 @@ class BasketDaoSqliteTest {
         });
     }
 
+    @Test
+    void testIfCreateBasketThrowsIllegalArgumentExceptionWithResulSetAsNull() throws SQLException {
+        assertThrows(IllegalArgumentException.class, () -> {
+            basketDaoSqlite.createBasketList(null);
+        });
+    }
+
 }
