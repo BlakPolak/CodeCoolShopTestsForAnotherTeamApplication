@@ -48,4 +48,5 @@ class ProductCategoryDaoSqliteTest {
         categories.add(productCategory);
         assertEquals(categories.size(), productCategoryDaoSqlite.getAll().size());
     }
+
 }
