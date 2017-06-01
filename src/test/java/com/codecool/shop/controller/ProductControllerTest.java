@@ -50,13 +50,38 @@ class ProductControllerTest {
         basket = mock(Basket.class);
         session = mock(Session.class);
     }
+    @Test
+    void testIfRenderAdminProductEditShowExpectedView () {
+        SupplierDaoSqlite supplierDao = new SupplierDaoSqlite(connection);
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite(connection);
+        ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite(connection);
+        when(request.queryParams("name")).thenReturn("name");
+        when(request.queryParams("price")).thenReturn("20");
+        when(request.queryParams("supplier")).thenReturn("1");
+        when(request.queryParams("category")).thenReturn("1");
+        when(request.params(":id")).thenReturn("1");
+        String name = request.queryParams("name");
+        String price = request.queryParams("price");
+        String description = request.queryParams("name");
+        String id = request.params(":id");
+        String currency = "PLN";
+        Supplier supplier = supplierDao.find(Integer.parseInt(id));
+        ProductCategory productCategory = productCategoryDao.find(Integer.parseInt(id));
+        Product product = new Product(name, Float.parseFloat(price), currency, description, productCategory, supplier);
+        productDaoSqlite.update(product);
+        Map<String, Object> params = new HashMap<>();
+        params.put("product", productDao.find(Integer.parseInt(id)));
+        params.put("suppliers", supplierDao.getAll());
+        params.put("categories", productCategoryDao.getAll());
+        ModelAndView modelAndView = new ModelAndView(params, "admin/productEdit");
+        assertSame(modelAndView.getViewName(), productController.adminProductEdit(request, response).getViewName());
+    }
 
     @Test
     void testIfRenderAdminProductInsertShowExpectedView () {
         SupplierDaoSqlite supplierDao = new SupplierDaoSqlite(connection);
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite(connection);
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite(connection);
-        when(request.queryParams("name")).thenReturn("name");
         when(request.queryParams("name")).thenReturn("name");
         when(request.queryParams("price")).thenReturn("20");
         when(request.queryParams("supplier")).thenReturn("1");
