@@ -73,4 +73,16 @@ public class Basket{
         }
         return null;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!Basket.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        return true;
+    }
 }

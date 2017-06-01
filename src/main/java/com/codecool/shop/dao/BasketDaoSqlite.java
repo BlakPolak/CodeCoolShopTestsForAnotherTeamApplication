@@ -59,14 +59,6 @@ public class BasketDaoSqlite extends BaseDao implements BasketDao{
         return basket;
     }
 
-    @Override
-    public void remove(int id) {
-
-    }
-
-    @Override
-    public void getAll() {
-    }
 
     @Override
     public Basket createBasketList(ResultSet rs) throws SQLException {
