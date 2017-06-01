@@ -31,10 +31,7 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
 
     }
 
-    @Override
-    public void add(Product product) {
 
-    }
 
     @Override
     public Product find(int id) {
