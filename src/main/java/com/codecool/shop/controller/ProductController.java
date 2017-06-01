@@ -21,9 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductController extends BaseController{
-//    private ProductDao productDao = new ProductDaoSqlite();
-//    private ProductCategoryDao productCategoryDao = new ProductCategoryDaoSqlite();
-//    private SupplierDao supplierDao = new SupplierDaoSqlite();
     private ProductDao productDao;
     private ProductCategoryDao productCategoryDao;
     private SupplierDao supplierDao;
@@ -34,10 +31,8 @@ public class ProductController extends BaseController{
         this.supplierDao = new SupplierDaoSqlite(connection);
     }
 
-
-    public String index(Request request, Response response){
+    public ModelAndView index(Request request, Response response){
         Basket basket = request.session().attribute("basket");
-
         List<Product> products = productDao.getAll();
         List<ProductCategory> productCategories = productCategoryDao.getAll();
         List<Supplier> suppliers = supplierDao.getAll();
@@ -46,10 +41,10 @@ public class ProductController extends BaseController{
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         model.put("basket", basket);
-        return this.render("product/index", model);
+        return new ModelAndView(model, "product/index");
     }
 
-    public String indexFilter(Request request, Response response){
+    public ModelAndView indexFilter(Request request, Response response){
         String productName = request.queryParams("name");
         String categoryId = request.queryParams("category");
         String supplierId = request.queryParams("supplier");
@@ -64,20 +59,18 @@ public class ProductController extends BaseController{
         model.put("suppliers", suppliers);
         model.put("categories", productCategories);
         model.put("basket", basket);
-
-        return this.render("product/index", model);
+        return new ModelAndView(model, "product/index");
     }
 
-    public String removeProduct(Request request, Response response) {
+    public ModelAndView removeProduct(Request request, Response response) {
 
         productDao.remove(Integer.parseInt(request.params(":id")));
         response.redirect("../../admin/products");
 
         Map params = new HashMap<>();
-        ModelAndView render = new ModelAndView(params, "admin/productEdit");
-        return new ThymeleafTemplateEngine().render(render);
+        return new ModelAndView(params, "admin/productEdit");
     }
-    public String adminProductEdit(Request request, Response response) {
+    public ModelAndView adminProductEdit(Request request, Response response) {
 
         if (!request.queryParams().isEmpty()) {
             Integer id = Integer.parseInt(request.params(":id"));
@@ -97,20 +90,18 @@ public class ProductController extends BaseController{
         params.put("categories", productCategoryDao.getAll());
         params.put("suppliers", supplierDao.getAll());
 
-        ModelAndView render = new ModelAndView(params, "admin/productEdit");
-        return new ThymeleafTemplateEngine().render(render);
+        return new ModelAndView(params, "admin/productEdit");
     }
 
-    public String adminshowAll(Request request, Response response) {
+    public ModelAndView adminshowAll(Request request, Response response) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("products", productDao.getAll());
 
-        ModelAndView render = new ModelAndView(params, "admin/productlist");
-        return new ThymeleafTemplateEngine().render(render);
+        return new ModelAndView(params, "admin/productlist");
     }
 
-    public String adminProductInsert(Request request, Response response) {
+    public ModelAndView adminProductInsert(Request request, Response response) {
 
         if (!request.queryParams().isEmpty()) {
 
@@ -129,20 +120,18 @@ public class ProductController extends BaseController{
         Map<String, Object> params = new HashMap<>();
         params.put("categories", productCategoryDao.getAll());
         params.put("suppliers", supplierDao.getAll());
-        ModelAndView render = new ModelAndView(params, "admin/productAdd");
-        return new ThymeleafTemplateEngine().render(render);
+        return new ModelAndView(params, "admin/productAdd");
     }
 
 
-    public String showProduct(Request request, Response response){
+    public ModelAndView showProduct(Request request, Response response){
         Basket basket = request.session().attribute("basket");
         Integer productId = Integer.parseInt(request.params("id"));
         Product product = this.productDao.find(productId);
         Map<String, Object> model= new HashMap<>();
         model.put("product",product);
         model.put("basket", basket);
-        ModelAndView render = new ModelAndView(model, "product/product");
-        return new ThymeleafTemplateEngine().render(render);
+        return new ModelAndView(model, "product/product");
     }
 
 }
