@@ -21,13 +21,12 @@ public class OrderController {
         this.orderDao = new OrderDaoSqlite(connection);
     }
 
-    public String showAll(Request request, Response response) {
+    public ModelAndView showAll(Request request, Response response) {
 
         List<Order> orderList = orderDao.getAll();
         Map<String, Object> params = new HashMap<>();
         params.put("orders", orderList);
         System.out.println(orderList.get(0).getBasket().getItems());
-        ModelAndView render = new ModelAndView(params, "admin/orderslist");
-        return new ThymeleafTemplateEngine().render(render);
+        return new ModelAndView(params, "admin/orderslist");
     }
 }
