@@ -14,13 +14,13 @@ import java.util.List;
 
 
 class OrderDaoSqliteTest {
-    private OrderDaoSqlite orderDaoSq;
+    private OrderDaoSqlite orderDaoSqlite;
     private Connection connection;
 
     @BeforeEach
     public void setup() throws SQLException, IOException {
         connection = DriverManager.getConnection("jdbc:sqlite:src/test/java/db/test.db");
-        orderDaoSq = new OrderDaoSqlite(connection);
+        orderDaoSqlite = new OrderDaoSqlite(connection);
         TestSqliteJDBCConnector.runSql(connection, "src/test/java/db/scripts/BaseStructure.sql");
     }
 
@@ -31,22 +31,22 @@ class OrderDaoSqliteTest {
 
     @Test
     public void testAddFailsWhenProductIsNull() {
-        assertThrows(NullPointerException.class, ()-> orderDaoSq.add(null));
+        assertThrows(NullPointerException.class, ()-> orderDaoSqlite.add(null));
     }
 
     @Test
     public void testUpdatePaidFailsWhenIdLT0() {
-        assertThrows(IllegalArgumentException.class, ()-> orderDaoSq.updatePaid(-1));
+        assertThrows(IllegalArgumentException.class, ()-> orderDaoSqlite.updatePaid(-1));
     }
 
     @Test
     public void testGetAllReturnsExpectedList() {
         List<Order> orders = new ArrayList<>();
-        assertEquals(orders, orderDaoSq.getAll());
+        assertEquals(orders, orderDaoSqlite.getAll());
     }
 
     @Test
     public void testCreateOrdersListFailsWhenRsIsNull() {
-        assertThrows(NullPointerException.class, ()-> orderDaoSq.createOrdersList(null));
+        assertThrows(NullPointerException.class, ()-> orderDaoSqlite.createOrdersList(null));
     }
 }
