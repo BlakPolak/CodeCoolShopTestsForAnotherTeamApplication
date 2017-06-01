@@ -50,5 +50,14 @@ class ProductDaoSqliteTest {
         assertThrows(IllegalArgumentException.class, () -> {productDaoSqlite.remove(8);;});
     }
 
-
+    @Test
+    void testIfGetAllMethodReturnExpectedAmountOfElements(){
+        SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite(connection);
+        Supplier supplier = supplierDaoSqlite.find(1);
+        ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite(connection);
+        ProductCategory productCategory = productCategoryDaoSqlite.find(1);
+        Product product = new Product(8, "name", (float) 22, "PLN", "description", productCategory, supplier);
+        productDaoSqlite.insert(product);
+        assertEquals(8, productDaoSqlite.getAll().size());
+    }
 }
