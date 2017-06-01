@@ -34,6 +34,15 @@ public class UserDaoSqliteTest {
     void testIfAddReturnsCorrectId() {
         User user = new User("Boleslaw", "Chrobry", "kasztel 12", "8787878787", "bolek666@buziaczek.pl");
         Integer id = userDaoSqlite.add(user);
-        assertEquals(3, (int)id);
+        assertEquals(2, (int)id);
+    }
+
+    @Test
+    void testIfFindReturnsCorrectUser() {
+        User user = userDaoSqlite.find(1);
+        User expectedUser = new User("Michael", "Osak", "olkusz",
+                "12345", "osakmichal@gmail.com");
+        expectedUser.setId(1);
+        assertEquals(expectedUser, user);
     }
 }
