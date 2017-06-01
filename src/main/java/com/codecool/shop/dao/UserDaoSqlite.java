@@ -1,10 +1,7 @@
 package com.codecool.shop.dao;
 
 import com.codecool.shop.model.User;
-
 import java.sql.*;
-import java.util.List;
-
 
 public class UserDaoSqlite extends BaseDao implements UserDao {
 
@@ -68,32 +65,4 @@ public class UserDaoSqlite extends BaseDao implements UserDao {
         }
         return user;
     }
-
-    public Integer findId(String email) {
-        Integer userId = null;
-
-        try {
-            PreparedStatement statement = this.getConnection().
-                    prepareStatement("SELECT id FROM users WHERE email = ?");
-            statement.setString(1, email);
-            ResultSet rs = statement.executeQuery();
-            while(rs.next()) {
-                userId = rs.getInt("id");
-            }
-        } catch (SQLException e ) {
-            e.printStackTrace();
-        }
-        return userId;
-    }
-
-    @Override
-    public void remove(int id) {
-
-    }
-
-    @Override
-    public List<User> getAll() {
-        return null;
-    }
-
 }
