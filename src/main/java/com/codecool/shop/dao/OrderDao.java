@@ -9,8 +9,6 @@ import java.util.List;
 public interface OrderDao {
 
     Integer add(Order order);
-    Order find(int id);
-    void remove(int id);
     List<Order> getAll();
     List<Order> createOrdersList(ResultSet rs) throws SQLException;
 
