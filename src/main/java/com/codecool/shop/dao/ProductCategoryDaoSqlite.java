@@ -16,11 +16,6 @@ public class ProductCategoryDaoSqlite extends BaseDao implements ProductCategory
     }
 
     @Override
-    public void add(ProductCategory category) {
-
-    }
-
-    @Override
     public ProductCategory find(int id) {
         ProductCategory productCategory = null;
         try {
@@ -41,11 +36,6 @@ public class ProductCategoryDaoSqlite extends BaseDao implements ProductCategory
             e.printStackTrace();
         }
         return productCategory;
-    }
-
-    @Override
-    public void remove(int id) {
-
     }
 
     @Override
