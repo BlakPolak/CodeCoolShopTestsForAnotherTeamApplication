@@ -84,4 +84,9 @@ class ProductDaoSqliteTest {
     void testIfGetByFiltersReturnArrayList() {
         assertEquals(ArrayList.class, productDaoSqlite.getByFilters("name", "9" , "1").getClass());
     }
+
+    @Test
+    void testIfGetByFiltersReturnArrayListWhereFilterAll() {
+        assertEquals(7, productDaoSqlite.getByFilters("", "all" , "all").size());
+    }
 }
