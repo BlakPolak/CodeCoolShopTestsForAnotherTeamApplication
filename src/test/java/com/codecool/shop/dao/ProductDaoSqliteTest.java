@@ -79,4 +79,9 @@ class ProductDaoSqliteTest {
     void testGetByFiltersWhenOneFilterNoExistInDatabase() {
         assertThrows(IllegalArgumentException.class, () -> {productDaoSqlite.getByFilters("name", "9" , "1");});
     }
+
+    @Test
+    void testIfGetByFiltersReturnArrayList() {
+        assertEquals(ArrayList.class, productDaoSqlite.getByFilters("name", "9" , "1").getClass());
+    }
 }
