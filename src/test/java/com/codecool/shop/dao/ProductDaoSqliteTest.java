@@ -89,4 +89,15 @@ class ProductDaoSqliteTest {
     void testIfGetByFiltersReturnArrayListWhereFilterAll() {
         assertEquals(7, productDaoSqlite.getByFilters("", "all" , "all").size());
     }
+
+    @Test
+    void testUpdateProduct() {
+        SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite(connection);
+        Supplier supplier = supplierDaoSqlite.find(1);
+        ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite(connection);
+        ProductCategory productCategory = productCategoryDaoSqlite.find(1);
+        Product product = new Product(7, "name", (float) 1000, "PLN", "description", productCategory, supplier);
+        productDaoSqlite.update(product);
+        assertEquals((float)1000,  productDaoSqlite.find(7).getDefaultPrice());
+    }
 }
