@@ -45,4 +45,37 @@ public class User {
     public Integer getId() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!User.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final User other = (User) obj;
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+            return false;
+        }
+        if ((this.firstName == null) ? (other.firstName != null) : !this.firstName.equals(other.firstName)) {
+            return false;
+        }
+        if ((this.lastName == null) ? (other.lastName != null) : !this.lastName.equals(other.lastName)) {
+            return false;
+        }
+        if ((this.adres == null) ? (other.adres != null) : !this.adres.equals(other.adres)) {
+            return false;
+        }
+
+        if ((phone == null) ? (phone != null) : !this.phone.equals(other.phone)) {
+            return false;
+        }
+
+        if ((email == null) ? (email != null) : !this.email.equals(other.email)) {
+            return false;
+        }
+        return true;
+    }
+
 }
