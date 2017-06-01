@@ -79,9 +79,6 @@ public class ProductDaoSqlite extends BaseDao implements ProductDao {
     @Override
     public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
-        ProductCategoryDao category = new ProductCategoryDaoSqlite();
-        SupplierDao supplier = new SupplierDaoSqlite();
-
         try {
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
