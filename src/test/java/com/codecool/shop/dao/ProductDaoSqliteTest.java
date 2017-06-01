@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by ppolak on 01.06.17.
@@ -31,7 +32,6 @@ class ProductDaoSqliteTest {
         TestSqliteJDBCConnector.runSql(connection, "src/test/java/db/scripts/BaseStructure.sql");
         TestSqliteJDBCConnector.runSql(connection, "src/test/java/db/scripts/ProductDaoSqliteTest.sql");
         productDaoSqlite = new ProductDaoSqlite(connection);
-
     }
 
     @AfterEach
@@ -40,8 +40,15 @@ class ProductDaoSqliteTest {
     }
 
     @Test
-    void testFindMethodWitchNoExistingId(){
+    void testFindMethodWithNoExistingId(){
         Product product = productDaoSqlite.find(8);
         assertThrows(NullPointerException.class, () -> {product.getId();});
     }
+
+    @Test
+    void testRemoveProductWhenNoExist(){
+        assertThrows(IllegalArgumentException.class, () -> {productDaoSqlite.remove(8);;});
+    }
+
+
 }
