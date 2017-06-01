@@ -41,7 +41,6 @@ public class Basket{
     }
 
     public Float getPriceNetto() {
-
         return getPrice() / 1.23f;
     }
 
