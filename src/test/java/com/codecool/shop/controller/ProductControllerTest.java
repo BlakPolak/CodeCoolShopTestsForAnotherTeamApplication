@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 import db.TestSqliteJDBCConnector;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
@@ -47,8 +49,6 @@ class ProductControllerTest {
         basket = mock(Basket.class);
         session = mock(Session.class);
         productController = new ProductController(connection, productDao, productCategoryDao, supplierDao);
-        TestSqliteJDBCConnector.runSql(connection, "src/test/java/db/scripts/BaseStructure.sql");
-        TestSqliteJDBCConnector.runSql(connection, "src/test/java/db/scripts/ProductControllerTest.sql");
     }
 
     @Test
@@ -66,6 +66,14 @@ class ProductControllerTest {
         params.put("products", Arrays.asList(mock(Product.class), mock(Product.class)));
         ModelAndView modelAndView = new ModelAndView(params, "product/index");
         assertSame(modelAndView.getViewName(), productController.index(request, response).getViewName());
+    }
+
+    @Test
+    void testIfIndexFilterReturnsExpectedModelAndView () {
+        when(request.session()).thenReturn(session);
+        Map<String, Object> params = new HashMap<>();
+        ModelAndView modelAndView = new ModelAndView(params, "product/index");
+        assertSame(modelAndView.getViewName(), productController.indexFilter(request, response).getViewName());
     }
 
     @Test
