@@ -66,4 +66,10 @@ class ProductDaoSqliteTest {
         ProductCategory productCategory = new ProductCategory("name","department","description");
         assertThrows(IllegalArgumentException.class, () -> {productDaoSqlite.getBy(productCategory);});
     }
+
+    @Test
+    void testGetProductBySupplierWhenSupplierNoExistInDatabase() {
+        Supplier supplier = new Supplier("name","description");
+        assertThrows(IllegalArgumentException.class, () -> {productDaoSqlite.getBy(supplier);});
+    }
 }
