@@ -40,7 +40,7 @@ class OrderDaoSqliteTest {
     }
 
     @Test
-    public void testGetAllReturnsExpectedList() {
+    public void testGetAllReturnsEmptyList() {
         List<Order> orders = new ArrayList<>();
         assertEquals(orders, orderDaoSqlite.getAll());
     }
