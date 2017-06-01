@@ -16,15 +16,15 @@ import static spark.Spark.notFound;
 
 public class Application {
 
-    private static Application app = new Application();
+    private static Application app = new Application("jdbc:sqlite:src/main/resources/database.db");
     private BasketController basketController;
     private OrderController orderController;
     private ProductController productController;
     private ConfirmController confirmController;
     private PaymentController paymentController;
 
-    private Application() {
-        setConnection();
+    private Application(String path) {
+        setConnection(path);
         this.basketController = new BasketController(SqliteJDBCConnector.getConnection());
         this.productController = new ProductController(SqliteJDBCConnector.getConnection());
         this.orderController = new OrderController(SqliteJDBCConnector.getConnection());
@@ -48,9 +48,9 @@ public class Application {
     }
 
 
-    private void setConnection(){
+    public void setConnection(String path){
         try {
-            SqliteJDBCConnector.setConnection("jdbc:sqlite:src/main/resources/database.db");
+            SqliteJDBCConnector.setConnection(path);
         } catch (SQLException e) {
             e.printStackTrace();
         }
