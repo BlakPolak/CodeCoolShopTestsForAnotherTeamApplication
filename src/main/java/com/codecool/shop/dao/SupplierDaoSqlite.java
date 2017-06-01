@@ -16,11 +16,6 @@ public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
     }
 
     @Override
-    public void add(Supplier supplier) {
-
-    }
-
-    @Override
     public Supplier find(int id) {
         Supplier supplier = null;
         try {
@@ -40,11 +35,6 @@ public class SupplierDaoSqlite extends BaseDao implements SupplierDao {
             e.printStackTrace();
         }
         return supplier;
-    }
-
-    @Override
-    public void remove(int id) {
-
     }
 
     @Override
