@@ -56,4 +56,11 @@ class BasketDaoSqliteTest {
     }
 
 
+    @Test
+    void testIfFindMethodThrowsRuntimeExceptionWhenGivenIdIsNotInDatabase() throws SQLException {
+        assertThrows(RuntimeException.class, () -> {
+            basketDaoSqlite.find(123);
+        });
+    }
+
 }
