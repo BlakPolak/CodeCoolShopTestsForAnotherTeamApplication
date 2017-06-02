@@ -142,6 +142,10 @@ public class Application {
             return paymentController.processPayment(req, res);
         });
 
+        get("/", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.index(req, res));
+        });
+
         get("/products", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render(productController.index(req, res));
         });
