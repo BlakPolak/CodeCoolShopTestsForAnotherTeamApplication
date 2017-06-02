@@ -21,6 +21,12 @@
     * UserDaoSqliteTest
         * 100% methods coverage
         * all tests passed
+    * SqliteJDBCConnector
+        * 100% methods coverage
+        * 2/4 tests failed
+    * ProductDaoSqliteTest
+         * 100% methods coverage
+         * 4/9 tests failed
 
 * MODEL:
     * BaseModelTest
@@ -48,6 +54,16 @@
     * UserTest
         * 33% methods coverage
         * 2/4 test failed
+        
+* CONTROLLER:
+    * BasketController
+        * renderBasket() method
+    * ConfirmController
+        * displayConfirmForm() method
+    * OrderController
+        * showAll() method
+    * PaymentController
+        * displayPaymentForm()
 
 **2. Refactoring**
 
