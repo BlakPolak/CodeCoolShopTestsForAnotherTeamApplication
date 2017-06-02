@@ -54,16 +54,20 @@
     * UserTest
         * 33% methods coverage
         * 2/4 test failed
-        
 * CONTROLLER:
-    * BasketController
-        * renderBasket() method
-    * ConfirmController
-        * displayConfirmForm() method
-    * OrderController
-        * showAll() method
+    * ProductController
+        * 83% methods coverage
+        * 1/5 tests failed
     * PaymentController
-        * displayPaymentForm()
+        * 100% methods coverage
+    * OrderController
+        * 100% methods coverage
+    * ConfirmController
+        * 100% methods coverage
+    * BasketController
+        * 100% methods coverage
+    * BaseController
+        * 100% methods coverage       
 
 **2. Refactoring**
 

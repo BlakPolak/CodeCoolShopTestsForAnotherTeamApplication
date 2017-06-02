@@ -16,7 +16,6 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.sql.SQLException;
 
 import static spark.Spark.*;
-import static spark.Spark.notFound;
 
 
 public class Application {
@@ -143,6 +142,10 @@ public class Application {
             return paymentController.processPayment(req, res);
         });
 
+        get("/", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(productController.index(req, res));
+        });
+
         get("/products", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render(productController.index(req, res));
         });
@@ -153,11 +156,6 @@ public class Application {
             return new ThymeleafTemplateEngine().render(productController.indexFilter(req, res));
         });
 
-
-        notFound(((request, response) -> {
-            response.redirect("/products");
-            return null;
-        } ));
     }
 
     public static void run(){
