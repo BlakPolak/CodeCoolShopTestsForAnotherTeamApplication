@@ -1,4 +1,3 @@
-
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
@@ -19,6 +18,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,8 +35,9 @@ class ProductControllerTest {
     Connection connection;
     ProductDao productDao;
     Basket basket;
-
-
+    ProductCategory productCategory;
+    SupplierDao supplierDao;
+    ProductCategoryDao productCategoryDao;
 
     @BeforeEach
     void setup() throws IOException, SQLException {
@@ -49,24 +50,28 @@ class ProductControllerTest {
         basket = mock(Basket.class);
         productDao = mock(ProductDao.class);
         productController = new ProductController(connection);
+        productCategory = mock(ProductCategory.class);
+        productCategoryDao = mock(ProductCategoryDao.class);
+        supplierDao = mock(SupplierDao.class);
     }
 
-//    @Test
-//    void testIfIndexReturnsExpectedModelAndView () {
-//        when(request.session()).thenReturn(session);
-//        when(session.attribute("basket")).thenReturn(basket);
-//        when(productDao.getAll()).thenReturn(Arrays.asList(mock(Product.class), mock(Product.class)));
-//        when(productCategoryDao.getAll()).thenReturn(Arrays.asList(mock(ProductCategory.class), mock(ProductCategory.class)));
-//        when(supplierDao.getAll()).thenReturn(Arrays.asList(mock(Supplier.class), mock(Supplier.class)));
-//
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("basket", basket);
-//        params.put("suppliers", Arrays.asList(mock(Supplier.class), mock(Supplier.class)));
-//        params.put("categories", Arrays.asList(mock(ProductCategory.class), mock(ProductCategory.class)));
-//        params.put("products", Arrays.asList(mock(Product.class), mock(Product.class)));
-//        ModelAndView modelAndView = new ModelAndView(params, "product/index");
-//        assertSame(modelAndView.getViewName(), productController.index(request, response).getViewName());
-//    }
+    @Test
+    void testIfIndexReturnsExpectedModelAndView () {
+        ProductController productControllertest = new ProductController(connection, productDao, productCategoryDao, supplierDao);
+        when(request.session()).thenReturn(session);
+        when(session.attribute("basket")).thenReturn(basket);
+        when(productDao.getAll()).thenReturn(Arrays.asList(mock(Product.class), mock(Product.class)));
+        when(productCategoryDao.getAll()).thenReturn(Arrays.asList(mock(ProductCategory.class), mock(ProductCategory.class)));
+        when(supplierDao.getAll()).thenReturn(Arrays.asList(mock(Supplier.class), mock(Supplier.class)));
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("basket", basket);
+        params.put("suppliers", Arrays.asList(mock(Supplier.class), mock(Supplier.class)));
+        params.put("categories", Arrays.asList(mock(ProductCategory.class), mock(ProductCategory.class)));
+        params.put("products", Arrays.asList(mock(Product.class), mock(Product.class)));
+        ModelAndView modelAndView = new ModelAndView(params, "product/index");
+        assertSame(modelAndView.getViewName(), productController.index(request, response).getViewName());
+    }
 
     @Test
     void testIfIndexFilterReturnsExpectedModelAndView () {
@@ -82,7 +87,6 @@ class ProductControllerTest {
         Map<String, Object> params = new HashMap<>();
         ModelAndView modelAndView = new ModelAndView(params, "admin/productEdit");
         assertSame(modelAndView.getViewName(), productController.removeProduct(request, response).getViewName());
-
     }
 
     @Test
